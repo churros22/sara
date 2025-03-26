@@ -1,69 +1,74 @@
-# Welcome to your Lovable project
 
-## Project info
+# Sara's Birthday Website
 
-**URL**: https://lovable.dev/projects/5c8815e5-1150-420a-aaac-cff3c39c726d
+A personalized birthday website for Sara with interactive sections and customizable content.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Entry Screen**: Requires Sara's birthday (11-04) to access
+- **Welcome Screen**: Personalized welcome message with background music
+- **Four Interactive Sections**:
+  - **Saranterest**: Pinterest-inspired image grid
+  - **Googolu**: Custom Google-like search results with compliments
+  - **Saratify**: Spotify-inspired music player
+  - **Saraprise**: Space for custom surprise content
 
-**Use Lovable**
+## How to Customize
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/5c8815e5-1150-420a-aaac-cff3c39c726d) and start prompting.
+### Adding Images for Saranterest
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Place your images in the `/public/assets/images/` folder
+2. Update the `dummyImages` array in `src/pages/Saranterest.tsx` with your image paths
 
-**Use your preferred IDE**
+### Modifying Compliments in Googolu
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1. Edit the `searchResults` array in `src/pages/Googolu.tsx`
+2. Update titles and descriptions with personalized compliments and achievements
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Adding Songs in Saratify
 
-Follow these steps:
+1. Place audio files in `/public/assets/audio/` folder
+2. Place cover images in `/public/assets/images/` folder
+3. Update the `songs` array in `src/pages/Saratify.tsx` with:
+   - Song titles
+   - Artist names
+   - File paths
+   - Cover image paths
+   - Custom lyrics or messages
+
+### Customizing the Saraprise Page
+
+1. Open `src/pages/Saraprise.tsx`
+2. Locate the div with `id="custom-content"`
+3. Replace the placeholder content with your custom HTML
+4. Add images, videos, messages, or any other content
+
+## Asset Organization
+
+Create the following folders in the `/public` directory:
+- `/public/assets/images/` - For all images
+- `/public/assets/audio/` - For music files
+- `/public/assets/videos/` - For video content (if needed)
+
+## Running the Project
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## Technical Details
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
+This project is built with:
 - React
-- shadcn-ui
+- TypeScript
 - Tailwind CSS
+- React Router
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/5c8815e5-1150-420a-aaac-cff3c39c726d) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+The code is structured for easy customization with clear comments indicating where to add your personal content.
