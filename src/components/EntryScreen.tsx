@@ -1,5 +1,5 @@
 
-import { useState, useEffect, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { cn } from "@/lib/utils";
 
 interface EntryScreenProps {
@@ -7,7 +7,7 @@ interface EntryScreenProps {
 }
 
 const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
-  const [date, setDate] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -15,48 +15,49 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
     e.preventDefault();
     setError("");
     
-    // Format should be DD-MM
-    if (!date.match(/^\d{2}-\d{2}$/)) {
-      setError("Please enter a valid date format (DD-MM)");
-      return;
-    }
-
     setIsLoading(true);
     
     // Check if it's Sara's birthday - 11-04
     setTimeout(() => {
-      if (date === "11-04") {
+      if (password === "11-04") {
         onAccessGranted();
       } else {
-        setError("That's not Sara's birthday. Try again!");
+        setError("That's not the correct password. Try again! 💕");
         setIsLoading(false);
       }
     }, 800); // Small delay for effect
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 bg-gradient-to-br from-sara-blue/10 via-background to-sara-pink/10">
-      <div className="w-full max-w-md glass p-8 rounded-2xl animate-fade-in">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 bg-gradient-to-br from-sara-pink/20 via-background to-sara-purple/20">
+      {/* Decorative elements */}
+      <div className="absolute top-10 left-10 animate-float text-4xl">🎂</div>
+      <div className="absolute top-20 right-20 animate-float text-4xl" style={{ animationDelay: "0.5s" }}>🎁</div>
+      <div className="absolute bottom-20 left-20 animate-float text-4xl" style={{ animationDelay: "1s" }}>🎈</div>
+      <div className="absolute bottom-10 right-10 animate-float text-4xl" style={{ animationDelay: "1.5s" }}>✨</div>
+      
+      <div className="w-full max-w-md glass p-8 rounded-2xl animate-fade-in shadow-lg border-2 border-sara-pink/30">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-primary mb-2">Hello there!</h1>
-          <p className="text-muted-foreground">Please enter Sara's birthday to continue</p>
+          <h1 className="text-3xl font-bold text-primary mb-2">Hello there! 👋</h1>
+          <p className="text-muted-foreground">Please enter the password to continue</p>
+          <div className="mt-4 text-5xl">🔐</div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label htmlFor="date" className="block text-sm font-medium text-primary">
-              Birthday (DD-MM)
+            <label htmlFor="password" className="block text-sm font-medium text-primary">
+              Password
             </label>
             <input
-              id="date"
+              id="password"
               type="text"
-              placeholder="11-04"
+              placeholder="Enter password"
               className={cn(
                 "w-full px-4 py-3 rounded-lg bg-background border-2 focus:ring-2 focus:ring-primary/20 outline-none transition-all",
-                error ? "border-destructive" : "border-input"
+                error ? "border-destructive" : "border-sara-pink/50"
               )}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               autoFocus
             />
             {error && <p className="text-destructive text-sm">{error}</p>}
@@ -67,18 +68,18 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
             disabled={isLoading}
             className={cn(
               "w-full py-3 px-4 rounded-lg font-medium transition-all",
-              "bg-primary text-primary-foreground hover:bg-primary/90",
+              "bg-sara-pink text-primary-foreground hover:bg-sara-pink/90",
               "focus:outline-none focus:ring-2 focus:ring-primary/20",
               isLoading && "opacity-70 cursor-not-allowed"
             )}
           >
-            {isLoading ? "Checking..." : "Enter"}
+            {isLoading ? "Checking... 🔍" : "Enter ✨"}
           </button>
         </form>
 
         <div className="mt-8 text-center">
           <p className="text-sm text-muted-foreground italic">
-            Hint: It's Sara's birthday! (DD-MM)
+            Hint: It's Sara's birthday! (DD-MM) 💫
           </p>
         </div>
       </div>
