@@ -69,12 +69,26 @@ export default {
 					yellow: '#FDFD96',
 					green: '#B5EAD7',
 					purple: '#C3B1E1',
-					glass: 'rgba(255, 255, 255, 0.15)'
+					glass: 'rgba(255, 255, 255, 0.15)',
+					pastel1: '#F2FCE2',
+					pastel2: '#FEF7CD',
+					pastel3: '#FEC6A1',
+					pastel4: '#E5DEFF',
+					pastel5: '#FFDEE2',
+					pastel6: '#FDE1D3',
+					retro1: '#FF6384',
+					retro2: '#36A2EB',
+					retro3: '#FFCE56',
+					retro4: '#4BC0C0',
+					retro5: '#9966FF',
 				}
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
-				display: ['SF Pro Display', 'Inter', 'sans-serif']
+				display: ['SF Pro Display', 'Inter', 'sans-serif'],
+				caveat: ['Caveat', 'cursive'],
+				vt323: ['VT323', 'monospace'],
+				press: ['"Press Start 2P"', 'cursive']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -121,6 +135,14 @@ export default {
 				'pulse-gentle': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.8' }
+				},
+				'pixel-bounce': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-4px)' }
+				},
+				'rainbow': {
+					'0%': { filter: 'hue-rotate(0deg)' },
+					'100%': { filter: 'hue-rotate(360deg)' }
 				}
 			},
 			animation: {
@@ -133,7 +155,9 @@ export default {
 				'slide-in': 'slide-in 0.5s ease-out',
 				'slide-out': 'slide-out 0.5s ease-out',
 				'float': 'float 3s ease-in-out infinite',
-				'pulse-gentle': 'pulse-gentle 3s ease-in-out infinite'
+				'pulse-gentle': 'pulse-gentle 3s ease-in-out infinite',
+				'pixel-bounce': 'pixel-bounce 0.6s ease-in-out infinite',
+				'rainbow': 'rainbow 5s linear infinite'
 			},
 			backdropFilter: {
 				'none': 'none',

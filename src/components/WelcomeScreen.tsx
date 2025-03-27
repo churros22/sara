@@ -1,12 +1,15 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Music, VolumeX, Cake, Images, Search, Gift } from "lucide-react";
 
 const WelcomeScreen = () => {
   const navigate = useNavigate();
   const [showContent, setShowContent] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Create audio element - this will be replaced with actual audio
@@ -45,72 +48,134 @@ const WelcomeScreen = () => {
   const navigateTo = (path: string) => {
     navigate(path);
   };
+  
+  // Pixel art decorations
+  const pixelArts = [
+    "🧁", "🎀", "🍭", "🎈", "✨", "💖", "🎊", "🦄", "🌈"
+  ];
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-tr from-sara-blue/20 via-background to-sara-pink/20 p-4 sm:p-8">
-      <div className="relative w-full max-w-5xl">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-tr from-sara-pastel3/40 via-background to-sara-pastel2/40 p-4 sm:p-8 overflow-x-hidden">
+      {/* Pixel art decorations */}
+      {pixelArts.map((emoji, index) => (
+        <div 
+          key={index}
+          className="absolute animate-float text-2xl md:text-4xl"
+          style={{ 
+            top: `${Math.random() * 80 + 10}%`, 
+            left: `${Math.random() * 80 + 10}%`,
+            animationDelay: `${index * 0.4}s`,
+            transform: `rotate(${Math.random() * 20 - 10}deg)`,
+            zIndex: 1
+          }}
+        >
+          {emoji}
+        </div>
+      ))}
+      
+      <div className="relative w-full max-w-5xl z-10">
         <button
           onClick={toggleAudio}
           className="absolute top-4 right-4 z-10 glass rounded-full p-3 animate-hover"
           aria-label={audioPlaying ? "Mute music" : "Play music"}
         >
           {audioPlaying ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M11 5 6 9H2v6h4l5 4V5Z" /><path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-            </svg>
+            <Music className="text-sara-retro5" />
           ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M11 5 6 9H2v6h4l5 4V5Z" /><line x1="23" y1="9" x2="17" y2="15" />
-              <line x1="17" y1="9" x2="23" y2="15" />
-            </svg>
+            <VolumeX className="text-sara-retro1" />
           )}
         </button>
 
-        <div className={`text-center mb-12 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-primary">Hello Sara!</h1>
-          <p className="text-xl text-muted-foreground">
+        <div className={`text-center mb-8 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
+          <h1 className="text-4xl sm:text-5xl font-caveat font-bold mb-4 text-primary">
+            Hello Sara! 
+            <span className="inline-block ml-2 animate-pulse-gentle">🎂</span>
+          </h1>
+          <div className="w-12 h-1 bg-sara-pink mx-auto my-4 rounded-full"></div>
+          <p className="text-xl font-caveat text-muted-foreground px-4">
             Welcome! Please feel at home, mi casa is your casa
           </p>
         </div>
 
-        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
+        <div 
+          className={`grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
+          style={{ animationDelay: '0.2s' }}
+        >
           <div 
-            className="interactive-tile bg-sara-pink/10"
+            className="interactive-tile bg-sara-retro1/10 relative overflow-hidden group"
             onClick={() => navigateTo("/saranterest")}
           >
-            <h2 className="text-2xl font-semibold mb-2">Saranterest</h2>
-            <p className="text-muted-foreground">Discover beautiful images curated for you</p>
+            <div className="absolute inset-0 bg-gradient-to-br from-sara-retro1/20 to-sara-retro3/20 opacity-50 group-hover:opacity-70 transition-opacity"></div>
+            <div className="relative z-10 flex items-center gap-3">
+              <div className="bg-white/30 p-2 rounded-full">
+                <Images size={isMobile ? 20 : 24} className="text-sara-retro1" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-caveat font-semibold mb-1">Saranterest</h2>
+                <p className="text-muted-foreground font-caveat">Discover beautiful images curated for you</p>
+              </div>
+            </div>
+            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro1/70">✨ click me ✨</div>
           </div>
 
           <div 
-            className="interactive-tile bg-sara-blue/10"
+            className="interactive-tile bg-sara-retro2/10 relative overflow-hidden group"
             onClick={() => navigateTo("/googolu")}
           >
-            <h2 className="text-2xl font-semibold mb-2">Googolu</h2>
-            <p className="text-muted-foreground">Find all things Sara in one place</p>
+            <div className="absolute inset-0 bg-gradient-to-br from-sara-retro2/20 to-sara-retro4/20 opacity-50 group-hover:opacity-70 transition-opacity"></div>
+            <div className="relative z-10 flex items-center gap-3">
+              <div className="bg-white/30 p-2 rounded-full">
+                <Search size={isMobile ? 20 : 24} className="text-sara-retro2" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-caveat font-semibold mb-1">Googolu</h2>
+                <p className="text-muted-foreground font-caveat">Find all things Sara in one place</p>
+              </div>
+            </div>
+            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro2/70">✨ click me ✨</div>
           </div>
 
           <div 
-            className="interactive-tile bg-sara-yellow/10" 
+            className="interactive-tile bg-sara-retro3/10 relative overflow-hidden group" 
             onClick={() => navigateTo("/saratify")}
           >
-            <h2 className="text-2xl font-semibold mb-2">Saratify</h2>
-            <p className="text-muted-foreground">Listen to your favorite songs</p>
+            <div className="absolute inset-0 bg-gradient-to-br from-sara-retro3/20 to-sara-retro5/20 opacity-50 group-hover:opacity-70 transition-opacity"></div>
+            <div className="relative z-10 flex items-center gap-3">
+              <div className="bg-white/30 p-2 rounded-full">
+                <Music size={isMobile ? 20 : 24} className="text-sara-retro3" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-caveat font-semibold mb-1">Saratify</h2>
+                <p className="text-muted-foreground font-caveat">Listen to your favorite songs</p>
+              </div>
+            </div>
+            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro3/70">✨ click me ✨</div>
           </div>
 
           <div 
-            className="interactive-tile bg-sara-purple/10"
+            className="interactive-tile bg-sara-retro5/10 relative overflow-hidden group"
             onClick={() => navigateTo("/saraprise")}
           >
-            <h2 className="text-2xl font-semibold mb-2">Saraprise</h2>
-            <p className="text-muted-foreground">A special surprise just for you</p>
+            <div className="absolute inset-0 bg-gradient-to-br from-sara-retro5/20 to-sara-retro1/20 opacity-50 group-hover:opacity-70 transition-opacity"></div>
+            <div className="relative z-10 flex items-center gap-3">
+              <div className="bg-white/30 p-2 rounded-full">
+                <Gift size={isMobile ? 20 : 24} className="text-sara-retro5" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-caveat font-semibold mb-1">Saraprise</h2>
+                <p className="text-muted-foreground font-caveat">A special surprise just for you</p>
+              </div>
+            </div>
+            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro5/70">✨ click me ✨</div>
           </div>
         </div>
       </div>
 
       <div className={`mt-12 text-center text-sm text-muted-foreground ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
-        <p>Made with love for your special day</p>
+        <p className="font-caveat text-lg">Made with 💖 for your special day</p>
+        <div className="mt-2 font-vt323">
+          <span className="inline-block animate-rainbow">✨ Happy Birthday Sara! ✨</span>
+        </div>
       </div>
     </div>
   );

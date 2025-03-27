@@ -1,9 +1,12 @@
 
 import { useNavigate } from "react-router-dom";
 import MusicPlayer from "@/components/MusicPlayer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Music, ArrowLeft } from "lucide-react";
 
 const Saratify = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   // Placeholder songs - these will be replaced with actual songs from the assets folder
   const songs = [
@@ -42,27 +45,32 @@ const Saratify = () => {
           className="p-2 rounded-full hover:bg-white/10 transition-colors mr-4 text-white"
           aria-label="Go back"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
-          </svg>
+          <ArrowLeft size={isMobile ? 20 : 24} />
         </button>
         <div className="flex items-center">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="12" fill="#1DB954"/>
-            <path d="M17.9 10.9C14.7 9 9.35 8.8 6.3 9.75C5.8 9.9 5.3 9.6 5.15 9.15C5 8.65 5.3 8.15 5.75 8C9.3 6.95 15.15 7.15 18.85 9.35C19.3 9.6 19.45 10.15 19.2 10.6C18.95 11 18.4 11.15 17.9 10.9ZM17.8 13.7C17.55 14.05 17.1 14.2 16.75 13.95C14.05 12.3 9.95 11.8 6.8 12.8C6.4 12.9 5.95 12.7 5.85 12.3C5.75 11.9 5.95 11.45 6.35 11.35C10 10.25 14.5 10.8 17.55 12.65C17.9 12.85 18.05 13.35 17.8 13.7ZM16.6 16.45C16.4 16.75 16.05 16.85 15.75 16.65C13.4 15.2 10.45 14.9 6.95 15.7C6.6 15.8 6.3 15.55 6.2 15.25C6.1 14.9 6.35 14.6 6.65 14.5C10.45 13.65 13.75 14 16.4 15.6C16.7 15.75 16.8 16.15 16.6 16.45Z" fill="white"/>
-          </svg>
-          <h1 className="text-2xl font-bold ml-2">Saratify</h1>
+          <div className="bg-[#1DB954] rounded-full w-10 h-10 flex items-center justify-center">
+            <Music size={isMobile ? 16 : 20} className="text-white" />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold ml-2 font-vt323">Saratify</h1>
         </div>
       </div>
 
-      <div className="container py-8 max-w-5xl mx-auto">
+      <div className="container py-8 max-w-5xl mx-auto px-4">
+        {/* Pixel art decorations */}
+        <div className="hidden sm:block absolute top-20 right-8 text-4xl animate-float" style={{ animationDelay: "0.5s" }}>🎵</div>
+        <div className="hidden sm:block absolute bottom-20 left-8 text-4xl animate-float" style={{ animationDelay: "1.2s" }}>🎧</div>
+        
         {/* Custom player section */}
-        <div className="bg-gray-900/70 rounded-lg p-6 shadow-lg">
+        <div className="bg-gray-900/70 rounded-lg p-4 sm:p-6 shadow-lg backdrop-blur-lg border border-gray-800">
+          <div className="mb-6 text-center">
+            <h2 className="font-caveat text-3xl text-[#1DB954] mb-2">Sara's Playlist</h2>
+            <p className="text-gray-400 font-vt323">Songs selected just for you</p>
+          </div>
           <MusicPlayer songs={songs} />
         </div>
 
         <div className="mt-12 text-center text-sm text-white/70">
-          <p>
+          <p className="font-caveat text-lg">
             To add your own songs, place audio files in the '/assets/audio/' folder, cover images in the '/assets/images/' folder, and update the songs array in the Saratify.tsx file.
           </p>
         </div>

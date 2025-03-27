@@ -3,10 +3,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageGrid from "@/components/ImageGrid";
 import SearchBar from "@/components/SearchBar";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { ArrowLeft, Heart, Bell, User } from "lucide-react";
 
 const Saranterest = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const isMobile = useIsMobile();
 
   // Placeholder images - these will be replaced with actual images from the assets folder
   const dummyImages = [
@@ -38,37 +41,49 @@ const Saranterest = () => {
             className="p-2 rounded-full text-gray-700 hover:bg-gray-100 transition-colors"
             aria-label="Go back"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
-            </svg>
+            <ArrowLeft size={isMobile ? 20 : 24} />
           </button>
           
           {/* Logo */}
           <div className="flex items-center">
-            <span className="text-2xl text-red-600 font-bold">S</span>
-            <span className="text-xl text-red-600 font-bold">aranterest</span>
+            <span className="text-2xl font-caveat font-bold text-red-600">S</span>
+            <span className="text-xl font-caveat font-bold text-red-600">aranterest</span>
           </div>
           
-          {/* Search bar */}
-          <div className="flex-1 max-w-md mx-4">
+          {/* Search bar - conditionally hide on mobile */}
+          <div className={`flex-1 max-w-md mx-4 ${isMobile ? 'hidden sm:block' : ''}`}>
             <SearchBar 
               onSearch={handleSearch}
               placeholder="Search for inspiration..."
-              className="bg-gray-100 border-none rounded-full"
+              className="bg-gray-100 border-none rounded-full font-vt323"
             />
           </div>
           
-          {/* Icon placeholders */}
+          {/* Icons */}
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-              <span className="text-lg">💌</span>
+            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all">
+              <Bell size={isMobile ? 18 : 20} className="text-gray-700" />
             </div>
-            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-              <span className="text-lg">🔔</span>
+            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all">
+              <Heart size={isMobile ? 18 : 20} className="text-gray-700" />
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all">
+              <User size={isMobile ? 18 : 20} className="text-gray-700" />
             </div>
           </div>
         </div>
       </div>
+      
+      {/* Mobile search bar - only shown on mobile */}
+      {isMobile && (
+        <div className="bg-white px-4 py-2 shadow-sm">
+          <SearchBar 
+            onSearch={handleSearch}
+            placeholder="Search for inspiration..."
+            className="bg-gray-100 border-none rounded-full font-vt323"
+          />
+        </div>
+      )}
 
       {/* Pinterest-style content */}
       <div className="container mx-auto py-6 px-4">
@@ -77,7 +92,7 @@ const Saranterest = () => {
         </div>
 
         <div className="mt-6 text-center text-sm text-gray-500">
-          <p>
+          <p className="font-caveat text-lg">
             To replace these images, add your own photos to the '/assets/images/' folder and update the image paths in the Saranterest.tsx file.
           </p>
         </div>
