@@ -2,11 +2,13 @@
 import { useNavigate } from "react-router-dom";
 import MusicPlayer from "@/components/MusicPlayer";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Music, ArrowLeft, Heart, Search, Library } from "lucide-react";
+import { ArrowLeft, Heart, Search, Library, LogOut } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Saratify = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
   // Placeholder songs - these will be replaced with actual songs from the assets folder
   const songs = [
@@ -36,6 +38,15 @@ const Saratify = () => {
     }
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem("saraAccessGranted");
+    toast({
+      title: "Logged out! 👋",
+      description: "Come back soon!",
+    });
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
       {/* Spotify-like header */}
@@ -49,27 +60,32 @@ const Saratify = () => {
             <ArrowLeft size={isMobile ? 20 : 24} />
           </button>
           <div className="flex items-center">
-            <div className="bg-[#1DB954] rounded-full w-10 h-10 flex items-center justify-center">
-              <Music size={isMobile ? 16 : 20} className="text-white" />
-            </div>
-            <h1 className="text-xl sm:text-2xl font-bold ml-2 font-vt323">Saratify</h1>
+            <svg className="w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/>
+            </svg>
+            <h1 className="text-xl sm:text-2xl font-vt323 font-bold ml-2">Saratify</h1>
           </div>
         </div>
         
         {/* Spotify-like navigation buttons (desktop only) */}
-        {!isMobile && (
-          <div className="hidden md:flex items-center gap-4">
-            <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-              <Heart size={20} className="text-gray-300" />
-            </button>
-            <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-              <Search size={20} className="text-gray-300" />
-            </button>
-            <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-              <Library size={20} className="text-gray-300" />
-            </button>
-          </div>
-        )}
+        <div className="flex md:flex items-center gap-2 md:gap-4">
+          <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
+            <Heart size={isMobile ? 18 : 20} className="text-gray-300" />
+          </button>
+          {!isMobile && (
+            <>
+              <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
+                <Search size={20} className="text-gray-300" />
+              </button>
+              <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
+                <Library size={20} className="text-gray-300" />
+              </button>
+            </>
+          )}
+          <button className="p-2 rounded-full hover:bg-white/10 transition-colors" onClick={handleLogout}>
+            <LogOut size={isMobile ? 18 : 20} className="text-gray-300" />
+          </button>
+        </div>
       </div>
 
       <div className="container py-8 max-w-5xl mx-auto px-4">
@@ -82,7 +98,7 @@ const Saratify = () => {
         {/* Custom player section with pixel-art inspired styling */}
         <div className="relative bg-gradient-to-br from-gray-900/90 to-black/90 rounded-lg p-4 sm:p-6 shadow-lg backdrop-blur-lg border border-gray-800 z-10">
           <div className="mb-6 text-center">
-            <h2 className="font-caveat text-3xl text-[#1DB954] mb-2 pixel-border" style={{ textShadow: "2px 2px 0 #000" }}>Sara's Playlist</h2>
+            <h2 className="font-vt323 text-3xl text-[#1DB954] mb-2 pixel-shadow" style={{ textShadow: "2px 2px 0 #000" }}>Sara's Playlist</h2>
             <p className="text-gray-400 font-vt323">Songs selected just for you</p>
             
             {/* Pixel art grid background (subtle) */}
@@ -116,7 +132,7 @@ const Saratify = () => {
         </div>
 
         <div className="mt-12 text-center text-sm text-white/70">
-          <p className="font-caveat text-lg">
+          <p className="font-vt323 text-lg">
             To add your own songs, place audio files in the '/assets/audio/' folder, cover images in the '/assets/images/' folder, and update the songs array in the Saratify.tsx file.
           </p>
         </div>

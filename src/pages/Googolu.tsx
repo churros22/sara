@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "@/components/SearchBar";
-import { ArrowLeft, Search, Image, Mic, MapPin, Newspaper, Video } from "lucide-react";
+import { ArrowLeft, Search, Image, Mic, MapPin, Newspaper, Video, LogOut } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
 
 interface SearchResult {
   id: string;
@@ -17,6 +18,7 @@ const Googolu = () => {
   const [searchQuery, setSearchQuery] = useState("Sara");
   const [showResults, setShowResults] = useState(false);
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
   // Placeholder search results - these would be customized with compliments and achievements
   const searchResults: SearchResult[] = [
@@ -63,6 +65,15 @@ const Googolu = () => {
     setShowResults(true);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("saraAccessGranted");
+    toast({
+      title: "Logged out! 👋",
+      description: "Come back soon!",
+    });
+    navigate("/");
+  };
+
   // Google-like categories
   const categories = [
     { name: "All", icon: <Search size={16} /> },
@@ -76,29 +87,54 @@ const Googolu = () => {
     <div className="min-h-screen bg-[#FFFFFF]">
       {/* Google-style navigation and header */}
       <div className="bg-white border-b px-4 py-3">
-        <div className="flex items-center max-w-7xl mx-auto">
-          <button
-            onClick={() => navigate("/")}
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors mr-4"
-            aria-label="Go back"
-          >
-            <ArrowLeft size={isMobile ? 20 : 24} />
-          </button>
-          
-          {/* Only show the logo on mobile or when no results are showing */}
-          {(isMobile || !showResults) && (
-            <div className="flex items-center justify-center py-6 mb-4">
-              <div className="inline-block pixel-border" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.1)" }}>
-                <span className="text-6xl font-bold text-[#4285F4]">G</span>
-                <span className="text-6xl font-bold text-[#EA4335]">o</span>
-                <span className="text-6xl font-bold text-[#FBBC05]">o</span>
-                <span className="text-6xl font-bold text-[#4285F4]">g</span>
-                <span className="text-6xl font-bold text-[#34A853]">o</span>
-                <span className="text-6xl font-bold text-[#EA4335]">l</span>
-                <span className="text-6xl font-bold text-[#4285F4]">u</span>
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
+          <div className="flex items-center">
+            <button
+              onClick={() => navigate("/")}
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors mr-2"
+              aria-label="Go back"
+            >
+              <ArrowLeft size={isMobile ? 20 : 24} />
+            </button>
+            
+            {/* Show the logo on both mobile and desktop but smaller on mobile */}
+            {!showResults && (
+              <div className="flex items-center justify-center py-2 mb-0">
+                <div className={`inline-block pixel-shadow ${isMobile ? 'scale-75' : ''}`}>
+                  <span className="text-4xl font-bold text-[#4285F4]">G</span>
+                  <span className="text-4xl font-bold text-[#EA4335]">o</span>
+                  <span className="text-4xl font-bold text-[#FBBC05]">o</span>
+                  <span className="text-4xl font-bold text-[#4285F4]">g</span>
+                  <span className="text-4xl font-bold text-[#34A853]">o</span>
+                  <span className="text-4xl font-bold text-[#EA4335]">l</span>
+                  <span className="text-4xl font-bold text-[#4285F4]">u</span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+            
+            {/* When results are showing, show a smaller logo on both */}
+            {showResults && (
+              <div className="flex items-center ml-2">
+                <div className="inline-block">
+                  <span className="text-2xl font-bold text-[#4285F4]">G</span>
+                  <span className="text-2xl font-bold text-[#EA4335]">o</span>
+                  <span className="text-2xl font-bold text-[#FBBC05]">o</span>
+                  <span className="text-2xl font-bold text-[#4285F4]">g</span>
+                  <span className="text-2xl font-bold text-[#34A853]">o</span>
+                  <span className="text-2xl font-bold text-[#EA4335]">l</span>
+                  <span className="text-2xl font-bold text-[#4285F4]">u</span>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <button
+            onClick={handleLogout}
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+            aria-label="Log out"
+          >
+            <LogOut size={isMobile ? 20 : 24} />
+          </button>
         </div>
       </div>
 
@@ -106,7 +142,7 @@ const Googolu = () => {
       <div className="container py-4 max-w-6xl mx-auto px-4">
         {!showResults ? (
           <div className="mb-12 text-center">
-            <div className="inline-block pixel-border" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.1)" }}>
+            <div className="inline-block pixel-shadow" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.1)" }}>
               <span className="text-6xl font-bold text-[#4285F4]">G</span>
               <span className="text-6xl font-bold text-[#EA4335]">o</span>
               <span className="text-6xl font-bold text-[#FBBC05]">o</span>
@@ -124,7 +160,7 @@ const Googolu = () => {
               onSearch={handleSearch}
               defaultValue={searchQuery}
               placeholder="Search for Sara..."
-              className={`${showResults ? 'border shadow-sm' : 'border shadow-lg'} rounded-full pr-12`}
+              className={`${showResults ? 'border shadow-sm' : 'border shadow-lg'} rounded-full pr-12 font-vt323`}
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
               <button 
@@ -146,8 +182,8 @@ const Googolu = () => {
         {showResults && (
           <>
             {/* Google-like category tabs */}
-            <div className="border-b mb-4">
-              <div className="flex space-x-6 font-vt323">
+            <div className="border-b mb-4 overflow-x-auto scrollbar-none">
+              <div className="flex space-x-6 font-vt323 min-w-max">
                 {categories.map((category, index) => (
                   <div 
                     key={index} 
@@ -161,7 +197,7 @@ const Googolu = () => {
             </div>
 
             <div className="max-w-3xl animate-fade-in">
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm font-vt323 text-gray-500 mb-6">
                 About {searchResults.length} results for "{searchQuery}"
               </p>
 
@@ -172,17 +208,17 @@ const Googolu = () => {
               <div className="space-y-8">
                 {searchResults.map((result) => (
                   <div key={result.id} className="group">
-                    <h2 className="text-xl font-medium text-[#1a0dab] group-hover:underline transition-colors">
+                    <h2 className="text-xl font-medium font-vt323 text-[#1a0dab] group-hover:underline transition-colors">
                       {result.title}
                     </h2>
                     <a 
                       href="#" 
-                      className="text-[#006621] text-sm hover:underline block mb-1"
+                      className="text-[#006621] text-sm font-vt323 hover:underline block mb-1"
                       onClick={(e) => e.preventDefault()}
                     >
                       {result.url}
                     </a>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 font-vt323">
                       {result.description}
                     </p>
                   </div>
@@ -193,7 +229,7 @@ const Googolu = () => {
         )}
 
         <div className="mt-6 text-center text-sm text-gray-500">
-          <p className="font-caveat text-lg">
+          <p className="font-vt323 text-lg">
             To customize these search results, edit the searchResults array in the Googolu.tsx file with your own compliments and achievements for Sara.
           </p>
         </div>
