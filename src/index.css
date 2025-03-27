@@ -165,5 +165,23 @@
     background-image: 
       linear-gradient(45deg, #f9c5d1 0%, #f3c6f1 34%, #a1c4fd 70%, #c2e9fb 100%);
   }
-}
 
+  /* New pixel art utilities */
+  .pixel-shadow {
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+  }
+  
+  .pixel-button {
+    @apply border-2 border-black rounded-none bg-white hover:bg-gray-100 transition-colors;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
