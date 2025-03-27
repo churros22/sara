@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Music, VolumeX, LogOut } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const WelcomeScreen = () => {
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ const WelcomeScreen = () => {
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
   useEffect(() => {
     // Create audio element - this will be replaced with actual audio
@@ -59,22 +60,22 @@ const WelcomeScreen = () => {
     navigate("/");
   };
   
-  // Pixel art decorations - strategically placed not to overlap content
+  // Pixel art decorations - positioned with more care to avoid overlapping
   const pixelArts = [
     { emoji: "🧁", top: 5, left: 5, delay: 0.2 },
     { emoji: "🎀", top: 15, left: 90, delay: 0.5 },
-    { emoji: "🍭", top: 85, left: 8, delay: 0.8 },
+    { emoji: "🍭", top: 85, left: 10, delay: 0.8 },
     { emoji: "🎈", top: 90, left: 92, delay: 1.1 },
     { emoji: "✨", top: 10, left: 50, delay: 1.4 },
-    { emoji: "💖", top: 75, left: 40, delay: 1.7 },
+    { emoji: "💖", top: 80, left: 40, delay: 1.7 },
     { emoji: "🎊", top: 35, left: 95, delay: 2.0 },
-    { emoji: "🦄", top: 95, left: 50, delay: 2.3 },
+    { emoji: "🦄", top: 95, left: 65, delay: 2.3 },
     { emoji: "🌈", top: 3, left: 80, delay: 2.6 }
   ];
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-tr from-sara-pastel3/40 via-background to-sara-pastel2/40 p-4 sm:p-8 overflow-x-hidden">
-      {/* Pixel art decorations */}
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-tr from-sara-pastel3/40 via-background to-sara-pastel2/40 p-4 sm:p-8 overflow-x-hidden relative">
+      {/* Pixel art decorations - with better z-index and positioning */}
       {pixelArts.map((item, index) => (
         <div 
           key={index}

@@ -30,7 +30,14 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
     }
   };
 
-  // Pixel art decorations
+  // Function to handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    }
+  };
+
+  // Pixel art decorations - carefully positioned to avoid overlap
   const pixelArts = [
     { emoji: "🎂", top: 10, left: 85, delay: 0.2 },
     { emoji: "🎁", top: 80, left: 10, delay: 0.5 },
@@ -44,7 +51,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
       {pixelArts.map((item, index) => (
         <div 
           key={index}
-          className="absolute animate-float text-3xl md:text-5xl"
+          className="absolute animate-float text-3xl md:text-5xl pointer-events-none"
           style={{ 
             top: `${item.top}%`, 
             left: `${item.left}%`,
@@ -83,6 +90,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder="Enter password"
                 className="w-full px-4 py-3 rounded-md border-2 border-black font-vt323 focus:outline-none text-center text-xl tracking-widest"
                 autoFocus

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "@/components/SearchBar";
-import { ArrowLeft, Search, Image, Mic, MapPin, Newspaper, Video, LogOut } from "lucide-react";
+import { ArrowLeft, Image, MapPin, Newspaper, Video } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 
@@ -65,18 +65,9 @@ const Googolu = () => {
     setShowResults(true);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("saraAccessGranted");
-    toast({
-      title: "Logged out! 👋",
-      description: "Come back soon!",
-    });
-    navigate("/");
-  };
-
   // Google-like categories
   const categories = [
-    { name: "All", icon: <Search size={16} /> },
+    { name: "All", icon: <div className="w-4 h-4"></div> },
     { name: "Images", icon: <Image size={16} /> },
     { name: "Videos", icon: <Video size={16} /> },
     { name: "News", icon: <Newspaper size={16} /> },
@@ -100,7 +91,7 @@ const Googolu = () => {
             {/* Show the logo on both mobile and desktop but smaller on mobile */}
             {!showResults && (
               <div className="flex items-center justify-center py-2 mb-0">
-                <div className={`inline-block pixel-shadow ${isMobile ? 'scale-75' : ''}`}>
+                <div className={`inline-block pixel-shadow ${isMobile ? 'scale-75 transform-origin-left' : ''}`}>
                   <span className="text-4xl font-bold text-[#4285F4]">G</span>
                   <span className="text-4xl font-bold text-[#EA4335]">o</span>
                   <span className="text-4xl font-bold text-[#FBBC05]">o</span>
@@ -129,11 +120,11 @@ const Googolu = () => {
           </div>
           
           <button
-            onClick={handleLogout}
+            onClick={() => navigate("/")}
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-            aria-label="Log out"
+            aria-label="Go back to home"
           >
-            <LogOut size={isMobile ? 20 : 24} />
+            <ArrowLeft size={isMobile ? 20 : 24} className="rotate-180" />
           </button>
         </div>
       </div>
@@ -141,15 +132,15 @@ const Googolu = () => {
       {/* Main search section - simplified if results are showing */}
       <div className="container py-4 max-w-6xl mx-auto px-4">
         {!showResults ? (
-          <div className="mb-12 text-center">
+          <div className="mb-8 text-center">
             <div className="inline-block pixel-shadow" style={{ textShadow: "2px 2px 0 rgba(0,0,0,0.1)" }}>
-              <span className="text-6xl font-bold text-[#4285F4]">G</span>
-              <span className="text-6xl font-bold text-[#EA4335]">o</span>
-              <span className="text-6xl font-bold text-[#FBBC05]">o</span>
-              <span className="text-6xl font-bold text-[#4285F4]">g</span>
-              <span className="text-6xl font-bold text-[#34A853]">o</span>
-              <span className="text-6xl font-bold text-[#EA4335]">l</span>
-              <span className="text-6xl font-bold text-[#4285F4]">u</span>
+              <span className="text-5xl md:text-6xl font-bold text-[#4285F4]">G</span>
+              <span className="text-5xl md:text-6xl font-bold text-[#EA4335]">o</span>
+              <span className="text-5xl md:text-6xl font-bold text-[#FBBC05]">o</span>
+              <span className="text-5xl md:text-6xl font-bold text-[#4285F4]">g</span>
+              <span className="text-5xl md:text-6xl font-bold text-[#34A853]">o</span>
+              <span className="text-5xl md:text-6xl font-bold text-[#EA4335]">l</span>
+              <span className="text-5xl md:text-6xl font-bold text-[#4285F4]">u</span>
             </div>
           </div>
         ) : null}
@@ -160,22 +151,8 @@ const Googolu = () => {
               onSearch={handleSearch}
               defaultValue={searchQuery}
               placeholder="Search for Sara..."
-              className={`${showResults ? 'border shadow-sm' : 'border shadow-lg'} rounded-full pr-12 font-vt323`}
+              className={`${showResults ? 'border shadow-sm' : 'border shadow-lg'} rounded-full font-vt323`}
             />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-              <button 
-                className="w-8 h-8 flex items-center justify-center text-[#4285F4] hover:bg-gray-100 rounded-full"
-                aria-label="Voice search"
-              >
-                <Mic size={20} />
-              </button>
-              <button 
-                className="w-8 h-8 flex items-center justify-center text-[#4285F4] hover:bg-gray-100 rounded-full"
-                aria-label="Search"
-              >
-                <Search size={20} />
-              </button>
-            </div>
           </div>
         </div>
 
