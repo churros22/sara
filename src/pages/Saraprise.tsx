@@ -52,12 +52,13 @@ const Saraprise = () => {
             </div>
           )}
           
-          {/* Embed the external HTML page using an iframe */}
+          {/* Embed the external HTML page using an iframe with adjusted dimensions */}
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
-            className={`w-full ${isMobile ? 'h-[300px]' : 'h-[500px]'} rounded-lg border border-gray-300 ${isLoaded ? 'block' : 'hidden'}`}
+            className={`w-full ${isMobile ? 'h-[400px]' : 'h-[500px]'} rounded-lg border border-gray-300 ${isLoaded ? 'block' : 'hidden'}`}
             onLoad={() => setIsLoaded(true)}
+            style={{ overflow: 'hidden' }}
           ></iframe>
         </div>
       </div>

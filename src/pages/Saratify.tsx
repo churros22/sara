@@ -4,12 +4,14 @@ import MusicPlayer from "@/components/MusicPlayer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ArrowLeft, Heart, Search, Library, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Saratify = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(true);
 
   // Songs with corrected paths
   const songs = [
@@ -26,7 +28,7 @@ const Saratify = () => {
       title: "You Are Amazing",
       artist: "Sara's Admirers",
       src: "/assets/audio/sara_impala.mp3",
-      cover: "/assets/images/sara_1.jpg", // Using existing image
+      cover: "/assets/images/sara_1.jpg",
       lyrics: "You're amazing just the way you are\nYour smile lights up the entire room\nYour kindness touches everyone around you\nNever change, you're perfect as you are."
     },
     {
@@ -34,13 +36,18 @@ const Saratify = () => {
       title: "Memories",
       artist: "Friends of Sara",
       src: "/assets/audio/sara_poem.mp3",
-      cover: "/assets/images/sara_2.jpg", // Using existing image
+      cover: "/assets/images/sara_2.jpg",
       lyrics: "Remember all the good times\nAll the laughter we've shared\nEvery moment with you\nIs a treasure beyond compare."
     }
   ];
 
   // Preload audio files to make them load faster
   useEffect(() => {
+    // Simulate loading
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
     songs.forEach(song => {
       const audio = new Audio();
       audio.src = song.src;
@@ -48,6 +55,8 @@ const Saratify = () => {
       // Just trigger loading without playing
       audio.load();
     });
+
+    return () => clearTimeout(loadingTimer);
   }, []);
 
   const handleLogout = () => {
@@ -61,6 +70,22 @@ const Saratify = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+      {/* Loading screen */}
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black">
+          <div className="flex flex-col items-center space-y-6">
+            <svg className="w-16 h-16 animate-pulse" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/>
+            </svg>
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-32 bg-gray-800" />
+              <Skeleton className="h-4 w-24 bg-gray-800" />
+            </div>
+            <div className="text-sm text-gray-400 mt-4">Loading your music...</div>
+          </div>
+        </div>
+      )}
+
       {/* Spotify-like header */}
       <div className="sticky top-0 z-10 bg-black/95 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center">
