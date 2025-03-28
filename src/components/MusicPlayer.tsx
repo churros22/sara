@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
@@ -20,25 +19,42 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isAudioReady, setIsAudioReady] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number>(0);
 
   const currentSong = songs[currentSongIndex];
 
   useEffect(() => {
-    // Create a new audio element when component mounts
+    const audioElements = songs.map(song => {
+      const audio = new Audio(song.src);
+      audio.preload = "auto";
+      return audio;
+    });
+    
+    return () => {
+      audioElements.forEach(audio => {
+        audio.pause();
+        audio.src = "";
+      });
+    };
+  }, [songs]);
+
+  useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio();
     }
     
     const audio = audioRef.current;
     
-    // Set the source only when currentSongIndex changes
     audio.src = currentSong.src;
-    audio.load(); // Explicitly load the audio
+    audio.preload = "auto";
+    audio.load();
+    setIsAudioReady(false);
     
     const handleLoadedMetadata = () => {
       setDuration(audio.duration);
+      setIsAudioReady(true);
     };
     
     const handleEnded = () => {
@@ -48,12 +64,14 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
     audio.addEventListener('ended', handleEnded);
     
-    // If it was playing before changing songs, play the new song
     if (isPlaying) {
-      audio.play().catch(error => {
-        console.error("Audio playback failed:", error);
-        setIsPlaying(false);
-      });
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error("Audio playback failed:", error);
+          setIsPlaying(false);
+        });
+      }
       startProgressAnimation();
     }
     
@@ -65,19 +83,22 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
   }, [currentSongIndex, currentSong.src]);
 
   useEffect(() => {
-    if (!audioRef.current) return;
+    if (!audioRef.current || !isAudioReady) return;
     
     if (isPlaying) {
-      audioRef.current.play().catch(error => {
-        console.error("Audio playback failed:", error);
-        setIsPlaying(false);
-      });
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error("Audio playback failed:", error);
+          setIsPlaying(false);
+        });
+      }
       startProgressAnimation();
     } else {
       audioRef.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
-  }, [isPlaying]);
+  }, [isPlaying, isAudioReady]);
 
   const startProgressAnimation = () => {
     if (!audioRef.current) return;
@@ -128,12 +149,16 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
       <audio 
         ref={audioRef} 
         src={currentSong.src} 
-        preload="metadata"
-        onLoadedMetadata={() => audioRef.current && setDuration(audioRef.current.duration)}
+        preload="auto"
+        onLoadedMetadata={() => {
+          if (audioRef.current) {
+            setDuration(audioRef.current.duration);
+            setIsAudioReady(true);
+          }
+        }}
       />
       
       <div className="flex flex-col space-y-6">
-        {/* Album Cover */}
         <div className="relative w-full aspect-square overflow-hidden rounded-lg shadow-md mx-auto animate-float">
           <img 
             src={currentSong.cover} 
@@ -142,13 +167,11 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
           />
         </div>
         
-        {/* Song Info */}
         <div className="text-center">
           <h3 className="text-xl font-bold truncate">{currentSong.title}</h3>
           <p className="text-muted-foreground">{currentSong.artist}</p>
         </div>
         
-        {/* Progress Bar */}
         <div className="space-y-2">
           <input
             type="range"
@@ -164,7 +187,6 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
           </div>
         </div>
         
-        {/* Controls */}
         <div className="flex items-center justify-center space-x-6">
           <button 
             onClick={prevSong}
@@ -204,7 +226,6 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
         </div>
       </div>
       
-      {/* Lyrics */}
       {currentSong.lyrics && (
         <div className="mt-8 px-4 py-6 rounded-lg bg-white/5 text-center max-h-60 overflow-y-auto custom-scrollbar">
           <p className="whitespace-pre-line">{currentSong.lyrics}</p>

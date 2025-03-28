@@ -4,6 +4,7 @@ import MusicPlayer from "@/components/MusicPlayer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ArrowLeft, Heart, Search, Library, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useEffect } from "react";
 
 const Saratify = () => {
   const navigate = useNavigate();
@@ -37,6 +38,17 @@ const Saratify = () => {
       lyrics: "Remember all the good times\nAll the laughter we've shared\nEvery moment with you\nIs a treasure beyond compare."
     }
   ];
+
+  // Preload audio files to make them load faster
+  useEffect(() => {
+    songs.forEach(song => {
+      const audio = new Audio();
+      audio.src = song.src;
+      audio.preload = "auto";
+      // Just trigger loading without playing
+      audio.load();
+    });
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("saraAccessGranted");

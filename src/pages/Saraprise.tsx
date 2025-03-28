@@ -1,10 +1,12 @@
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Saraprise = () => {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Mark as loaded after a short delay
@@ -42,10 +44,10 @@ const Saraprise = () => {
           <h1 className="text-3xl font-bold">Saraprise</h1>
         </div>
 
-        <div className="max-w-4xl mx-auto glass p-10 rounded-2xl shadow-lg">
+        <div className="max-w-4xl mx-auto glass p-4 sm:p-10 rounded-2xl shadow-lg">
           {/* Loading indicator */}
           {!isLoaded && (
-            <div className="w-full h-[500px] flex items-center justify-center bg-gray-100 rounded-lg">
+            <div className="w-full h-[300px] md:h-[500px] flex items-center justify-center bg-gray-100 rounded-lg">
               <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
@@ -54,7 +56,7 @@ const Saraprise = () => {
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
-            className={`w-full h-[500px] rounded-lg border border-gray-300 ${isLoaded ? 'block' : 'hidden'}`}
+            className={`w-full ${isMobile ? 'h-[300px]' : 'h-[500px]'} rounded-lg border border-gray-300 ${isLoaded ? 'block' : 'hidden'}`}
             onLoad={() => setIsLoaded(true)}
           ></iframe>
         </div>
