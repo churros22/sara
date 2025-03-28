@@ -16,7 +16,7 @@ const Saratify = () => {
       id: "1",
       title: "Happy Birthday",
       artist: "For Sara",
-      src: "/assets/audio/song1.mp3",
+      src: "/assets/audio/arabic_sara.mp3",
       cover: "/assets/images/cover1.jpg",
       lyrics: "Happy birthday to you\nHappy birthday to you\nHappy birthday dear Sara\nHappy birthday to you!\n\nMay all your wishes come true today and always."
     },
@@ -24,7 +24,7 @@ const Saratify = () => {
       id: "2",
       title: "You Are Amazing",
       artist: "Sara's Admirers",
-      src: "/assets/audio/song2.mp3",
+      src: "/assets/audio/sara_impala.mp3",
       cover: "/assets/images/cover2.jpg",
       lyrics: "You're amazing just the way you are\nYour smile lights up the entire room\nYour kindness touches everyone around you\nNever change, you're perfect as you are."
     },
@@ -32,7 +32,7 @@ const Saratify = () => {
       id: "3",
       title: "Memories",
       artist: "Friends of Sara",
-      src: "/assets/audio/song3.mp3",
+      src: "/assets/audio/sara_poem.mp3",
       cover: "/assets/images/cover3.jpg",
       lyrics: "Remember all the good times\nAll the laughter we've shared\nEvery moment with you\nIs a treasure beyond compare."
     }

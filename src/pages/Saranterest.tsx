@@ -15,14 +15,14 @@ const Saranterest = () => {
 
   // Placeholder images - these will be replaced with actual images from the assets folder
   const dummyImages = [
-    { id: "1", src: "/assets/images/1.jpg", alt: "Sara image 1" },
-    { id: "2", src: "/assets/images/2.jpg", alt: "Sara image 2" },
-    { id: "3", src: "/assets/images/3.jpg", alt: "Sara image 3" },
-    { id: "4", src: "/assets/images/4.jpg", alt: "Sara image 4" },
-    { id: "5", src: "/assets/images/5.jpg", alt: "Sara image 5" },
-    { id: "6", src: "/assets/images/6.jpg", alt: "Sara image 6" },
-    { id: "7", src: "/assets/images/7.jpg", alt: "Sara image 7" },
-    { id: "8", src: "/assets/images/8.jpg", alt: "Sara image 8" },
+    { id: "1", src: "/assets/images/sara_1.jpg", alt: "Sara image 1" },
+    { id: "2", src: "/assets/images/sara_2.jpg", alt: "Sara image 2" },
+    { id: "3", src: "/assets/images/sara_3.jpg", alt: "Sara image 3" },
+    { id: "4", src: "/assets/images/sara_4.jpg", alt: "Sara image 4" },
+    { id: "5", src: "/assets/images/sara_5.jpg", alt: "Sara image 5" },
+    { id: "6", src: "/assets/images/sara_6.jpg", alt: "Sara image 6" },
+    { id: "7", src: "/assets/images/sara_7.jpg", alt: "Sara image 7" },
+    { id: "8", src: "/assets/images/sara_8.jpg", alt: "Sara image 8" },
   ];
 
   const handleSearch = (query: string) => {
