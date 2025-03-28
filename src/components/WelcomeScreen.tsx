@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -94,24 +93,25 @@ const WelcomeScreen = () => {
       ))}
       
       <div className="relative w-full max-w-5xl z-10">
-        <div className="absolute top-4 right-4 z-10 flex space-x-2">
+        {/* Optimized mobile buttons */}
+        <div className={`absolute top-2 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}>
           <button
             onClick={toggleAudio}
-            className="glass rounded-full p-3 animate-hover"
+            className="glass rounded-full p-2 animate-hover"
             aria-label={audioPlaying ? "Mute music" : "Play music"}
           >
             {audioPlaying ? (
-              <Music className="text-sara-retro5" />
+              <Music size={isMobile ? 16 : 20} className="text-sara-retro5" />
             ) : (
-              <VolumeX className="text-sara-retro1" />
+              <VolumeX size={isMobile ? 16 : 20} className="text-sara-retro1" />
             )}
           </button>
           <button
             onClick={handleLogout}
-            className="glass rounded-full p-3 animate-hover"
+            className="glass rounded-full p-2 animate-hover"
             aria-label="Log out"
           >
-            <LogOut className="text-sara-retro3" />
+            <LogOut size={isMobile ? 16 : 20} className="text-sara-retro3" />
           </button>
         </div>
 

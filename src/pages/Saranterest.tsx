@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageGrid from "@/components/ImageGrid";
 import SearchBar from "@/components/SearchBar";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { ArrowLeft, Heart, Bell, MessageCircle, Upload, User } from "lucide-react";
+import { ArrowLeft, Heart, Bell, MessageCircle, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Saranterest = () => {
@@ -13,14 +12,13 @@ const Saranterest = () => {
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
-  // Placeholder images - these will be replaced with actual images from the assets folder
+  // Preload images with proper dimensions
   const dummyImages = [
     { id: "1", src: "/assets/images/sara_1.jpg", alt: "Sara image 1" },
     { id: "2", src: "/assets/images/sara_2.jpg", alt: "Sara image 2" },
     { id: "3", src: "/assets/images/sara_3.jpg", alt: "Sara image 3" },
     { id: "4", src: "/assets/images/sara_4.jpg", alt: "Sara image 4" },
     { id: "5", src: "/assets/images/sara_5.jpg", alt: "Sara image 5" },
-    { id: "6", src: "/assets/images/sara_6.jpg", alt: "Sara image 6" },
     { id: "7", src: "/assets/images/sara_7.jpg", alt: "Sara image 7" },
     { id: "8", src: "/assets/images/sara_8.jpg", alt: "Sara image 8" },
   ];

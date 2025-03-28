@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface Image {
@@ -14,6 +14,24 @@ interface ImageGridProps {
 
 const ImageGrid = ({ images }: ImageGridProps) => {
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+  // Preload images
+  useEffect(() => {
+    const imagePromises = images.map((image) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          setLoadedImages((prev) => new Set(prev).add(image.id));
+          resolve(true);
+        };
+        img.onerror = () => resolve(false);
+        img.src = image.src;
+      });
+    });
+    
+    Promise.all(imagePromises);
+  }, [images]);
 
   const openModal = (image: Image) => {
     setSelectedImage(image);
@@ -37,8 +55,16 @@ const ImageGrid = ({ images }: ImageGridProps) => {
               <img
                 src={image.src}
                 alt={image.alt}
-                className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
+                loading="lazy"
+                className={cn(
+                  "w-full h-full object-cover transition-all duration-300 group-hover:scale-105",
+                  loadedImages.has(image.id) ? "opacity-100" : "opacity-0"
+                )}
+                onLoad={() => setLoadedImages(prev => new Set(prev).add(image.id))}
               />
+              {!loadedImages.has(image.id) && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+              )}
             </div>
           </div>
         ))}

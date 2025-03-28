@@ -10,7 +10,7 @@ const Saratify = () => {
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
-  // Placeholder songs - these will be replaced with actual songs from the assets folder
+  // Songs with corrected paths
   const songs = [
     {
       id: "1",
@@ -25,7 +25,7 @@ const Saratify = () => {
       title: "You Are Amazing",
       artist: "Sara's Admirers",
       src: "/assets/audio/sara_impala.mp3",
-      cover: "/assets/images/cover2.jpg",
+      cover: "/assets/images/sara_1.jpg", // Using existing image
       lyrics: "You're amazing just the way you are\nYour smile lights up the entire room\nYour kindness touches everyone around you\nNever change, you're perfect as you are."
     },
     {
@@ -33,7 +33,7 @@ const Saratify = () => {
       title: "Memories",
       artist: "Friends of Sara",
       src: "/assets/audio/sara_poem.mp3",
-      cover: "/assets/images/cover3.jpg",
+      cover: "/assets/images/sara_2.jpg", // Using existing image
       lyrics: "Remember all the good times\nAll the laughter we've shared\nEvery moment with you\nIs a treasure beyond compare."
     }
   ];

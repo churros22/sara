@@ -1,7 +1,19 @@
+
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Saraprise = () => {
   const navigate = useNavigate();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Mark as loaded after a short delay
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sara-pink/20 via-background to-sara-purple/20">
@@ -31,11 +43,19 @@ const Saraprise = () => {
         </div>
 
         <div className="max-w-4xl mx-auto glass p-10 rounded-2xl shadow-lg">
+          {/* Loading indicator */}
+          {!isLoaded && (
+            <div className="w-full h-[500px] flex items-center justify-center bg-gray-100 rounded-lg">
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
+          
           {/* Embed the external HTML page using an iframe */}
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
-            className="w-full h-[500px] rounded-lg border border-gray-300"
+            className={`w-full h-[500px] rounded-lg border border-gray-300 ${isLoaded ? 'block' : 'hidden'}`}
+            onLoad={() => setIsLoaded(true)}
           ></iframe>
         </div>
       </div>

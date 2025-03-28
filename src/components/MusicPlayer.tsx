@@ -26,9 +26,16 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
   const currentSong = songs[currentSongIndex];
 
   useEffect(() => {
-    if (!audioRef.current) return;
+    // Create a new audio element when component mounts
+    if (!audioRef.current) {
+      audioRef.current = new Audio();
+    }
     
     const audio = audioRef.current;
+    
+    // Set the source only when currentSongIndex changes
+    audio.src = currentSong.src;
+    audio.load(); // Explicitly load the audio
     
     const handleLoadedMetadata = () => {
       setDuration(audio.duration);
@@ -41,12 +48,21 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
     audio.addEventListener('ended', handleEnded);
     
+    // If it was playing before changing songs, play the new song
+    if (isPlaying) {
+      audio.play().catch(error => {
+        console.error("Audio playback failed:", error);
+        setIsPlaying(false);
+      });
+      startProgressAnimation();
+    }
+    
     return () => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       audio.removeEventListener('ended', handleEnded);
       cancelAnimationFrame(animationRef.current);
     };
-  }, [currentSongIndex]);
+  }, [currentSongIndex, currentSong.src]);
 
   useEffect(() => {
     if (!audioRef.current) return;
@@ -61,7 +77,7 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
       audioRef.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
-  }, [isPlaying, currentSongIndex]);
+  }, [isPlaying]);
 
   const startProgressAnimation = () => {
     if (!audioRef.current) return;
