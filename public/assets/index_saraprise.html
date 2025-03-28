@@ -15,18 +15,20 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      background-color: #000;
     }
     canvas {
       display: block;
-      width: 100%;
-      height: 100%;
-      transform-origin: center center;
-      transform: scale(0.7); /* Scale down more to prevent cropping */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5); /* Center and scale down */
+      max-width: 100%;
     }
-    /* Add media query for mobile devices */
-    @media (max-width: 768px) {
+    /* Adjust scaling for different screen sizes */
+    @media (max-width: 480px) {
       canvas {
-        transform: scale(0.6); /* Scale down significantly more on mobile */
+        transform: translate(-50%, -50%) scale(0.4); /* Scale down more on small phones */
       }
     }
   </style>
