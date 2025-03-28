@@ -21,26 +21,26 @@ const Saratify = () => {
     {
       id: "1",
       title: "Happy Birthday",
-      artist: "For Sara",
+      artist: "churros",
       src: "/assets/audio/arabic_sara.mp3",
-      cover: "/assets/images/cover1.jpg",
-      lyrics: "Happy birthday to you\nHappy birthday to you\nHappy birthday dear Sara\nHappy birthday to you!\n\nMay all your wishes come true today and always."
+      cover: "/assets/images/sara_7.jpg",
+      lyrics: "not really lyrics"
     },
     {
       id: "2",
       title: "You Are Amazing",
-      artist: "Sara's Admirers",
+      artist: "tame impala",
       src: "/assets/audio/sara_impala.mp3",
       cover: "/assets/images/sara_1.jpg",
-      lyrics: "You're amazing just the way you are\nYour smile lights up the entire room\nYour kindness touches everyone around you\nNever change, you're perfect as you are."
+      lyrics: "the less i know the better"
     },
     {
       id: "3",
       title: "Memories",
-      artist: "Friends of Sara",
+      artist: "cameleon",
       src: "/assets/audio/sara_poem.mp3",
       cover: "/assets/images/sara_2.jpg",
-      lyrics: "Remember all the good times\nAll the laughter we've shared\nEvery moment with you\nIs a treasure beyond compare."
+      lyrics: "lila."
     }
   ];
 
@@ -217,26 +217,11 @@ const Saratify = () => {
               <MusicPlayer songs={songs} />
             </div>
             
-            {/* Pixel art album recommendations */}
-            <div className="mt-12 border-t border-gray-800 pt-6">
-              <h3 className="font-pixel text-xl mb-4 text-white/90 pixel-shadow">Because you're awesome...</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {[1, 2].map((item) => (
-                  <div key={item} className="group cursor-pointer animate-hover">
-                    <div className="aspect-square bg-gray-800 rounded-md overflow-hidden mb-2 pixel-border" style={{ boxShadow: "2px 2px 0 #000" }}>
-                      <div className="w-full h-full bg-gradient-to-br from-sara-retro1/20 to-sara-retro3/20"></div>
-                    </div>
-                    <p className="font-pixel text-sm truncate">More Birthday Songs</p>
-                    <p className="font-pixel text-xs text-gray-400 truncate">Just for you</p>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           <div className="mt-8 text-center text-sm text-white/70">
             <p className="font-pixel text-lg animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              Made with 💖 just for you
+              Made with love here not rage :3 💖 
             </p>
           </div>
         </div>
