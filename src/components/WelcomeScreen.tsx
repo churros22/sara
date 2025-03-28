@@ -15,7 +15,7 @@ const WelcomeScreen = () => {
 
   useEffect(() => {
     // Create audio element - this will be replaced with actual audio
-    const audioElement = new Audio("/assets/audio/background.mp3");
+    const audioElement = new Audio("/assets/audio/sara_impala.mp3");
     audioElement.loop = true;
     setAudio(audioElement);
 
@@ -62,15 +62,15 @@ const WelcomeScreen = () => {
   
   // Pixel art decorations - positioned carefully to avoid overlap
   const pixelArts = [
-    { emoji: "🧁", position: { top: "5%", left: "5%" }, delay: 0.2, size: "text-2xl" },
-    { emoji: "🎀", position: { top: "10%", right: "8%" }, delay: 0.5, size: "text-2xl" },
+    { emoji: "🧁", position: { top: "5%", left: "47%" }, delay: 0.2, size: "text-2xl" },
+    { emoji: "🎀", position: { top: "10%", right: "10%" }, delay: 0.5, size: "text-2xl" },
     { emoji: "🍭", position: { bottom: "15%", left: "7%" }, delay: 0.8, size: "text-2xl" },
     { emoji: "🎈", position: { bottom: "8%", right: "10%" }, delay: 1.1, size: "text-2xl" },
-    { emoji: "✨", position: { top: "20%", left: "48%" }, delay: 1.4, size: "text-xl" },
+    { emoji: "✨", position: { top: "22%", left: "90%" }, delay: 1.4, size: "text-xl" },
     { emoji: "💖", position: { bottom: "20%", left: "40%" }, delay: 1.7, size: "text-xl" },
     { emoji: "🎊", position: { top: "35%", right: "5%" }, delay: 2.0, size: "text-xl" },
-    { emoji: "🦄", position: { bottom: "5%", left: "45%" }, delay: 2.3, size: "text-2xl" },
-    { emoji: "🌈", position: { top: "3%", left: "30%" }, delay: 2.6, size: "text-xl" }
+    { emoji: "🦄", position: { bottom: "11%", left: "55%" }, delay: 2.3, size: "text-2xl" },
+    { emoji: "🌈", position: { top: "3%", left: "5%" }, delay: 2.6, size: "text-xl" }
   ];
 
   return (
@@ -84,7 +84,7 @@ const WelcomeScreen = () => {
             ...item.position,
             animationDelay: `${item.delay}s`,
             transform: `rotate(${Math.random() * 20 - 10}deg)`,
-            opacity: 0.8
+            opacity: 0.5
           }}
         >
           {item.emoji}
@@ -139,13 +139,14 @@ const WelcomeScreen = () => {
                 <svg className="w-6 h-6 text-sara-retro1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" fill="currentColor"/>
                 </svg>
+
               </div>
               <div>
                 <h2 className="text-2xl font-pixel font-semibold mb-1 pixel-shadow">Saranterest</h2>
-                <p className="text-muted-foreground font-pixel">Discover beautiful images curated for you</p>
+                <p className="text-muted-foreground font-pixel">Get inspired by beautiful aesthetic images</p>
               </div>
             </div>
-            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro1/70 animate-pulse-gentle">✨ click me ✨</div>
+            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro1/70 animate-pulse-gentle">✨</div>
           </div>
 
           <div 
@@ -161,10 +162,10 @@ const WelcomeScreen = () => {
               </div>
               <div>
                 <h2 className="text-2xl font-pixel font-semibold mb-1 pixel-shadow">Googolu</h2>
-                <p className="text-muted-foreground font-pixel">Find all things Sara in one place</p>
+                <p className="text-muted-foreground font-pixel">Search everything</p>
               </div>
             </div>
-            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro2/70 animate-pulse-gentle">✨ click me ✨</div>
+            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro2/70 animate-pulse-gentle">✨</div>
           </div>
 
           <div 
@@ -183,7 +184,7 @@ const WelcomeScreen = () => {
                 <p className="text-muted-foreground font-pixel">Listen to your favorite songs</p>
               </div>
             </div>
-            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro3/70 animate-pulse-gentle">✨ click me ✨</div>
+            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro3/70 animate-pulse-gentle">✨</div>
           </div>
 
           <div 
@@ -203,16 +204,16 @@ const WelcomeScreen = () => {
               </div>
               <div>
                 <h2 className="text-2xl font-pixel font-semibold mb-1 pixel-shadow">Saraprise</h2>
-                <p className="text-muted-foreground font-pixel">A special surprise just for you</p>
+                <p className="text-muted-foreground font-pixel">Something for you</p>
               </div>
             </div>
-            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro5/70 animate-pulse-gentle">✨ click me ✨</div>
+            <div className="absolute bottom-2 right-2 font-pixel text-xs text-sara-retro5/70 animate-pulse-gentle">✨</div>
           </div>
         </div>
       </div>
 
       <div className={`mt-12 text-center text-sm text-muted-foreground ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
-        <p className="font-pixel text-lg">Made with 💖 for your special day</p>
+        <p className="font-pixel text-lg">Made with rage :3 💖 for your special day</p>
         <div className="mt-2 font-pixel">
           <span className="inline-block animate-rainbow font-bold pixel-shadow">✨ Happy Birthday Sara! ✨</span>
         </div>

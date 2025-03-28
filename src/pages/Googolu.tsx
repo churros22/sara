@@ -30,33 +30,33 @@ const Googolu = () => {
     },
     {
       id: "2",
-      title: "Sara's Remarkable Achievements",
-      url: "https://achievements.com/sara",
-      description: "A comprehensive list of Sara's impressive achievements, including her academic excellence and professional accomplishments."
+      title: "Breaking News: Sara saved the world!!",
+      url: "https://algerie-news.com/04-11-2025-news",
+      description: "Sara's quick thinking and bravery saved the world from a catastrophic event. Her heroism will be remembered for generations to come."
     },
     {
       id: "3",
-      title: "Why Sara Is Loved By Everyone",
-      url: "https://beloved.com/sara",
-      description: "Explore the many reasons why Sara is adored by friends, family, and colleagues. Her genuine care for others tops the list."
+      title: "Why Sara Is Loved By Everyone She Meets",
+      url: "https://amazon.com/sara_secerets",
+      description: "Explore the many reasons why Sara is adored by friends, family, and colleagues. Buy her secret for 411.99 $ only!"
     },
     {
       id: "4",
       title: "Sara's Creative Talents",
-      url: "https://creative-minds.com/sara",
-      description: "Discover Sara's artistic abilities and creative thinking that impresses everyone around her."
+      url: "https://guinness-world-records.com/sara-hamaidi",
+      description: "Sara made history with crocheting the world's largest tapestry in just 24 hours. Her creative talents know no bounds."
     },
     {
       id: "5",
-      title: "Sara's Infectious Laughter and Humor",
-      url: "https://joy.com/sara",
-      description: "Sara's sense of humor and contagious laugh brings joy to every room she enters."
+      title: "More Than Just a Pretty Face: Sara's multiple personalities",
+      url: "https://crime-ivestigations.com/psycho-files",
+      description: "Sara's multiple personalities have been the subject of many studies. Her unique mind is a mystery that continues to fascinate the FBI researchers. Naughty Sara, Mad Sara, Chef Sara, Wise Sara... Slow Sara is the most dangerous one."
     },
     {
       id: "6",
-      title: "The Wisdom of Sara",
-      url: "https://wisdom.com/sara",
-      description: "Sara's thoughtful insights and wise perspective on life have helped many people through difficult times."
+      title: "Pride and Prejudice: What Sara Thinks",
+      url: "https://cinema.com/sara-reviews",
+      description: "Sara's reviews of the latest movies and TV shows are always insightful and entertaining. Mr Darcy is such a man, she said... and she was right."
     }
   ];
 
@@ -207,7 +207,7 @@ const Googolu = () => {
 
         <div className="mt-6 text-center text-sm text-gray-500">
           <p className="font-vt323 text-lg">
-            To customize these search results, edit the searchResults array in the Googolu.tsx file with your own compliments and achievements for Sara.
+           2025 Googolu - 🔍
           </p>
         </div>
       </div>

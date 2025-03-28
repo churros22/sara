@@ -18,7 +18,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
       onAccessGranted();
       toast({
         title: "🎉 Welcome!",
-        description: "Access granted. Enjoy your special place!",
+        description: "Access granted. Enjoy!",
       });
     } else {
       toast({
@@ -71,10 +71,10 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
         >
           <div className="pixel-shadow mb-6 text-center">
             <h1 className="text-3xl font-press text-primary mb-2">
-              <span className="animate-rainbow inline-block">Sara's Space</span> 
-              <span className="inline-block ml-2">🔐</span>
+              <span className="animate-rainbow inline-block">Hello there! Sara</span> 
+              <span className="inline-block ml-2">💟</span>
             </h1>
-            <p className="text-sm font-vt323 text-gray-600">A special place just for you</p>
+            <p className="text-sm font-vt323 text-gray-600"></p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -83,7 +83,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
                 Please enter the password:
               </label>
               <p className="font-vt323 text-xs text-gray-500 mb-4">
-                Hint: Your special day is the key (format: MMDD)
+                Hint: Your special day is the key (format: DayMonth)
               </p>
               <input
                 id="password"
@@ -91,7 +91,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Enter password"
+                placeholder="Example : 0122"
                 className="w-full px-4 py-3 rounded-md border-2 border-black font-vt323 focus:outline-none text-center text-xl tracking-widest"
                 autoFocus
                 style={{ boxShadow: "2px 2px 0 rgba(0,0,0,0.8)" }}
@@ -109,7 +109,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
           
           <div className="mt-4 text-center">
             <p className="font-vt323 text-sm text-gray-500">
-              This space contains a special birthday gift for Sara
+            👉👈
             </p>
           </div>
         </div>

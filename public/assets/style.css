@@ -17,7 +17,7 @@ p a {
 	color: #aaa;
 }
 span {
-	font-size: 11px;
+	font-size: 12px;
 }
 p > a:first-of-type {
 	font-size: 20px;
