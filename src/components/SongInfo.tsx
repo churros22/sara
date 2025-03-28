@@ -15,6 +15,8 @@ const SongInfo = ({ song }: SongInfoProps) => {
           src={song.cover} 
           alt={`${song.title} cover`}
           className="w-full h-full object-cover"
+          loading="eager" // Force eager loading for faster display
+          decoding="async" // Use async decoding for performance
         />
       </div>
       

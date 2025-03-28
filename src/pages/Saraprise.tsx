@@ -56,7 +56,7 @@ const Saraprise = () => {
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
-            className={`w-full ${isMobile ? 'h-[400px]' : 'h-[500px]'} rounded-lg border border-gray-300 ${isLoaded ? 'block' : 'hidden'}`}
+            className={`w-full ${isMobile ? 'h-[500px]' : 'h-[600px]'} rounded-lg border border-gray-300 ${isLoaded ? 'block' : 'hidden'}`}
             onLoad={() => setIsLoaded(true)}
             style={{ overflow: 'hidden' }}
           ></iframe>
