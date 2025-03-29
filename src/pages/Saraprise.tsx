@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ArrowLeft } from "lucide-react";
 
@@ -8,6 +8,7 @@ const Saraprise = () => {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
   const isMobile = useIsMobile();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     // Mark as loaded after a short delay
@@ -15,7 +16,24 @@ const Saraprise = () => {
       setIsLoaded(true);
     }, 100);
 
-    return () => clearTimeout(timer);
+    // Ensure iframe adapts to screen size
+    const handleResize = () => {
+      if (iframeRef.current) {
+        // Set iframe width to match container width
+        const containerWidth = iframeRef.current.parentElement?.clientWidth || window.innerWidth;
+        iframeRef.current.style.width = `${containerWidth}px`;
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    // Call once on mount
+    setTimeout(handleResize, 200);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
@@ -32,10 +50,10 @@ const Saraprise = () => {
           <h1 className="text-3xl font-bold font-pixel pixel-shadow animate-scale-in">Saraprise</h1>
         </div>
 
-        <div className="max-w-screen-sm mx-auto glass p-4 rounded-2xl shadow-lg animate-fade-in">
+        <div className="max-w-screen-md mx-auto glass p-4 rounded-2xl shadow-lg animate-fade-in">
           {/* Loading indicator */}
           {!isLoaded && (
-            <div className="w-full h-[400px] flex items-center justify-center rounded-lg">
+            <div className="w-full h-[500px] flex items-center justify-center rounded-lg">
               <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
@@ -43,12 +61,13 @@ const Saraprise = () => {
           {/* Embed the external HTML page using an iframe with adjusted dimensions */}
           <div className="w-full overflow-hidden">
             <iframe
+              ref={iframeRef}
               src="./assets/index_saraprise.html"
               title="Saraprise Content"
               className={`w-full rounded-lg border-0 ${isLoaded ? "block" : "hidden"}`}
               onLoad={() => setIsLoaded(true)}
               style={{ 
-                height: "400px",
+                height: "500px",
                 maxWidth: "100%",
                 overflow: "hidden"
               }}

@@ -1,6 +1,7 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useAudioContext } from "@/hooks/use-audio-context";
 
 interface EntryScreenProps {
   onAccessGranted: () => void;
@@ -10,11 +11,27 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
   const [password, setPassword] = useState("");
   const { toast } = useToast();
   const correctPassword = "1104"; // Sara's birthday 11-04
+  const { isPlaying, togglePlayPause } = useAudioContext();
+
+  // Ensure music is stopped when on login screen
+  useEffect(() => {
+    if (isPlaying) {
+      togglePlayPause();
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (password === correctPassword) {
+      // Clear any existing access token first
+      localStorage.removeItem("saraAccessGranted");
+      // Then set the new one
+      localStorage.setItem("saraAccessGranted", "true");
+      
+      // Notify other components about the storage change
+      window.dispatchEvent(new Event('storage'));
+      
       onAccessGranted();
       toast({
         title: "🎉 Welcome!",

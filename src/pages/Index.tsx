@@ -1,10 +1,12 @@
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import EntryScreen from "@/components/EntryScreen";
 import WelcomeScreen from "@/components/WelcomeScreen";
 
 const Index = () => {
   const [accessGranted, setAccessGranted] = useState(false);
+  const navigate = useNavigate();
 
   // Check localStorage on component mount
   useEffect(() => {
@@ -23,7 +25,9 @@ const Index = () => {
   return (
     <div className="min-h-screen w-full">
       {accessGranted ? (
-        <WelcomeScreen />
+        <div className="animate-fade-in">
+          <WelcomeScreen />
+        </div>
       ) : (
         <EntryScreen onAccessGranted={handleAccessGranted} />
       )}
