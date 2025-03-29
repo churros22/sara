@@ -2,7 +2,7 @@
 import { useAudio } from "@/contexts/AudioContext";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { X, Skip, SkipBack, Play, Pause } from "lucide-react";
+import { X, SkipBack, Play, Pause } from "lucide-react";
 
 const FloatingPlayer = () => {
   const {
@@ -78,7 +78,7 @@ const FloatingPlayer = () => {
             className="text-white p-1 hover:bg-white/10 rounded-full transition"
             aria-label="Next song"
           >
-            <Skip size={16} />
+            
           </button>
         </div>
         

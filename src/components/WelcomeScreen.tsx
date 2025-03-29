@@ -20,7 +20,7 @@ const WelcomeScreen = () => {
     {
       id: "saranterest",
       title: "Saranterest",
-      description: "Discover beautiful image collections curated just for you",
+      description: "Discover beautiful images and get inspired",
       color: "sara-retro1",
       icon: (
         <svg className="w-5 h-5 text-sara-retro1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +31,7 @@ const WelcomeScreen = () => {
     {
       id: "googolu",
       title: "Googolu",
-      description: "Search for compliments about yourself and feel great",
+      description: "Search Everything and Anything with Googolu",
       color: "sara-retro2",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +42,7 @@ const WelcomeScreen = () => {
     {
       id: "saratify",
       title: "Saratify",
-      description: "Listen to handpicked music crafted with love for you",
+      description: "Listen to handpicked music crafted just for you",
       color: "sara-retro3",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,7 @@ const WelcomeScreen = () => {
     {
       id: "saraprise",
       title: "Saraprise",
-      description: "A special surprise awaits, just for your birthday",
+      description: "Just a little something made for you",
       color: "sara-retro5",
       icon: (
         <svg className="w-5 h-5 text-sara-retro5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

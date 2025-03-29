@@ -169,12 +169,12 @@ const Saratify = () => {
         
         {/* Spotify-like navigation buttons */}
         <div className="flex md:flex items-center gap-2 md:gap-4">
-          {!isMobile && (
+          {isMobile && (
             <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
               <Heart size={20} className="text-gray-300" />
             </button>
           )}
-          {!isMobile && (
+          {isMobile && (
             <>
               <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
                 <Search size={20} className="text-gray-300" />
