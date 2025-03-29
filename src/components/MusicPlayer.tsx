@@ -1,9 +1,9 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import PlayerControls from "./PlayerControls";
 import PlayerProgress from "./PlayerProgress";
 import SongInfo from "./SongInfo";
-import { useMusicPlayer } from "@/hooks/use-music-player";
+import { useAudio } from "@/contexts/AudioContext";
 
 interface Song {
   id: string;
@@ -20,7 +20,7 @@ interface MusicPlayerProps {
 
 const MusicPlayer = ({ songs }: MusicPlayerProps) => {
   const {
-    currentSong,
+    currentSongIndex,
     isPlaying,
     progress,
     duration,
@@ -28,8 +28,18 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
     handleProgressChange,
     nextSong,
     prevSong,
-    formatTime
-  } = useMusicPlayer(songs);
+    formatTime,
+    setSongs
+  } = useAudio();
+
+  useEffect(() => {
+    // Set songs in context
+    setSongs(songs);
+  }, [songs, setSongs]);
+
+  const currentSong = songs[currentSongIndex];
+
+  if (!currentSong) return null;
 
   return (
     <div className="w-full max-w-xl mx-auto glass rounded-2xl p-6 shadow-lg">

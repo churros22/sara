@@ -12,6 +12,9 @@ import Googolu from "./pages/Googolu";
 import Saratify from "./pages/Saratify";
 import Saraprise from "./pages/Saraprise";
 import NotFound from "./pages/NotFound";
+import { AudioProvider } from "./contexts/AudioContext";
+import FloatingPlayer from "./components/FloatingPlayer";
+import { useAudio } from "./contexts/AudioContext";
 
 const queryClient = new QueryClient();
 
@@ -26,39 +29,84 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Component to handle page transitions
+const PageTransition = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  
+  return (
+    <div key={location.pathname} className="page-transition">
+      {children}
+    </div>
+  );
+};
+
 // AuthGuard component to protect routes
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const audio = useAudio();
 
   useEffect(() => {
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
     if (!hasAccess && location.pathname !== "/") {
       navigate("/");
     }
-  }, [navigate, location]);
+    
+    // Stop audio when user logs out
+    return () => {
+      if (!hasAccess) {
+        audio.stopAndReset();
+      }
+    };
+  }, [navigate, location, audio]);
 
-  return <>{children}</>;
+  // Stop music when leaving Saratify page
+  useEffect(() => {
+    const prevPath = localStorage.getItem("prevPath");
+    
+    if (prevPath === "/saratify" && location.pathname !== "/saratify" && audio.isPlaying) {
+      audio.setIsPlaying(false);
+    }
+    
+    localStorage.setItem("prevPath", location.pathname);
+  }, [location.pathname, audio]);
+
+  return (
+    <PageTransition>
+      {children}
+    </PageTransition>
+  );
+};
+
+const AppContent = () => {
+  return (
+    <>
+      <ScrollToTop />
+      <AuthGuard>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/saranterest" element={<Saranterest />} />
+          <Route path="/googolu" element={<Googolu />} />
+          <Route path="/saratify" element={<Saratify />} />
+          <Route path="/saraprise" element={<Saraprise />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthGuard>
+      <FloatingPlayer />
+    </>
+  );
 };
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <AuthGuard>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/saranterest" element={<Saranterest />} />
-            <Route path="/googolu" element={<Googolu />} />
-            <Route path="/saratify" element={<Saratify />} />
-            <Route path="/saraprise" element={<Saraprise />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthGuard>
+        <AudioProvider>
+          <AppContent />
+        </AudioProvider>
+        <Toaster />
+        <Sonner />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

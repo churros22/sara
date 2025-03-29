@@ -6,6 +6,7 @@ import { ArrowLeft, Heart, Search, Library, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAudio } from "@/contexts/AudioContext";
 
 const Saratify = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Saratify = () => {
   const [songsLoaded, setSongsLoaded] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const preloadedRef = useRef(false);
+  const audio = useAudio();
 
   // Songs with corrected paths
   const songs = [
@@ -44,8 +46,25 @@ const Saratify = () => {
     }
   ];
 
+  // Set songs in context when component mounts
+  useEffect(() => {
+    audio.setSongs(songs);
+  }, [audio]);
+
   // Preload assets to make them load faster
   useEffect(() => {
+    // If already loaded from cache, skip loading
+    const cacheKey = "saratify-assets-loaded";
+    const assetsLoaded = localStorage.getItem(cacheKey);
+    
+    if (assetsLoaded === "true" && !preloadedRef.current) {
+      setSongsLoaded(true);
+      setImagesLoaded(true);
+      setIsLoading(false);
+      preloadedRef.current = true;
+      return;
+    }
+    
     if (preloadedRef.current) return;
     preloadedRef.current = true;
 
@@ -59,6 +78,7 @@ const Saratify = () => {
         loadedImagesCount++;
         if (loadedImagesCount >= totalImages) {
           setImagesLoaded(true);
+          localStorage.setItem(cacheKey, "true");
         }
       };
       img.onerror = () => {
@@ -104,21 +124,21 @@ const Saratify = () => {
 
     return () => {
       clearTimeout(fallbackTimer);
-      preloadedRef.current = false;
     };
-  }, []);
+  }, [songs]);
 
   // Update loading state when both images and songs are loaded
   useEffect(() => {
     if (imagesLoaded && songsLoaded) {
-      // Show loading for at least 1 second for better UX
+      // Show loading for at least 0.5 second for better UX
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 500);
     }
   }, [imagesLoaded, songsLoaded]);
 
   const handleLogout = () => {
+    audio.stopAndReset();
     localStorage.removeItem("saraAccessGranted");
     toast({
       title: "Logged out! 👋",
