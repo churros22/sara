@@ -12,9 +12,8 @@ import Googolu from "./pages/Googolu";
 import Saratify from "./pages/Saratify";
 import Saraprise from "./pages/Saraprise";
 import NotFound from "./pages/NotFound";
-import { AudioProvider } from "./contexts/AudioContext";
+import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import FloatingPlayer from "./components/FloatingPlayer";
-import { useAudio } from "./contexts/AudioContext";
 
 const queryClient = new QueryClient();
 
@@ -64,8 +63,11 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const prevPath = localStorage.getItem("prevPath");
     
-    if (prevPath === "/saratify" && location.pathname !== "/saratify" && audio.isPlaying) {
-      audio.setIsPlaying(false);
+    if (prevPath === "/saratify" && location.pathname !== "/saratify") {
+      // Just pause rather than stop completely when navigating away
+      if (audio.isPlaying) {
+        audio.setIsPlaying(false);
+      }
     }
     
     localStorage.setItem("prevPath", location.pathname);

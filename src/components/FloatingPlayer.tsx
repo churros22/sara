@@ -2,6 +2,7 @@
 import { useAudio } from "@/contexts/AudioContext";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { X } from "lucide-react";
 
 const FloatingPlayer = () => {
   const {
@@ -22,6 +23,11 @@ const FloatingPlayer = () => {
   useEffect(() => {
     setIsVisible(location.pathname !== "/saratify" && songs.length > 0);
   }, [location.pathname, songs.length]);
+  
+  // Function to hide the floating player
+  const hidePlayer = () => {
+    setIsVisible(false);
+  };
   
   if (!isVisible || songs.length === 0) return null;
   
@@ -83,6 +89,14 @@ const FloatingPlayer = () => {
         <div className="text-white/80 text-xs pr-3 hidden sm:block">
           {formatTime(progress)}/{formatTime(duration)}
         </div>
+        
+        <button 
+          onClick={hidePlayer}
+          className="text-white/80 p-1 hover:bg-white/10 rounded-full transition ml-1"
+          aria-label="Close player"
+        >
+          <X size={16} />
+        </button>
       </div>
     </div>
   );
