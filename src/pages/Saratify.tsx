@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import MusicPlayer from "@/components/MusicPlayer";
 import { useIsMobile } from "@/hooks/use-mobile";

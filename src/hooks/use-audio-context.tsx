@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect } from 'react';
 
 interface Song {
@@ -5,6 +6,7 @@ interface Song {
   title: string;
   artist: string;
   src: string;
+  cover: string; // Added cover property
   lyrics?: string;
 }
 
@@ -15,10 +17,11 @@ interface AudioContextType {
   progress: number;
   duration: number;
   togglePlayPause: () => void;
-  handleProgressChange: (newProgress: number) => void;
+  handleProgressChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Updated parameter type
   nextSong: () => void;
   prevSong: () => void;
   formatTime: (time: number) => string;
+  stopAndReset: () => void; // Added stopAndReset function
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -39,6 +42,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       title: "Arabic Birthday Song",
       artist: "Unknown",
       src: "/assets/audio/arabic_sara.mp3",
+      cover: "/assets/images/sara_1.jpg", // Added cover image
       lyrics: `يا سارة عيد ميلاد سعيد
       كل عام وأنتِ بخير
       يا رب تكون أيامك كلها سعادة
@@ -64,6 +68,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       title: "Sara",
       artist: "Tame Impala",
       src: "/assets/audio/sara_impala.mp3",
+      cover: "/assets/images/sara_2.jpg", // Added cover image
       lyrics: `[Verse 1]
       It's always the same
       I'm stuck in a dream
@@ -111,6 +116,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       title: "A Poem for Sara",
       artist: "GPT-4",
       src: "/assets/audio/sara_poem.mp3",
+      cover: "/assets/images/sara_3.jpg", // Added cover image
       lyrics: `In realms of thought, where dreams reside,
       A name emerges, with grace as its guide.
       Sara, a beacon, both gentle and bright,
@@ -252,8 +258,9 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     setIsPlaying(!isPlaying);
   };
   
-  const handleProgressChange = (newProgress: number) => {
+  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!audioElement) return;
+    const newProgress = parseFloat(e.target.value);
     audioElement.currentTime = newProgress;
     setProgress(newProgress);
   };
@@ -272,6 +279,15 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
   
+  // Add stopAndReset function
+  const stopAndReset = () => {
+    if (audioElement) {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+    }
+    setIsPlaying(false);
+  };
+  
   return (
     <AudioContext.Provider
       value={{
@@ -285,6 +301,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
         nextSong,
         prevSong,
         formatTime,
+        stopAndReset,
       }}
     >
       {children}
