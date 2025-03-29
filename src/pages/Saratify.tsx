@@ -1,41 +1,124 @@
+
 import { useNavigate } from "react-router-dom";
 import MusicPlayer from "@/components/MusicPlayer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ArrowLeft, Heart, Search, Library, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAudioContext } from "@/hooks/use-audio-context";
 
 const Saratify = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
-  const { stopAndReset } = useAudioContext();
+  const [songsLoaded, setSongsLoaded] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const preloadedRef = useRef(false);
 
-  // Simulate loading for better UX
+  // Songs with corrected paths
+  const songs = [
+    {
+      id: "1",
+      title: "Happy Birthday",
+      artist: "churros",
+      src: "/assets/audio/arabic_sara.mp3",
+      cover: "/assets/images/sara_7.jpg",
+      lyrics: "not really lyrics"
+    },
+    {
+      id: "2",
+      title: "You Are Amazing",
+      artist: "tame impala",
+      src: "/assets/audio/sara_impala.mp3",
+      cover: "/assets/images/sara_1.jpg",
+      lyrics: "the less i know the better"
+    },
+    {
+      id: "3",
+      title: "Memories",
+      artist: "cameleon",
+      src: "/assets/audio/sara_poem.mp3",
+      cover: "/assets/images/sara_2.jpg",
+      lyrics: "lila."
+    }
+  ];
+
+  // Preload assets to make them load faster
   useEffect(() => {
-    // Check if we have cached data
-    const hasCachedData = localStorage.getItem("saratify-visited") === "true";
+    if (preloadedRef.current) return;
+    preloadedRef.current = true;
+
+    // Preload images first
+    let loadedImagesCount = 0;
+    const totalImages = songs.length;
     
-    // If we've visited before, load faster
-    const loadingTime = hasCachedData ? 800 : 1800;
+    songs.forEach(song => {
+      const img = new Image();
+      img.onload = () => {
+        loadedImagesCount++;
+        if (loadedImagesCount >= totalImages) {
+          setImagesLoaded(true);
+        }
+      };
+      img.onerror = () => {
+        loadedImagesCount++;
+        if (loadedImagesCount >= totalImages) {
+          setImagesLoaded(true);
+        }
+      };
+      img.src = song.cover;
+    });
+
+    // Preload audio files
+    let loadedAudioCount = 0;
+    const totalAudio = songs.length;
     
-    // Mark as visited for future loads
-    localStorage.setItem("saratify-visited", "true");
-    
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, loadingTime);
-    
-    return () => clearTimeout(timer);
+    songs.forEach(song => {
+      const audio = new Audio();
+      audio.addEventListener('canplaythrough', () => {
+        loadedAudioCount++;
+        if (loadedAudioCount >= totalAudio) {
+          setSongsLoaded(true);
+        }
+      }, { once: true });
+      
+      audio.addEventListener('error', () => {
+        loadedAudioCount++;
+        if (loadedAudioCount >= totalAudio) {
+          setSongsLoaded(true);
+        }
+      }, { once: true });
+      
+      audio.preload = "auto";
+      audio.src = song.src;
+      audio.load();
+    });
+
+    // Fallback timer in case audio loading takes too long
+    const fallbackTimer = setTimeout(() => {
+      if (!songsLoaded) {
+        setSongsLoaded(true);
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(fallbackTimer);
+      preloadedRef.current = false;
+    };
   }, []);
 
+  // Update loading state when both images and songs are loaded
+  useEffect(() => {
+    if (imagesLoaded && songsLoaded) {
+      // Show loading for at least 1 second for better UX
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+  }, [imagesLoaded, songsLoaded]);
+
   const handleLogout = () => {
-    // Stop music when logging out
-    stopAndReset();
-    
     localStorage.removeItem("saraAccessGranted");
     toast({
       title: "Logged out! 👋",
@@ -62,9 +145,9 @@ const Saratify = () => {
             </div>
             <div className="pixel-border bg-gray-800 p-3 font-pixel text-sm text-green-400 animate-pulse mt-4">
               Loading your music...
-              <div className="mt-2 flex justify-center space-x-2">
-                <span className="inline-block w-2 h-2 bg-green-400 animate-bounce" style={{ animationDelay: '0s' }}></span>
-                <span className="inline-block w-2 h-2 bg-green-400 animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+              <div className="mt-2 flex justify-center space-x-1">
+                <span className={`inline-block w-2 h-2 bg-green-400 ${imagesLoaded ? '' : 'animate-bounce'}`} style={{ animationDelay: '0s' }}></span>
+                <span className={`inline-block w-2 h-2 bg-green-400 ${songsLoaded ? '' : 'animate-bounce'}`} style={{ animationDelay: '0.2s' }}></span>
                 <span className="inline-block w-2 h-2 bg-green-400 animate-bounce" style={{ animationDelay: '0.4s' }}></span>
               </div>
             </div>
@@ -131,8 +214,9 @@ const Saratify = () => {
             </div>
             
             <div className="relative z-10">
-              <MusicPlayer />
+              <MusicPlayer songs={songs} />
             </div>
+            
           </div>
 
           <div className="mt-8 text-center text-sm text-white/70">

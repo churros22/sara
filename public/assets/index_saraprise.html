@@ -22,18 +22,13 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.6); /* Scaled down more for better fit */
+      transform: translate(-50%, -50%) scale(0.7); /* Center and scale down */
       max-width: 100%;
     }
     /* Adjust scaling for different screen sizes */
-    @media (max-width: 768px) {
+    @media (max-width: auto) {
       canvas {
-        transform: translate(-50%, -50%) scale(0.5); /* Scale down more on small phones */
-      }
-    }
-    @media (max-width: 480px) {
-      canvas {
-        transform: translate(-50%, -50%) scale(0.4); /* Scale down even more on very small phones */
+        transform: translate(-50%, -50%) scale(0.7); /* Scale down more on small phones */
       }
     }
   </style>

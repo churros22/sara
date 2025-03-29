@@ -4,7 +4,6 @@ interface SongInfoProps {
     title: string;
     artist: string;
     cover: string;
-    lyrics?: string;
   };
 }
 
