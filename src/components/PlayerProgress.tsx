@@ -1,5 +1,5 @@
 
-import React from "react";
+import { Slider } from "@/components/ui/slider";
 
 interface PlayerProgressProps {
   progress: number;
@@ -8,23 +8,19 @@ interface PlayerProgressProps {
   handleProgressChange: (newProgress: number) => void;
 }
 
-const PlayerProgress = ({ 
-  progress, 
-  duration, 
-  formatTime, 
-  handleProgressChange 
-}: PlayerProgressProps) => {
+const PlayerProgress = ({ progress, duration, formatTime, handleProgressChange }: PlayerProgressProps) => {
   return (
     <div className="space-y-2">
-      <input
-        type="range"
-        min="0"
-        max={duration || 0}
-        value={progress}
-        onChange={(e) => handleProgressChange(parseFloat(e.target.value))}
-        className="w-full h-2 rounded-full appearance-none bg-primary/20 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary"
+      <Slider
+        value={[progress]}
+        min={0}
+        max={duration || 100}
+        step={0.1}
+        onValueChange={(values) => handleProgressChange(values[0])}
+        className="w-full h-2"
       />
-      <div className="flex justify-between text-sm text-muted-foreground">
+      
+      <div className="flex justify-between text-xs text-white/80">
         <span>{formatTime(progress)}</span>
         <span>{formatTime(duration)}</span>
       </div>

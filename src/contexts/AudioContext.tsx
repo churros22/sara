@@ -1,14 +1,7 @@
 
 import { createContext, useState, useContext, useEffect, useRef } from "react";
-
-interface Song {
-  id: string;
-  title: string;
-  artist: string;
-  src: string;
-  cover: string;
-  lyrics?: string;
-}
+import { useAudioHandlers } from "@/hooks/use-audio-handlers";
+import { Song } from "@/types/audio";
 
 interface AudioContextType {
   currentSongIndex: number;
@@ -54,6 +47,26 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const animationRef = useRef<number>(0);
 
+  // Get audio handler functions from custom hook
+  const { 
+    togglePlayPause, 
+    formatTime,
+    handleProgressChange,
+    prevSong, 
+    nextSong,
+    stopAndReset,
+    startProgressAnimation
+  } = useAudioHandlers({
+    audioRef,
+    animationRef,
+    isPlaying,
+    setIsPlaying,
+    setProgress,
+    currentSongIndex, 
+    setCurrentSongIndex,
+    songs
+  });
+
   // Save current song index to localStorage when it changes
   useEffect(() => {
     localStorage.setItem("saratify-current-song-index", currentSongIndex.toString());
@@ -76,7 +89,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       audioRef.current.pause();
       cancelAnimationFrame(animationRef.current);
     }
-  }, [isPlaying]);
+  }, [isPlaying, startProgressAnimation]);
 
   // Update audio src when current song changes
   useEffect(() => {
@@ -102,7 +115,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
         setIsPlaying(false);
       });
     }
-  }, [currentSongIndex, songs]);
+  }, [currentSongIndex, songs, isPlaying]);
 
   // Save progress periodically
   useEffect(() => {
@@ -119,59 +132,6 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     
     return () => clearInterval(saveInterval);
   }, [progress, currentSongIndex, songs]);
-
-  const startProgressAnimation = () => {
-    if (!audioRef.current) return;
-    
-    const updateProgress = () => {
-      if (!audioRef.current) return;
-      setProgress(audioRef.current.currentTime);
-      animationRef.current = requestAnimationFrame(updateProgress);
-    };
-    
-    animationRef.current = requestAnimationFrame(updateProgress);
-  };
-
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-
-  const handleProgressChange = (newProgress: number) => {
-    if (!audioRef.current) return;
-    
-    audioRef.current.currentTime = newProgress;
-    setProgress(newProgress);
-  };
-
-  const prevSong = () => {
-    setCurrentSongIndex((prevIndex) => {
-      const newIndex = prevIndex === 0 ? songs.length - 1 : prevIndex - 1;
-      return newIndex;
-    });
-  };
-
-  const nextSong = () => {
-    setCurrentSongIndex((prevIndex) => {
-      const newIndex = prevIndex === songs.length - 1 ? 0 : prevIndex + 1;
-      return newIndex;
-    });
-  };
-
-  const stopAndReset = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-    setIsPlaying(false);
-    setProgress(0);
-    cancelAnimationFrame(animationRef.current);
-  };
 
   return (
     <AudioContext.Provider

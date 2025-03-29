@@ -7,6 +7,9 @@ import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAudio } from "@/contexts/AudioContext";
+import { useSaratifyCache } from "@/hooks/use-saratify-cache";
+
+const CACHE_KEY = "saratify-assets-loaded";
 
 const Saratify = () => {
   const navigate = useNavigate();
@@ -17,49 +20,21 @@ const Saratify = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const preloadedRef = useRef(false);
   const audio = useAudio();
-
-  // Songs with corrected paths
-  const songs = [
-    {
-      id: "1",
-      title: "Happy Birthday",
-      artist: "churros",
-      src: "/assets/audio/arabic_sara.mp3",
-      cover: "/assets/images/sara_7.jpg",
-      lyrics: "not really lyrics"
-    },
-    {
-      id: "2",
-      title: "You Are Amazing",
-      artist: "tame impala",
-      src: "/assets/audio/sara_impala.mp3",
-      cover: "/assets/images/sara_1.jpg",
-      lyrics: "the less i know the better"
-    },
-    {
-      id: "3",
-      title: "Memories",
-      artist: "cameleon",
-      src: "/assets/audio/sara_poem.mp3",
-      cover: "/assets/images/sara_2.jpg",
-      lyrics: "lila."
-    }
-  ];
+  
+  // Use the custom hook for caching
+  const { songs, isAssetsLoaded } = useSaratifyCache();
 
   // Set songs in context when component mounts
   useEffect(() => {
     audio.setSongs(songs);
-  }, [audio]);
+  }, [audio, songs]);
 
-  // Preload assets to make them load faster
+  // Handle loading state
   useEffect(() => {
-    // If already loaded from cache, skip loading
-    const cacheKey = "saratify-assets-loaded";
-    const assetsLoaded = localStorage.getItem(cacheKey);
-    
-    if (assetsLoaded === "true" && !preloadedRef.current) {
-      setSongsLoaded(true);
+    // If assets are already loaded from cache
+    if (isAssetsLoaded && !preloadedRef.current) {
       setImagesLoaded(true);
+      setSongsLoaded(true);
       setIsLoading(false);
       preloadedRef.current = true;
       return;
@@ -68,7 +43,7 @@ const Saratify = () => {
     if (preloadedRef.current) return;
     preloadedRef.current = true;
 
-    // Preload images first
+    // Preload images
     let loadedImagesCount = 0;
     const totalImages = songs.length;
     
@@ -78,7 +53,7 @@ const Saratify = () => {
         loadedImagesCount++;
         if (loadedImagesCount >= totalImages) {
           setImagesLoaded(true);
-          localStorage.setItem(cacheKey, "true");
+          localStorage.setItem(CACHE_KEY, "true");
         }
       };
       img.onerror = () => {
@@ -90,7 +65,7 @@ const Saratify = () => {
       img.src = song.cover;
     });
 
-    // Preload audio files
+    // Preload audio files with shorter timeout
     let loadedAudioCount = 0;
     const totalAudio = songs.length;
     
@@ -115,25 +90,24 @@ const Saratify = () => {
       audio.load();
     });
 
-    // Fallback timer in case audio loading takes too long
+    // Shorter fallback timer
     const fallbackTimer = setTimeout(() => {
       if (!songsLoaded) {
         setSongsLoaded(true);
       }
-    }, 5000);
+    }, 3000);
 
     return () => {
       clearTimeout(fallbackTimer);
     };
-  }, [songs]);
+  }, [songs, isAssetsLoaded]);
 
   // Update loading state when both images and songs are loaded
   useEffect(() => {
     if (imagesLoaded && songsLoaded) {
-      // Show loading for at least 0.5 second for better UX
       setTimeout(() => {
         setIsLoading(false);
-      }, 500);
+      }, 300);
     }
   }, [imagesLoaded, songsLoaded]);
 
@@ -149,7 +123,7 @@ const Saratify = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      {/* Loading screen with pixel art style */}
+      {/* Loading screen with simplified design */}
       {isLoading && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black">
           <div className="flex flex-col items-center space-y-6 animate-pulse-gentle">
@@ -175,15 +149,15 @@ const Saratify = () => {
         </div>
       )}
 
-      {/* Spotify-like header with pixel art styling */}
+      {/* Spotify-like header with cleaner styling */}
       <div className="sticky top-0 z-10 bg-black/95 px-4 py-3 flex items-center justify-between animate-fade-in">
         <div className="flex items-center">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
             className="p-2 rounded-full hover:bg-white/10 transition-colors mr-4 text-white"
             aria-label="Go back"
           >
-            <ArrowLeft size={isMobile ? 20 : 24} className="animate-pulse-gentle" />
+            <ArrowLeft size={isMobile ? 20 : 24} />
           </button>
           <div className="flex items-center">
             <svg className="w-8 h-8 animate-scale-in" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -196,21 +170,21 @@ const Saratify = () => {
         {/* Spotify-like navigation buttons */}
         <div className="flex md:flex items-center gap-2 md:gap-4">
           {!isMobile && (
-            <button className="p-2 rounded-full hover:bg-white/10 transition-colors animate-hover">
+            <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
               <Heart size={20} className="text-gray-300" />
             </button>
           )}
           {!isMobile && (
             <>
-              <button className="p-2 rounded-full hover:bg-white/10 transition-colors animate-hover">
+              <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
                 <Search size={20} className="text-gray-300" />
               </button>
-              <button className="p-2 rounded-full hover:bg-white/10 transition-colors animate-hover">
+              <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
                 <Library size={20} className="text-gray-300" />
               </button>
             </>
           )}
-          <button className="p-2 rounded-full hover:bg-white/10 transition-colors animate-hover" onClick={handleLogout}>
+          <button className="p-2 rounded-full hover:bg-white/10 transition-colors" onClick={handleLogout}>
             <LogOut size={isMobile ? 18 : 20} className="text-gray-300" />
           </button>
         </div>
@@ -218,13 +192,13 @@ const Saratify = () => {
 
       {!isLoading && (
         <div className="container py-8 max-w-5xl mx-auto px-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          {/* Custom player section with pixel art styling */}
-          <div className="relative bg-gradient-to-br from-gray-900/90 to-black/90 rounded-lg p-4 sm:p-6 shadow-lg backdrop-blur-lg border border-gray-800 z-10 pixel-border">
+          {/* Custom player section with cleaner styling */}
+          <div className="relative bg-gradient-to-br from-gray-900/90 to-black/90 rounded-lg p-4 sm:p-6 shadow-lg backdrop-blur-lg border border-gray-800 z-10">
             <div className="mb-6 text-center">
               <h2 className="font-pixel text-3xl text-[#1DB954] mb-2 pixel-shadow animate-scale-in">Sara's Playlist</h2>
               <p className="text-gray-400 font-pixel">Songs selected just for you</p>
               
-              {/* Pixel art background */}
+              {/* Background pattern */}
               <div className="absolute inset-0 -z-10 opacity-5">
                 <div className="w-full h-full" style={{ 
                   backgroundImage: "linear-gradient(#222 1px, transparent 1px), linear-gradient(90deg, #222 1px, transparent 1px)", 
@@ -236,7 +210,6 @@ const Saratify = () => {
             <div className="relative z-10">
               <MusicPlayer songs={songs} />
             </div>
-            
           </div>
 
           <div className="mt-8 text-center text-sm text-white/70">

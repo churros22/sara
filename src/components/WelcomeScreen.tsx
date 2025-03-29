@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Music, VolumeX, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAudio } from "@/contexts/AudioContext";
 
 const WelcomeScreen = () => {
@@ -16,7 +15,7 @@ const WelcomeScreen = () => {
   const { toast } = useToast();
   const audioContext = useAudio();
 
-  // App sections with descriptions
+  // App sections with clear descriptions
   const sections = [
     {
       id: "saranterest",
@@ -121,7 +120,7 @@ const WelcomeScreen = () => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-tr from-sara-pastel3/40 via-background to-sara-pastel2/40 p-4 sm:p-8 overflow-x-hidden relative">
       <div className="relative w-full max-w-4xl z-10">
-        {/* Optimized mobile buttons */}
+        {/* Audio and logout buttons */}
         <div className={`absolute top-2 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}>
           <button
             onClick={toggleAudio}
@@ -153,6 +152,7 @@ const WelcomeScreen = () => {
           </p>
         </div>
 
+        {/* Section cards in grid layout with small design but visible descriptions */}
         <div 
           className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
           style={{ animationDelay: '0.2s' }}
@@ -161,7 +161,7 @@ const WelcomeScreen = () => {
             <Link 
               key={section.id}
               to={`/${section.id}`}
-              className={`interactive-tile-small bg-${section.color}/10 relative overflow-hidden group`}
+              className={`interactive-tile-small bg-${section.color}/10 relative overflow-hidden group border border-${section.color}/20 rounded-lg shadow-sm`}
             >
               <div className={`absolute inset-0 bg-gradient-to-br from-${section.color}/20 to-${section.color}/10 opacity-50 group-hover:opacity-70 transition-opacity`}></div>
               <div className="relative z-10 p-3 text-center">

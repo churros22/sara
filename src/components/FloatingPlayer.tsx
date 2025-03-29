@@ -2,7 +2,7 @@
 import { useAudio } from "@/contexts/AudioContext";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, Skip, SkipBack, Play, Pause } from "lucide-react";
 
 const FloatingPlayer = () => {
   const {
@@ -19,9 +19,14 @@ const FloatingPlayer = () => {
   const [isVisible, setIsVisible] = useState(false);
   const location = useLocation();
   
-  // Hide on Saratify page since the full player is there
+  // Hide on Saratify page and when logged out
   useEffect(() => {
-    setIsVisible(location.pathname !== "/saratify" && songs.length > 0);
+    const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
+    setIsVisible(
+      location.pathname !== "/saratify" && 
+      songs.length > 0 && 
+      hasAccess
+    );
   }, [location.pathname, songs.length]);
   
   // Function to hide the floating player
@@ -55,34 +60,25 @@ const FloatingPlayer = () => {
           <button 
             onClick={prevSong}
             className="text-white p-1 hover:bg-white/10 rounded-full transition"
+            aria-label="Previous song"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
-            </svg>
+            <SkipBack size={16} />
           </button>
           
           <button 
             onClick={togglePlayPause}
             className="text-white p-1 hover:bg-white/10 rounded-full transition"
+            aria-label={isPlaying ? "Pause" : "Play"}
           >
-            {isPlaying ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="5 3 19 12 5 21 5 3"/>
-              </svg>
-            )}
+            {isPlaying ? <Pause size={16} /> : <Play size={16} />}
           </button>
           
           <button 
             onClick={nextSong}
             className="text-white p-1 hover:bg-white/10 rounded-full transition"
+            aria-label="Next song"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m12 5 7 7-7 7"/><path d="M5 12h14"/>
-            </svg>
+            <Skip size={16} />
           </button>
         </div>
         

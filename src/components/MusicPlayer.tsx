@@ -4,15 +4,7 @@ import PlayerControls from "./PlayerControls";
 import PlayerProgress from "./PlayerProgress";
 import SongInfo from "./SongInfo";
 import { useAudio } from "@/contexts/AudioContext";
-
-interface Song {
-  id: string;
-  title: string;
-  artist: string;
-  src: string;
-  cover: string;
-  lyrics?: string;
-}
+import { Song } from "@/types/audio";
 
 interface MusicPlayerProps {
   songs: Song[];
