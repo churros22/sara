@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -40,17 +41,23 @@ const Saraprise = () => {
           )}
 
           {/* Embed the external HTML page using an iframe with adjusted dimensions */}
-          <iframe
-            src="./assets/index_saraprise.html"
-            title="Saraprise Content"
-            className={`w-full h-[auto] rounded-lg border-0 ${isLoaded ? "block" : "hidden"}`}
-            onLoad={() => setIsLoaded(true)}
-            style={{ overflow: "hidden" }}
-          ></iframe>
+          <div className="w-full overflow-hidden">
+            <iframe
+              src="./assets/index_saraprise.html"
+              title="Saraprise Content"
+              className={`w-full rounded-lg border-0 ${isLoaded ? "block" : "hidden"}`}
+              onLoad={() => setIsLoaded(true)}
+              style={{ 
+                height: "400px",
+                maxWidth: "100%",
+                overflow: "hidden"
+              }}
+            ></iframe>
+          </div>
 
           {/* Additional content: Pictures and text */}
           <div className="mt-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">A Special Message for Sara</h2>
+            <h2 className="text-2xl font-bold mb-4 font-pixel pixel-shadow">A Special Message for Sara</h2>
             <p className="text-lg mb-6">
               Sara, you are an amazing person, and this is a small token of appreciation for all the joy you bring to our lives.
             </p>
@@ -58,12 +65,12 @@ const Saraprise = () => {
               <img
                 src="./assets/images/sara_1.jpg"
                 alt="Sara smiling"
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg pixel-border"
               />
               <img
                 src="./assets/images/sara_2.jpg"
                 alt="Sara enjoying her day"
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg pixel-border"
               />
             </div>
             <p className="text-lg mt-6">

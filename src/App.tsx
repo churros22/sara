@@ -12,6 +12,8 @@ import Googolu from "./pages/Googolu";
 import Saratify from "./pages/Saratify";
 import Saraprise from "./pages/Saraprise";
 import NotFound from "./pages/NotFound";
+import DockedPlayer from "./components/DockedPlayer";
+import { AudioProvider } from "./hooks/use-audio-context";
 
 const queryClient = new QueryClient();
 
@@ -43,24 +45,27 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <AuthGuard>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/saranterest" element={<Saranterest />} />
-            <Route path="/googolu" element={<Googolu />} />
-            <Route path="/saratify" element={<Saratify />} />
-            <Route path="/saraprise" element={<Saraprise />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthGuard>
-      </BrowserRouter>
-    </TooltipProvider>
+    <BrowserRouter>
+      <TooltipProvider>
+        <AudioProvider>
+          <Toaster />
+          <Sonner />
+          <ScrollToTop />
+          <AuthGuard>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/saranterest" element={<Saranterest />} />
+              <Route path="/googolu" element={<Googolu />} />
+              <Route path="/saratify" element={<Saratify />} />
+              <Route path="/saraprise" element={<Saraprise />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <DockedPlayer />
+          </AuthGuard>
+        </AudioProvider>
+      </TooltipProvider>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 

@@ -1,0 +1,150 @@
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes pulse-gentle {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bob {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes rainbow {
+  0% { color: #ff73b5; }
+  14% { color: #ff3366; }
+  28% { color: #ff6e3a; }
+  42% { color: #ffcf3f; }
+  56% { color: #85e962; }
+  70% { color: #53c6f0; }
+  84% { color: #8e7dff; }
+  100% { color: #ff73b5; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 3s ease-in-out infinite;
+}
+
+.animate-bob {
+  animation: bob 2s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+.animate-rainbow {
+  animation: rainbow 8s linear infinite;
+}
+
+.animate-hover {
+  transition: all 0.3s ease;
+}
+
+.animate-hover:hover {
+  transform: translateY(-3px);
+}
+
+/* Pixel art related styles */
+.pixel-border {
+  box-shadow: 
+    0 -4px 0 0 rgba(255, 255, 255, 0.2),
+    0 4px 0 0 rgba(0, 0, 0, 0.2),
+    -4px 0 0 0 rgba(255, 255, 255, 0.2),
+    4px 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.pixel-shadow {
+  text-shadow: 
+    2px 2px 0 rgba(0, 0, 0, 0.2),
+    -1px -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Interactive components */
+.interactive-tile {
+  @apply glass rounded-2xl p-5 cursor-pointer transition-all duration-300;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1);
+}
+
+.interactive-tile:hover {
+  @apply shadow-lg;
+  transform: perspective(1000px) rotateX(2deg) rotateY(2deg) scale3d(1.02, 1.02, 1.02);
+}
+
+/* Glassmorphism */
+.glass {
+  @apply backdrop-blur-md bg-white/10 border border-white/20;
+}
+
+/* Custom scrollbar for content areas */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}

@@ -1,26 +1,14 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import PlayerControls from "./PlayerControls";
 import PlayerProgress from "./PlayerProgress";
 import SongInfo from "./SongInfo";
-import { useMusicPlayer } from "@/hooks/use-music-player";
+import { useAudioContext } from "@/hooks/use-audio-context";
 
-interface Song {
-  id: string;
-  title: string;
-  artist: string;
-  src: string;
-  cover: string;
-  lyrics?: string;
-}
-
-interface MusicPlayerProps {
-  songs: Song[];
-}
-
-const MusicPlayer = ({ songs }: MusicPlayerProps) => {
+const MusicPlayer = () => {
   const {
-    currentSong,
+    songs,
+    currentSongIndex,
     isPlaying,
     progress,
     duration,
@@ -29,7 +17,10 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
     nextSong,
     prevSong,
     formatTime
-  } = useMusicPlayer(songs);
+  } = useAudioContext();
+
+  const currentSong = songs[currentSongIndex];
+  const [showLyrics, setShowLyrics] = useState(false);
 
   return (
     <div className="w-full max-w-xl mx-auto glass rounded-2xl p-6 shadow-lg">
@@ -49,11 +40,22 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
           prevSong={prevSong}
           nextSong={nextSong}
         />
+
+        {currentSong.lyrics && (
+          <div className="mt-4 text-center">
+            <button 
+              onClick={() => setShowLyrics(!showLyrics)}
+              className="px-4 py-2 bg-primary/10 hover:bg-primary/20 rounded-lg font-pixel text-sm transition-colors"
+            >
+              {showLyrics ? "Hide lyrics" : "Show lyrics"}
+            </button>
+          </div>
+        )}
       </div>
       
-      {currentSong.lyrics && (
-        <div className="mt-8 px-4 py-6 rounded-lg bg-white/5 text-center max-h-60 overflow-y-auto custom-scrollbar">
-          <p className="whitespace-pre-line">{currentSong.lyrics}</p>
+      {showLyrics && currentSong.lyrics && (
+        <div className="mt-4 px-4 py-4 rounded-lg bg-white/5 text-center max-h-60 overflow-y-auto custom-scrollbar animate-fade-in">
+          <p className="whitespace-pre-line font-pixel text-sm">{currentSong.lyrics}</p>
         </div>
       )}
     </div>
