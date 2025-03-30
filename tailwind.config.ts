@@ -78,7 +78,7 @@ export default {
 					pastel6: '#FDE1D3',
 					retro1: '#FF6384',
 					retro2: '#36A2EB',
-					retro3: '#FFCE56',
+					retro3: '#89CFF0',
 					retro4: '#4BC0C0',
 					retro5: '#9966FF',
 				}

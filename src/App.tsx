@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +13,7 @@ import Saraprise from "./pages/Saraprise";
 import NotFound from "./pages/NotFound";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
+import PersistentView, { PersistentLayout } from "./layouts/PersistentLayout";
 
 // Create a persistent query client for better caching
 const queryClient = new QueryClient({
@@ -65,7 +65,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
       navigate("/");
     }
     
-    // Stop audio when user logs out
+    // Only handle cleanup on unmount
     return () => {
       if (!hasAccess) {
         audio.stopAndReset();
@@ -73,17 +73,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     };
   }, [navigate, location, audio]);
 
-  // Pause music when leaving Saratify page
-  useEffect(() => {
-    // Only allow music on Saratify page
-    if (location.pathname !== "/saratify") {
-      // Stop completely when navigating away
-      console.log("Navigating away from Saratify, stopping audio");
-      audio.stopAndReset();
-    }
-    
-    localStorage.setItem("prevPath", location.pathname);
-  }, [location.pathname, audio]);
+  // Remove the useEffect that was stopping audio on navigation
 
   return (
     <PageTransition>
@@ -111,18 +101,65 @@ const AppContent = () => {
   );
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <BrowserRouter>
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
         <AudioProvider>
-          <AppContent />
+          <BrowserRouter>
+            <PersistentLayout>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route
+                  path="/home"
+                  element={
+                    <PersistentView path="/home">
+                      <Home />
+                    </PersistentView>
+                  }
+                />
+                <Route
+                  path="/saranterest"
+                  element={
+                    <PersistentView path="/saranterest">
+                      <Saranterest />
+                    </PersistentView>
+                  }
+                />
+                <Route
+                  path="/googolu"
+                  element={
+                    <PersistentView path="/googolu">
+                      <Googolu />
+                    </PersistentView>
+                  }
+                />
+                <Route
+                  path="/saratify"
+                  element={
+                    <PersistentView path="/saratify">
+                      <Saratify />
+                    </PersistentView>
+                  }
+                />
+                <Route
+                  path="/saraprise"
+                  element={
+                    <PersistentView path="/saraprise">
+                      <Saraprise />
+                    </PersistentView>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </PersistentLayout>
+            <Toaster />
+            <Sonner />
+          </BrowserRouter>
         </AudioProvider>
-        <Toaster />
-        <Sonner />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;

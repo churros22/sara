@@ -1,4 +1,3 @@
-
 import { useCallback } from "react";
 import { Song } from "@/types/audio";
 
@@ -39,8 +38,9 @@ export function useAudioHandlers({
   }, [audioRef, setProgress]);
 
   const togglePlayPause = useCallback(() => {
-    console.log("Toggle play/pause, current state:", isPlaying);
+    console.log("Current play state before toggle:", isPlaying);
     setIsPlaying(!isPlaying);
+    console.log("Current play state after toggle:", !isPlaying);
   }, [isPlaying, setIsPlaying]);
 
   const formatTime = useCallback((time: number) => {

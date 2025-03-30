@@ -86,11 +86,6 @@ const Saranterest = () => {
           <ImageGrid images={dummyImages} />
         </div>
 
-        <div className="mt-6 text-center text-sm text-gray-500">
-          <p className="font-vt323 text-lg">
-            To replace these images, add your own photos to the '/assets/images/' folder and update the image paths in the Saranterest.tsx file.
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import MusicPlayer from "@/components/MusicPlayer";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -26,13 +25,6 @@ const Saratify = () => {
           console.log("Setting songs in audio context:", songs);
           audio.setSongs(songs);
           
-          // Ensure audio is reset before trying to play
-          if (audio.audioRef.current) {
-            audio.audioRef.current.pause();
-            audio.audioRef.current.currentTime = 0;
-            audio.setIsPlaying(false);
-          }
-          
           // Simulate a short loading time for UI smoothness
           setTimeout(() => {
             setIsLoading(false);
@@ -50,11 +42,6 @@ const Saratify = () => {
     };
     
     loadSongs();
-    
-    // Cleanup function when navigating away
-    return () => {
-      audio.stopAndReset();
-    };
   }, [audio, songs, toast]);
 
   const handleLogout = () => {
@@ -134,7 +121,7 @@ const Saratify = () => {
 
           <div className="mt-8 text-center text-sm text-white/70">
             <p className="text-lg">
-              Made with love 💚
+              Made with love here 💚 no rage
             </p>
           </div>
         </div>

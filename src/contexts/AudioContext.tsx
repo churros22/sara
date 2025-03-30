@@ -1,4 +1,3 @@
-
 import { createContext, useState, useContext, useEffect, useRef } from "react";
 import { useAudioHandlers } from "@/hooks/use-audio-handlers";
 import { Song } from "@/types/audio";
@@ -146,9 +145,12 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
   // Properly handle cleanup when component unmounts
   useEffect(() => {
     return () => {
-      if (animationRef.current !== null) {
-        cancelAnimationFrame(animationRef.current);
-        animationRef.current = null;
+      if (audioRef.current) {
+        audioRef.current.pause();
+        if (animationRef.current !== null) {
+          cancelAnimationFrame(animationRef.current);
+          animationRef.current = null;
+        }
       }
     };
   }, []);

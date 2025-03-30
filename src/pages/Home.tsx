@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Music, VolumeX, LogOut } from "lucide-react";
@@ -9,7 +8,7 @@ import { useAudio } from "@/contexts/AudioContext";
 const Home = () => {
   const navigate = useNavigate();
   const [showContent, setShowContent] = useState(false);
-  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [audioPlaying, setAudioPlaying] = useState(true); // Changed to true
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const isMobile = useIsMobile();
   const { toast } = useToast();
@@ -20,7 +19,7 @@ const Home = () => {
     {
       id: "saranterest",
       title: "Saranterest",
-      description: "Browse beautiful images and memories in a Pinterest-style layout",
+      description: "Browse beautiful images and get inspired (or torture your heart :3)",
       color: "sara-retro1",
       icon: (
         <svg className="w-5 h-5 text-sara-retro1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +30,7 @@ const Home = () => {
     {
       id: "googolu",
       title: "Googolu",
-      description: "Search for anything with our custom search engine just for you",
+      description: "Search for anything and everything, even your name!",
       color: "sara-retro2",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +41,7 @@ const Home = () => {
     {
       id: "saratify",
       title: "Saratify",
-      description: "Enjoy a custom music player with songs selected specially for you",
+      description: "Enjoy your favorite songs and playlists, selected just for you",
       color: "sara-retro3",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +52,7 @@ const Home = () => {
     {
       id: "saraprise",
       title: "Saraprise",
-      description: "A special surprise just for you - click to discover what awaits",
+      description: "A little something for a little someone :3",
       color: "sara-retro5",
       icon: (
         <svg className="w-5 h-5 text-sara-retro5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,6 +73,12 @@ const Home = () => {
       audioElement.loop = true;
       audioElement.volume = 0.5;  // Lower volume for background music
       setAudio(audioElement);
+      
+      // Try to auto-play
+      audioElement.play().catch(error => {
+        console.error("Audio playback failed:", error);
+        setAudioPlaying(false);
+      });
     }
 
     // Fade in content
@@ -184,7 +189,7 @@ const Home = () => {
                   {section.icon}
                 </div>
                 <h2 className="text-base font-pixel font-semibold truncate pixel-shadow">{section.title}</h2>
-                <p className="text-xs mt-1 opacity-80 line-clamp-2">{section.description}</p>
+                <p className="text-xs mt-1 opacity-80">{section.description}</p>
               </div>
             </button>
           ))}
@@ -192,7 +197,7 @@ const Home = () => {
       </div>
 
       <div className={`mt-6 text-center text-sm text-muted-foreground ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
-        <p className="font-pixel text-lg">Made with love :3 💖 for your special day</p>
+        <p className="font-pixel text-lg">Made with love 'and rage :3' for you 💖</p>
         <div className="mt-2 font-pixel">
           <span className="inline-block animate-rainbow font-bold pixel-shadow">✨ Happy Birthday Sara! ✨</span>
         </div>
