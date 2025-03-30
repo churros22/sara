@@ -1,3 +1,4 @@
+
 import { useCallback } from "react";
 import { Song } from "@/types/audio";
 
@@ -29,14 +30,7 @@ export function useAudioHandlers({
     const updateProgress = () => {
       if (!audioRef.current) return;
       setProgress(audioRef.current.currentTime);
-      
-      // Instead of directly assigning to animationRef.current, we store the ID locally
-      // and the parent component will control setting/accessing the ref value
-      const id = requestAnimationFrame(updateProgress);
-      
-      // This is a workaround - we're not actually setting the ref directly,
-      // just returning the ID for the parent component to use
-      return id;
+      return requestAnimationFrame(updateProgress);
     };
     
     // Start the animation and return the ID
@@ -78,7 +72,7 @@ export function useAudioHandlers({
     setIsPlaying(false);
     setProgress(0);
     
-    // Use a callback for cancelling animation frame
+    // Return a cleanup function instead of trying to modify the ref
     return () => {
       if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current);

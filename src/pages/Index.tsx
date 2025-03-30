@@ -9,13 +9,15 @@ const Index = () => {
   const [accessGranted, setAccessGranted] = useState(false);
   const audio = useAudio();
 
-  // Check localStorage on component mount
+  // Start preloading assets immediately when the page loads
   useEffect(() => {
+    // Start preloading assets right away, regardless of login status
+    preloadAssets();
+    
+    // Check localStorage for access status
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
     if (hasAccess) {
       setAccessGranted(true);
-      // Start preloading assets as soon as we know the user is logged in
-      preloadAssets();
     }
   }, []);
 
@@ -23,8 +25,6 @@ const Index = () => {
     // Store access granted status in localStorage
     localStorage.setItem("saraAccessGranted", "true");
     setAccessGranted(true);
-    // Preload assets immediately after login
-    preloadAssets();
   };
 
   // Make sure audio is stopped when on login screen

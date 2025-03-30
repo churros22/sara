@@ -15,7 +15,16 @@ import NotFound from "./pages/NotFound";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
 
-const queryClient = new QueryClient();
+// Create a persistent query client for better caching
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 // ScrollToTop component to scroll to the top on route changes
 const ScrollToTop = () => {
@@ -28,7 +37,7 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Component to handle page transitions
+// Component to handle page transitions smoothly
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   
@@ -44,6 +53,11 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const audio = useAudio();
+
+  // Start preloading assets immediately
+  useEffect(() => {
+    preloadAssets();
+  }, []);
 
   useEffect(() => {
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
@@ -64,7 +78,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     const prevPath = localStorage.getItem("prevPath");
     
     if (prevPath === "/saratify" && location.pathname !== "/saratify") {
-      // Just pause rather than stop completely when navigating away
+      // Just pause when navigating away
       if (audio.isPlaying) {
         audio.setIsPlaying(false);
       }
@@ -72,14 +86,6 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     
     localStorage.setItem("prevPath", location.pathname);
   }, [location.pathname, audio]);
-
-  // Start preloading assets immediately
-  useEffect(() => {
-    const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
-    if (hasAccess) {
-      preloadAssets();
-    }
-  }, []);
 
   return (
     <PageTransition>

@@ -40,36 +40,43 @@ const imagesToPreload = [
   "/assets/images/sara_8.jpg",
 ];
 
+// Track preload status
+let preloadStarted = false;
+
 export const preloadAssets = () => {
-  // Check if assets are already preloaded
-  if (localStorage.getItem("sara-assets-preloaded") === "true") {
-    console.log("Assets already preloaded");
+  // Prevent duplicate preloading
+  if (preloadStarted) {
+    console.log("Assets already being preloaded");
     return;
   }
+  
+  preloadStarted = true;
+  console.log("Starting asset preload");
 
-  // Preload images
+  // Preload images in the background
   imagesToPreload.forEach(imageSrc => {
     const img = new Image();
     img.src = imageSrc;
+    img.onload = () => console.log(`Image preloaded: ${imageSrc}`);
   });
 
-  // Preload audio files
+  // Preload audio files in the background
   preloadSongs.forEach(song => {
     const audio = new Audio();
     audio.preload = "auto";
     audio.src = song.src;
-    
-    // We're just initiating the download, not playing
     audio.load();
     
-    // Clean up
     audio.oncanplaythrough = () => {
-      console.log(`Preloaded: ${song.title}`);
+      console.log(`Audio preloaded: ${song.title}`);
+      // Clean up event listener
       audio.oncanplaythrough = null;
     };
   });
 
-  // Mark assets as preloaded
-  localStorage.setItem("sara-assets-preloaded", "true");
-  console.log("Assets preloading started");
+  // Mark that preloading has started
+  localStorage.setItem("saratify-assets-preloaded", "true");
 };
+
+// Export the songs for reuse
+export const getSaratifySongs = (): Song[] => preloadSongs;
