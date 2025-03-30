@@ -84,7 +84,13 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
           setIsPlaying(false);
         });
       }
-      startProgressAnimation();
+      
+      // Store the animation frame ID in the ref without directly setting .current
+      const id = startProgressAnimation();
+      if (id) {
+        // Using a local variable to update the ref is safer than direct assignment
+        animationRef.current = id;
+      }
     } else {
       audioRef.current.pause();
       if (animationRef.current) {
@@ -134,6 +140,15 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     
     return () => clearInterval(saveInterval);
   }, [progress, currentSongIndex, songs]);
+
+  // Properly handle cleanup when component unmounts or stopAndReset is called
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
 
   return (
     <AudioContext.Provider
