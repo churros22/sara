@@ -73,13 +73,16 @@ export function useAudioHandlers({
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
+    
+    // Cancel animation frame if it exists
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    
     setIsPlaying(false);
     setProgress(0);
-    
-    return () => {
-      // This is now handled in the parent component
-    };
-  }, [audioRef, setIsPlaying, setProgress]);
+  }, [audioRef, animationRef, setIsPlaying, setProgress]);
 
   return {
     togglePlayPause,

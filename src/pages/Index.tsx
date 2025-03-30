@@ -27,12 +27,11 @@ const Index = () => {
     setAccessGranted(true);
   };
 
-  // Make sure audio is stopped when on login screen
+  // Make sure audio is completely stopped when on login screen
   useEffect(() => {
-    if (!accessGranted) {
-      audio.stopAndReset();
-    }
-  }, [accessGranted, audio]);
+    // Always stop and reset audio when on Index page
+    audio.stopAndReset();
+  }, [audio]);
 
   return (
     <div className="min-h-screen w-full">

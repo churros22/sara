@@ -14,7 +14,6 @@ import Saraprise from "./pages/Saraprise";
 import NotFound from "./pages/NotFound";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
-import FloatingPlayer from "./components/FloatingPlayer";
 
 // Create a persistent query client for better caching
 const queryClient = new QueryClient({
@@ -76,13 +75,9 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
   // Pause music when leaving Saratify page
   useEffect(() => {
-    const prevPath = localStorage.getItem("prevPath");
-    
-    if (prevPath === "/saratify" && location.pathname !== "/saratify") {
-      // Just pause when navigating away
-      if (audio.isPlaying) {
-        audio.setIsPlaying(false);
-      }
+    if (location.pathname !== "/saratify") {
+      // Stop completely when navigating away
+      audio.stopAndReset();
     }
     
     localStorage.setItem("prevPath", location.pathname);
@@ -110,7 +105,6 @@ const AppContent = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthGuard>
-      <FloatingPlayer />
     </>
   );
 };
