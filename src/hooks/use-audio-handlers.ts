@@ -30,10 +30,17 @@ export function useAudioHandlers({
     const updateProgress = () => {
       if (!audioRef.current) return;
       setProgress(audioRef.current.currentTime);
-      animationRef.current = requestAnimationFrame(updateProgress);
+      const id = requestAnimationFrame(updateProgress);
+      if (animationRef.current !== null) {
+        // Use requestAnimationFrame instead of directly assigning to read-only ref
+        animationRef.current = id;
+      }
     };
     
-    animationRef.current = requestAnimationFrame(updateProgress);
+    const id = requestAnimationFrame(updateProgress);
+    if (animationRef.current !== null) {
+      animationRef.current = id;
+    }
   }, [audioRef, setProgress, animationRef]);
 
   const togglePlayPause = useCallback(() => {
@@ -54,18 +61,14 @@ export function useAudioHandlers({
   }, [audioRef, setProgress]);
 
   const prevSong = useCallback(() => {
-    setCurrentSongIndex((prevIndex) => {
-      const newIndex = prevIndex === 0 ? songs.length - 1 : prevIndex - 1;
-      return newIndex;
-    });
-  }, [setCurrentSongIndex, songs.length]);
+    const newIndex = currentSongIndex === 0 ? songs.length - 1 : currentSongIndex - 1;
+    setCurrentSongIndex(newIndex);
+  }, [setCurrentSongIndex, songs.length, currentSongIndex]);
 
   const nextSong = useCallback(() => {
-    setCurrentSongIndex((prevIndex) => {
-      const newIndex = prevIndex === songs.length - 1 ? 0 : prevIndex + 1;
-      return newIndex;
-    });
-  }, [setCurrentSongIndex, songs.length]);
+    const newIndex = currentSongIndex === songs.length - 1 ? 0 : currentSongIndex + 1;
+    setCurrentSongIndex(newIndex);
+  }, [setCurrentSongIndex, songs.length, currentSongIndex]);
 
   const stopAndReset = useCallback(() => {
     if (audioRef.current) {
@@ -74,7 +77,9 @@ export function useAudioHandlers({
     }
     setIsPlaying(false);
     setProgress(0);
-    cancelAnimationFrame(animationRef.current);
+    if (animationRef.current !== null) {
+      cancelAnimationFrame(animationRef.current);
+    }
   }, [audioRef, setIsPlaying, setProgress, animationRef]);
 
   return {

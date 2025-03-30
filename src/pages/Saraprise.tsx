@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -6,16 +7,34 @@ import { ArrowLeft } from "lucide-react";
 const Saraprise = () => {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isIframeLoading, setIsIframeLoading] = useState(true);
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    // Mark as loaded after a short delay
+    // Mark as loaded after a short delay for initial animations
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 100);
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Handle iframe loading with a timeout fallback
+  useEffect(() => {
+    // Fallback in case the iframe's onLoad event doesn't trigger
+    const fallbackTimer = setTimeout(() => {
+      setIsIframeLoading(false);
+    }, 4000);
+
+    return () => clearTimeout(fallbackTimer);
+  }, []);
+
+  const handleIframeLoad = () => {
+    // Short delay to ensure smooth transition
+    setTimeout(() => {
+      setIsIframeLoading(false);
+    }, 300);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sara-pink/20 via-background to-sara-purple/20">
@@ -32,10 +51,12 @@ const Saraprise = () => {
         </div>
 
         <div className="max-w-screen-sm mx-auto glass p-4 rounded-2xl shadow-lg animate-fade-in">
-          {/* Loading indicator */}
-          {!isLoaded && (
-            <div className="w-full h-[400px] flex items-center justify-center rounded-lg">
-              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          {/* Enhanced loading indicator */}
+          {isIframeLoading && (
+            <div className="w-full h-[400px] flex flex-col items-center justify-center rounded-lg bg-black/5 backdrop-blur-sm">
+              <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+              <p className="text-lg font-pixel text-primary">Loading your surprise...</p>
+              <p className="text-sm text-muted-foreground mt-2">This might take a moment to load</p>
             </div>
           )}
 
@@ -43,8 +64,8 @@ const Saraprise = () => {
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
-            className={`w-full h-[auto] rounded-lg border-0 ${isLoaded ? "block" : "hidden"}`}
-            onLoad={() => setIsLoaded(true)}
+            className={`w-full h-[400px] rounded-lg border-0 transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
+            onLoad={handleIframeLoad}
             style={{ overflow: "hidden" }}
           ></iframe>
 

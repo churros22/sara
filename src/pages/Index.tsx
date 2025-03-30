@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import EntryScreen from "@/components/EntryScreen";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import { useAudio } from "@/contexts/AudioContext";
+import { preloadAssets } from "@/utils/preload";
 
 const Index = () => {
   const [accessGranted, setAccessGranted] = useState(false);
@@ -13,6 +14,8 @@ const Index = () => {
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
     if (hasAccess) {
       setAccessGranted(true);
+      // Start preloading assets as soon as we know the user is logged in
+      preloadAssets();
     }
   }, []);
 
@@ -20,6 +23,8 @@ const Index = () => {
     // Store access granted status in localStorage
     localStorage.setItem("saraAccessGranted", "true");
     setAccessGranted(true);
+    // Preload assets immediately after login
+    preloadAssets();
   };
 
   // Make sure audio is stopped when on login screen

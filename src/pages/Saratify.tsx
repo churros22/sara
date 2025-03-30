@@ -29,7 +29,7 @@ const Saratify = () => {
     audio.setSongs(songs);
   }, [audio, songs]);
 
-  // Handle loading state
+  // Handle loading state with shorter timeouts
   useEffect(() => {
     // If assets are already loaded from cache
     if (isAssetsLoaded && !preloadedRef.current) {
@@ -43,66 +43,19 @@ const Saratify = () => {
     if (preloadedRef.current) return;
     preloadedRef.current = true;
 
-    // Preload images
-    let loadedImagesCount = 0;
-    const totalImages = songs.length;
-    
-    songs.forEach(song => {
-      const img = new Image();
-      img.onload = () => {
-        loadedImagesCount++;
-        if (loadedImagesCount >= totalImages) {
-          setImagesLoaded(true);
-          localStorage.setItem(CACHE_KEY, "true");
-        }
-      };
-      img.onerror = () => {
-        loadedImagesCount++;
-        if (loadedImagesCount >= totalImages) {
-          setImagesLoaded(true);
-        }
-      };
-      img.src = song.cover;
-    });
-
-    // Preload audio files with shorter timeout
-    let loadedAudioCount = 0;
-    const totalAudio = songs.length;
-    
-    songs.forEach(song => {
-      const audio = new Audio();
-      audio.addEventListener('canplaythrough', () => {
-        loadedAudioCount++;
-        if (loadedAudioCount >= totalAudio) {
-          setSongsLoaded(true);
-        }
-      }, { once: true });
-      
-      audio.addEventListener('error', () => {
-        loadedAudioCount++;
-        if (loadedAudioCount >= totalAudio) {
-          setSongsLoaded(true);
-        }
-      }, { once: true });
-      
-      audio.preload = "auto";
-      audio.src = song.src;
-      audio.load();
-    });
-
-    // Shorter fallback timer
+    // Shorter fallback timer for faster display
     const fallbackTimer = setTimeout(() => {
-      if (!songsLoaded) {
-        setSongsLoaded(true);
-      }
-    }, 3000);
+      setImagesLoaded(true);
+      setSongsLoaded(true);
+      localStorage.setItem(CACHE_KEY, "true");
+    }, 1500); // Reduced from 3000ms
 
     return () => {
       clearTimeout(fallbackTimer);
     };
   }, [songs, isAssetsLoaded]);
 
-  // Update loading state when both images and songs are loaded
+  // Update loading state with a shorter delay
   useEffect(() => {
     if (imagesLoaded && songsLoaded) {
       setTimeout(() => {
@@ -168,21 +121,16 @@ const Saratify = () => {
         </div>
         
         {/* Spotify-like navigation buttons */}
-        <div className="flex md:flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           {isMobile && (
             <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
               <Heart size={20} className="text-gray-300" />
             </button>
           )}
           {isMobile && (
-            <>
-              <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-                <Search size={20} className="text-gray-300" />
-              </button>
-              <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-                <Library size={20} className="text-gray-300" />
-              </button>
-            </>
+            <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
+              <Library size={20} className="text-gray-300" />
+            </button>
           )}
           <button className="p-2 rounded-full hover:bg-white/10 transition-colors" onClick={handleLogout}>
             <LogOut size={isMobile ? 18 : 20} className="text-gray-300" />

@@ -15,12 +15,12 @@ const WelcomeScreen = () => {
   const { toast } = useToast();
   const audioContext = useAudio();
 
-  // App sections with clear descriptions
+  // App sections with detailed descriptions
   const sections = [
     {
       id: "saranterest",
       title: "Saranterest",
-      description: "Discover beautiful images and get inspired",
+      description: "Browse beautiful images and memories in a Pinterest-style layout",
       color: "sara-retro1",
       icon: (
         <svg className="w-5 h-5 text-sara-retro1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +31,7 @@ const WelcomeScreen = () => {
     {
       id: "googolu",
       title: "Googolu",
-      description: "Search Everything and Anything with Googolu",
+      description: "Search for anything with our custom search engine just for you",
       color: "sara-retro2",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +42,7 @@ const WelcomeScreen = () => {
     {
       id: "saratify",
       title: "Saratify",
-      description: "Listen to handpicked music crafted just for you",
+      description: "Enjoy a custom music player with songs selected specially for you",
       color: "sara-retro3",
       icon: (
         <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,7 @@ const WelcomeScreen = () => {
     {
       id: "saraprise",
       title: "Saraprise",
-      description: "Just a little something made for you",
+      description: "A special surprise just for you - click to discover what awaits",
       color: "sara-retro5",
       icon: (
         <svg className="w-5 h-5 text-sara-retro5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -152,7 +152,7 @@ const WelcomeScreen = () => {
           </p>
         </div>
 
-        {/* Section cards in grid layout with small design but visible descriptions */}
+        {/* Section cards in grid layout with small design but detailed descriptions */}
         <div 
           className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
           style={{ animationDelay: '0.2s' }}

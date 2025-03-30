@@ -1,14 +1,12 @@
-import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import ImageGrid from "@/components/ImageGrid";
-import SearchBar from "@/components/SearchBar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ArrowLeft, Heart, Bell, MessageCircle, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Saranterest = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
@@ -22,13 +20,6 @@ const Saranterest = () => {
     { id: "7", src: "/assets/images/sara_7.jpg", alt: "Sara image 7" },
     { id: "8", src: "/assets/images/sara_8.jpg", alt: "Sara image 8" },
   ];
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    // For now, we're not actually filtering the images
-    // This is just for aesthetics
-    console.log("Search query:", query);
-  };
 
   // Pinterest categories (for decoration)
   const categories = ["Memories", "Birthday", "Friends", "Travel", "Food", "Fashion", "Art"];
@@ -55,16 +46,7 @@ const Saranterest = () => {
             <span className="ml-1 text-xl font-vt323 font-bold text-red-600">aranterest</span>
           </div>
           
-          {/* Search bar - conditionally hide on mobile */}
-          <div className={`flex-1 max-w-md mx-4 ${isMobile ? 'hidden sm:block' : ''}`}>
-            <SearchBar 
-              onSearch={handleSearch}
-              placeholder="Search for inspiration..."
-              className="bg-gray-100 border-none rounded-full font-vt323"
-            />
-          </div>
-          
-          {/* Pinterest Icons - Removed logout button */}
+          {/* Pinterest Icons - Removed search bar */}
           <div className="flex items-center space-x-2">
             <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all">
               <Bell size={isMobile ? 18 : 20} className="text-gray-700" />
@@ -78,17 +60,6 @@ const Saranterest = () => {
           </div>
         </div>
       </div>
-      
-      {/* Mobile search bar - only shown on mobile */}
-      {isMobile && (
-        <div className="bg-white px-4 py-2 shadow-sm">
-          <SearchBar 
-            onSearch={handleSearch}
-            placeholder="Search for inspiration..."
-            className="bg-gray-100 border-none rounded-full font-vt323"
-          />
-        </div>
-      )}
 
       {/* Pinterest category chips */}
       <div className="bg-white border-b py-3 px-4 overflow-x-auto scrollbar-none">
@@ -110,10 +81,6 @@ const Saranterest = () => {
 
       {/* Pinterest-style content with pixel art decorations */}
       <div className="container mx-auto py-6 px-4">
-        {/* Strategically placed pixel decorations */}
-        <div className="hidden md:block absolute top-32 right-8 text-3xl" style={{ zIndex: 1, opacity: 0.7 }}>🖼️</div>
-        <div className="hidden md:block absolute bottom-20 left-8 text-3xl" style={{ zIndex: 1, opacity: 0.7 }}>📌</div>
-        
         <div className="bg-white rounded-2xl p-4 relative">
           <div className="absolute -inset-1 -z-10 bg-gradient-to-r from-sara-retro1/10 via-sara-retro3/10 to-sara-retro5/10 blur-sm"></div>
           <ImageGrid images={dummyImages} />

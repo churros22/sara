@@ -13,7 +13,7 @@ import Saratify from "./pages/Saratify";
 import Saraprise from "./pages/Saraprise";
 import NotFound from "./pages/NotFound";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
-import FloatingPlayer from "./components/FloatingPlayer";
+import { preloadAssets } from "./utils/preload";
 
 const queryClient = new QueryClient();
 
@@ -59,7 +59,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     };
   }, [navigate, location, audio]);
 
-  // Stop music when leaving Saratify page
+  // Pause music when leaving Saratify page
   useEffect(() => {
     const prevPath = localStorage.getItem("prevPath");
     
@@ -72,6 +72,14 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     
     localStorage.setItem("prevPath", location.pathname);
   }, [location.pathname, audio]);
+
+  // Start preloading assets immediately
+  useEffect(() => {
+    const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
+    if (hasAccess) {
+      preloadAssets();
+    }
+  }, []);
 
   return (
     <PageTransition>
@@ -95,7 +103,6 @@ const AppContent = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthGuard>
-      <FloatingPlayer />
     </>
   );
 };

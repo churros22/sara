@@ -87,7 +87,9 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       startProgressAnimation();
     } else {
       audioRef.current.pause();
-      cancelAnimationFrame(animationRef.current);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     }
   }, [isPlaying, startProgressAnimation]);
 
