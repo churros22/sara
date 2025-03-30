@@ -1,4 +1,3 @@
-
 import { useCallback } from "react";
 import { Song } from "@/types/audio";
 
@@ -75,9 +74,10 @@ export function useAudioHandlers({
     }
     
     // Cancel animation frame if it exists
-    if (animationRef.current) {
+    if (animationRef.current !== null) {
       cancelAnimationFrame(animationRef.current);
-      animationRef.current = null;
+      // Instead of directly assigning to .current, we handle this differently
+      // The parent component should manage setting this to null after cancellation
     }
     
     setIsPlaying(false);
