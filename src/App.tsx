@@ -14,6 +14,7 @@ import Saraprise from "./pages/Saraprise";
 import NotFound from "./pages/NotFound";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
+import FloatingPlayer from "./components/FloatingPlayer";
 
 // Create a persistent query client for better caching
 const queryClient = new QueryClient({
@@ -109,6 +110,7 @@ const AppContent = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthGuard>
+      <FloatingPlayer />
     </>
   );
 };

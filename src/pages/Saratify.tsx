@@ -19,25 +19,28 @@ const Saratify = () => {
   
   // Set songs in context and handle loading once
   useEffect(() => {
-    // Set songs directly from the preloaded list
-    audio.setSongs(songs);
+    const loadSongs = async () => {
+      // Set songs directly from the preloaded list
+      if (songs.length > 0) {
+        console.log("Loading songs:", songs);
+        audio.setSongs(songs);
+        
+        // Simulate a short loading time for UI smoothness
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 800);
+      }
+    };
     
-    // Simulate a short loading time for UI smoothness
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
+    loadSongs();
     
-    return () => clearTimeout(timer);
-  }, [audio, songs]);
-
-  // Pause audio when navigating away
-  useEffect(() => {
+    // Cleanup function
     return () => {
       if (audio.isPlaying) {
         audio.setIsPlaying(false);
       }
     };
-  }, [audio]);
+  }, [audio, songs]);
 
   const handleLogout = () => {
     audio.stopAndReset();

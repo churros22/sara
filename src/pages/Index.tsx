@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import EntryScreen from "@/components/EntryScreen";
-import WelcomeScreen from "@/components/WelcomeScreen";
+import Home from "@/pages/Home";
 import { useAudio } from "@/contexts/AudioContext";
 import { preloadAssets } from "@/utils/preload";
 
@@ -37,7 +37,7 @@ const Index = () => {
   return (
     <div className="min-h-screen w-full">
       {accessGranted ? (
-        <WelcomeScreen />
+        <Home />
       ) : (
         <EntryScreen onAccessGranted={handleAccessGranted} />
       )}

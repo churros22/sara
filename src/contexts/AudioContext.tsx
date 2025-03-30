@@ -85,10 +85,10 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
         });
       }
       
-      // Store the animation frame ID in the ref
-      const id = startProgressAnimation();
-      if (id) {
-        animationRef.current = id;
+      // Start the animation and store the ID
+      const animationId = startProgressAnimation();
+      if (animationId !== undefined) {
+        animationRef.current = animationId;
       }
     } else {
       audioRef.current.pause();
@@ -114,23 +114,27 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     if (savedProgress) {
       const parsedProgress = parseFloat(savedProgress);
       setProgress(parsedProgress);
-      audioRef.current.currentTime = parsedProgress;
+      if (audioRef.current) {
+        audioRef.current.currentTime = parsedProgress;
+      }
     }
 
     if (isPlaying) {
-      audioRef.current.play().catch(error => {
-        console.error("Audio playback failed:", error);
-        setIsPlaying(false);
-      });
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error("Audio playback failed:", error);
+          setIsPlaying(false);
+        });
+      }
     }
   }, [currentSongIndex, songs, isPlaying]);
 
   // Save progress periodically
   useEffect(() => {
-    if (songs.length === 0) return;
+    if (songs.length === 0 || !songs[currentSongIndex]) return;
     
     const currentSong = songs[currentSongIndex];
-    if (!currentSong) return;
     
     const saveInterval = setInterval(() => {
       if (progress > 0) {
@@ -178,9 +182,15 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
         onLoadedMetadata={() => {
           if (audioRef.current) {
             setDuration(audioRef.current.duration);
+            // Make sure audio is loaded properly
+            console.log("Audio loaded, duration:", audioRef.current.duration);
           }
         }}
         onEnded={nextSong}
+        onError={(e) => {
+          console.error("Audio error:", e);
+          setIsPlaying(false);
+        }}
       />
       {children}
     </AudioContext.Provider>

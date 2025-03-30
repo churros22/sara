@@ -42,8 +42,15 @@ const imagesToPreload = [
 
 // Track preload status
 let preloadStarted = false;
+let preloadCompleted = false;
 
 export const preloadAssets = () => {
+  // Check if already completed
+  if (preloadCompleted) {
+    console.log("Assets already preloaded completely");
+    return;
+  }
+  
   // Prevent duplicate preloading
   if (preloadStarted) {
     console.log("Assets already being preloaded");
@@ -53,29 +60,58 @@ export const preloadAssets = () => {
   preloadStarted = true;
   console.log("Starting asset preload");
 
+  let imagesLoaded = 0;
+  let audioLoaded = 0;
+  
+  // Helper to check if all assets are loaded
+  const checkAllLoaded = () => {
+    if (imagesLoaded === imagesToPreload.length && audioLoaded === preloadSongs.length) {
+      console.log("All assets preloaded successfully!");
+      preloadCompleted = true;
+      localStorage.setItem("saratify-assets-preloaded", "true");
+    }
+  };
+
   // Preload images in the background
   imagesToPreload.forEach(imageSrc => {
     const img = new Image();
+    img.onload = () => {
+      console.log(`Image preloaded: ${imageSrc}`);
+      imagesLoaded++;
+      checkAllLoaded();
+    };
+    img.onerror = (e) => {
+      console.error(`Failed to preload image: ${imageSrc}`, e);
+      // Count as loaded even if it failed, to avoid blocking
+      imagesLoaded++;
+      checkAllLoaded();
+    };
     img.src = imageSrc;
-    img.onload = () => console.log(`Image preloaded: ${imageSrc}`);
   });
 
   // Preload audio files in the background
   preloadSongs.forEach(song => {
     const audio = new Audio();
     audio.preload = "auto";
-    audio.src = song.src;
-    audio.load();
     
     audio.oncanplaythrough = () => {
       console.log(`Audio preloaded: ${song.title}`);
+      audioLoaded++;
+      checkAllLoaded();
       // Clean up event listener
       audio.oncanplaythrough = null;
     };
+    
+    audio.onerror = (e) => {
+      console.error(`Failed to preload audio: ${song.title}`, e);
+      // Count as loaded even if it failed, to avoid blocking
+      audioLoaded++;
+      checkAllLoaded();
+    };
+    
+    audio.src = song.src;
+    audio.load();
   });
-
-  // Mark that preloading has started
-  localStorage.setItem("saratify-assets-preloaded", "true");
 };
 
 // Export the songs for reuse

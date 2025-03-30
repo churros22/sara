@@ -4,7 +4,7 @@ import { Song } from "@/types/audio";
 
 interface AudioHandlersProps {
   audioRef: React.RefObject<HTMLAudioElement>;
-  animationRef: React.RefObject<number>;
+  animationRef: React.RefObject<number | null>;
   isPlaying: boolean;
   setIsPlaying: (isPlaying: boolean) => void;
   setProgress: (progress: number) => void;
@@ -30,6 +30,7 @@ export function useAudioHandlers({
     const updateProgress = () => {
       if (!audioRef.current) return;
       setProgress(audioRef.current.currentTime);
+      // Return the ID so it can be assigned in the parent component
       return requestAnimationFrame(updateProgress);
     };
     
@@ -42,6 +43,7 @@ export function useAudioHandlers({
   }, [isPlaying, setIsPlaying]);
 
   const formatTime = useCallback((time: number) => {
+    if (!time || isNaN(time)) return "0:00";
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
@@ -55,11 +57,13 @@ export function useAudioHandlers({
   }, [audioRef, setProgress]);
 
   const prevSong = useCallback(() => {
+    if (songs.length === 0) return;
     const newIndex = currentSongIndex === 0 ? songs.length - 1 : currentSongIndex - 1;
     setCurrentSongIndex(newIndex);
   }, [setCurrentSongIndex, songs.length, currentSongIndex]);
 
   const nextSong = useCallback(() => {
+    if (songs.length === 0) return;
     const newIndex = currentSongIndex === songs.length - 1 ? 0 : currentSongIndex + 1;
     setCurrentSongIndex(newIndex);
   }, [setCurrentSongIndex, songs.length, currentSongIndex]);
@@ -72,13 +76,10 @@ export function useAudioHandlers({
     setIsPlaying(false);
     setProgress(0);
     
-    // Return a cleanup function instead of trying to modify the ref
     return () => {
-      if (animationRef.current !== null) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      // This is now handled in the parent component
     };
-  }, [audioRef, setIsPlaying, setProgress, animationRef]);
+  }, [audioRef, setIsPlaying, setProgress]);
 
   return {
     togglePlayPause,
