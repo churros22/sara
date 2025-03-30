@@ -75,8 +75,10 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
   // Pause music when leaving Saratify page
   useEffect(() => {
+    // Only allow music on Saratify page
     if (location.pathname !== "/saratify") {
       // Stop completely when navigating away
+      console.log("Navigating away from Saratify, stopping audio");
       audio.stopAndReset();
     }
     

@@ -17,30 +17,45 @@ const Saratify = () => {
   const audio = useAudio();
   const songs = getSaratifySongs();
   
-  // Set songs in context and handle loading once
+  // Set songs in context and handle loading
   useEffect(() => {
     const loadSongs = async () => {
-      // Set songs directly from the preloaded list
-      if (songs.length > 0) {
-        console.log("Loading songs:", songs);
-        audio.setSongs(songs);
-        
-        // Simulate a short loading time for UI smoothness
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 800);
+      try {
+        // Set songs directly from the preloaded list
+        if (songs.length > 0) {
+          console.log("Setting songs in audio context:", songs);
+          audio.setSongs(songs);
+          
+          // Ensure audio is reset before trying to play
+          if (audio.audioRef.current) {
+            audio.audioRef.current.pause();
+            audio.audioRef.current.currentTime = 0;
+            audio.setIsPlaying(false);
+          }
+          
+          // Simulate a short loading time for UI smoothness
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 800);
+        }
+      } catch (error) {
+        console.error("Error loading songs:", error);
+        toast({
+          title: "Error loading songs",
+          description: "Please try refreshing the page.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
       }
     };
     
     loadSongs();
     
-    // Cleanup function
+    // Cleanup function when navigating away
     return () => {
-      if (audio.isPlaying) {
-        audio.setIsPlaying(false);
-      }
+      audio.stopAndReset();
     };
-  }, [audio, songs]);
+  }, [audio, songs, toast]);
 
   const handleLogout = () => {
     audio.stopAndReset();

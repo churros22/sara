@@ -77,22 +77,26 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     if (!audioRef.current) return;
     
     if (isPlaying) {
+      console.log("Attempting to play audio...");
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.error("Audio playback failed:", error);
-          setIsPlaying(false);
-        });
-      }
-      
-      // Start the animation and store the ID
-      const animationId = startProgressAnimation();
-      if (animationId !== undefined) {
-        animationRef.current = animationId;
+        playPromise
+          .then(() => {
+            console.log("Audio playback started successfully");
+            // Start the animation and store the ID
+            const animationId = startProgressAnimation();
+            if (animationId !== undefined) {
+              animationRef.current = animationId;
+            }
+          })
+          .catch(error => {
+            console.error("Audio playback failed:", error);
+            setIsPlaying(false);
+          });
       }
     } else {
       audioRef.current.pause();
-      if (animationRef.current) {
+      if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current);
         animationRef.current = null;
       }
@@ -106,6 +110,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     const currentSong = songs[currentSongIndex];
     if (!currentSong) return;
     
+    console.log(`Loading song: ${currentSong.title} from ${currentSong.src}`);
     audioRef.current.src = currentSong.src;
     audioRef.current.load();
     
@@ -119,16 +124,9 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
 
-    if (isPlaying) {
-      const playPromise = audioRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.error("Audio playback failed:", error);
-          setIsPlaying(false);
-        });
-      }
-    }
-  }, [currentSongIndex, songs, isPlaying]);
+    // Don't automatically play when song changes - let user initiate
+    setIsPlaying(false);
+  }, [currentSongIndex, songs]);
 
   // Save progress periodically
   useEffect(() => {
@@ -148,7 +146,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
   // Properly handle cleanup when component unmounts
   useEffect(() => {
     return () => {
-      if (animationRef.current) {
+      if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current);
         animationRef.current = null;
       }
@@ -186,11 +184,15 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
             console.log("Audio loaded, duration:", audioRef.current.duration);
           }
         }}
-        onEnded={nextSong}
+        onEnded={() => {
+          console.log("Song ended, playing next");
+          nextSong();
+        }}
         onError={(e) => {
           console.error("Audio error:", e);
           setIsPlaying(false);
         }}
+        preload="auto"
       />
       {children}
     </AudioContext.Provider>

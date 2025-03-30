@@ -29,9 +29,31 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
 
   // Update duration when component mounts or song changes
   useEffect(() => {
-    if (audioRef.current && audioRef.current.duration) {
-      setDuration(audioRef.current.duration);
+    const updateDuration = () => {
+      if (audioRef.current && !isNaN(audioRef.current.duration)) {
+        console.log("Updating duration:", audioRef.current.duration);
+        setDuration(audioRef.current.duration);
+      }
+    };
+
+    // Try to get duration immediately if already available
+    updateDuration();
+    
+    // Also add an event listener as a backup
+    if (audioRef.current) {
+      audioRef.current.addEventListener('loadedmetadata', updateDuration);
+      
+      // Add a canplaythrough event as a final fallback
+      audioRef.current.addEventListener('canplaythrough', updateDuration);
     }
+    
+    // Cleanup listeners
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('loadedmetadata', updateDuration);
+        audioRef.current.removeEventListener('canplaythrough', updateDuration);
+      }
+    };
   }, [currentSongIndex, setDuration, audioRef]);
 
   // Handle case when no songs are available
