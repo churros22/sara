@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import EntryScreen from "@/components/EntryScreen";
-import Home from "@/pages/Home";
 import { useAudio } from "@/contexts/AudioContext";
 import { preloadAssets } from "@/utils/preload";
 
@@ -20,8 +19,9 @@ const Index = () => {
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
     if (hasAccess) {
       setAccessGranted(true);
-      // Use navigate instead of directly rendering Home component
-      navigate("/home");
+      
+      // Use programmatic navigation instead of direct rendering
+      navigate("/home", { replace: true });
     }
   }, [navigate]);
 
@@ -29,8 +29,9 @@ const Index = () => {
     // Store access granted status in localStorage
     localStorage.setItem("saraAccessGranted", "true");
     setAccessGranted(true);
-    // Navigate to home using router
-    navigate("/home");
+    
+    // Navigate to home using router with replace to avoid back button issues
+    navigate("/home", { replace: true });
   };
 
   // Make sure audio is completely stopped when on login screen

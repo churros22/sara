@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
 
 interface EntryScreenProps {
   onAccessGranted: () => void;
