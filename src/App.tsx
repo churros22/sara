@@ -4,17 +4,20 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import Index from "./pages/Index";
-import Home from "./pages/Home";
-import Saranterest from "./pages/Saranterest";
-import Googolu from "./pages/Googolu";
-import Saratify from "./pages/Saratify";
-import Saraprise from "./pages/Saraprise";
-import NotFound from "./pages/NotFound";
+import { useEffect, lazy, Suspense } from "react";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
 import PersistentView, { PersistentLayout } from "./layouts/PersistentLayout";
+import { Skeleton } from "./components/ui/skeleton";
+
+// Lazy load pages for better performance
+const Index = lazy(() => import("./pages/Index"));
+const Home = lazy(() => import("./pages/Home"));
+const Saranterest = lazy(() => import("./pages/Saranterest"));
+const Googolu = lazy(() => import("./pages/Googolu"));
+const Saratify = lazy(() => import("./pages/Saratify"));
+const Saraprise = lazy(() => import("./pages/Saraprise"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Create a persistent query client for better caching
 const queryClient = new QueryClient({
@@ -26,6 +29,15 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+// Loading component for suspense
+const PageLoader = () => (
+  <div className="min-h-screen w-full flex items-center justify-center bg-sara-pixelBg">
+    <div className="w-32 h-32">
+      <Skeleton className="w-full h-full bg-sara-pixel3/20 animate-pulse-gentle rounded-none" />
+    </div>
+  </div>
+);
 
 // ScrollToTop component to scroll to the top on route changes
 const ScrollToTop = () => {
@@ -90,50 +102,52 @@ function App() {
             <PersistentLayout>
               <ScrollToTop />
               <AuthGuard>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route
-                    path="/home"
-                    element={
-                      <PersistentView path="/home">
-                        <Home />
-                      </PersistentView>
-                    }
-                  />
-                  <Route
-                    path="/saranterest"
-                    element={
-                      <PersistentView path="/saranterest">
-                        <Saranterest />
-                      </PersistentView>
-                    }
-                  />
-                  <Route
-                    path="/googolu"
-                    element={
-                      <PersistentView path="/googolu">
-                        <Googolu />
-                      </PersistentView>
-                    }
-                  />
-                  <Route
-                    path="/saratify"
-                    element={
-                      <PersistentView path="/saratify">
-                        <Saratify />
-                      </PersistentView>
-                    }
-                  />
-                  <Route
-                    path="/saraprise"
-                    element={
-                      <PersistentView path="/saraprise">
-                        <Saraprise />
-                      </PersistentView>
-                    }
-                  />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route
+                      path="/home"
+                      element={
+                        <PersistentView path="/home">
+                          <Home />
+                        </PersistentView>
+                      }
+                    />
+                    <Route
+                      path="/saranterest"
+                      element={
+                        <PersistentView path="/saranterest">
+                          <Saranterest />
+                        </PersistentView>
+                      }
+                    />
+                    <Route
+                      path="/googolu"
+                      element={
+                        <PersistentView path="/googolu">
+                          <Googolu />
+                        </PersistentView>
+                      }
+                    />
+                    <Route
+                      path="/saratify"
+                      element={
+                        <PersistentView path="/saratify">
+                          <Saratify />
+                        </PersistentView>
+                      }
+                    />
+                    <Route
+                      path="/saraprise"
+                      element={
+                        <PersistentView path="/saraprise">
+                          <Saraprise />
+                        </PersistentView>
+                      }
+                    />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
               </AuthGuard>
             </PersistentLayout>
             <Toaster />
