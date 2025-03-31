@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -73,31 +74,10 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     };
   }, [navigate, location, audio]);
 
-  // Remove the useEffect that was stopping audio on navigation
-
   return (
     <PageTransition>
       {children}
     </PageTransition>
-  );
-};
-
-const AppContent = () => {
-  return (
-    <>
-      <ScrollToTop />
-      <AuthGuard>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/saranterest" element={<Saranterest />} />
-          <Route path="/googolu" element={<Googolu />} />
-          <Route path="/saratify" element={<Saratify />} />
-          <Route path="/saraprise" element={<Saraprise />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AuthGuard>
-    </>
   );
 };
 
@@ -108,50 +88,53 @@ function App() {
         <AudioProvider>
           <BrowserRouter>
             <PersistentLayout>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route
-                  path="/home"
-                  element={
-                    <PersistentView path="/home">
-                      <Home />
-                    </PersistentView>
-                  }
-                />
-                <Route
-                  path="/saranterest"
-                  element={
-                    <PersistentView path="/saranterest">
-                      <Saranterest />
-                    </PersistentView>
-                  }
-                />
-                <Route
-                  path="/googolu"
-                  element={
-                    <PersistentView path="/googolu">
-                      <Googolu />
-                    </PersistentView>
-                  }
-                />
-                <Route
-                  path="/saratify"
-                  element={
-                    <PersistentView path="/saratify">
-                      <Saratify />
-                    </PersistentView>
-                  }
-                />
-                <Route
-                  path="/saraprise"
-                  element={
-                    <PersistentView path="/saraprise">
-                      <Saraprise />
-                    </PersistentView>
-                  }
-                />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <ScrollToTop />
+              <AuthGuard>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route
+                    path="/home"
+                    element={
+                      <PersistentView path="/home">
+                        <Home />
+                      </PersistentView>
+                    }
+                  />
+                  <Route
+                    path="/saranterest"
+                    element={
+                      <PersistentView path="/saranterest">
+                        <Saranterest />
+                      </PersistentView>
+                    }
+                  />
+                  <Route
+                    path="/googolu"
+                    element={
+                      <PersistentView path="/googolu">
+                        <Googolu />
+                      </PersistentView>
+                    }
+                  />
+                  <Route
+                    path="/saratify"
+                    element={
+                      <PersistentView path="/saratify">
+                        <Saratify />
+                      </PersistentView>
+                    }
+                  />
+                  <Route
+                    path="/saraprise"
+                    element={
+                      <PersistentView path="/saraprise">
+                        <Saraprise />
+                      </PersistentView>
+                    }
+                  />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </AuthGuard>
             </PersistentLayout>
             <Toaster />
             <Sonner />

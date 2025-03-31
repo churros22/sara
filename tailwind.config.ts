@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -76,11 +75,13 @@ export default {
 					pastel4: '#E5DEFF',
 					pastel5: '#FFDEE2',
 					pastel6: '#FDE1D3',
-					retro1: '#FF6384',
-					retro2: '#36A2EB',
-					retro3: '#89CFF0',
-					retro4: '#4BC0C0',
-					retro5: '#9966FF',
+					pixel1: '#1E3A8A',
+					pixel2: '#2563EB',
+					pixel3: '#3B82F6',
+					pixel4: '#60A5FA',
+					pixel5: '#93C5FD',
+					pixel6: '#172554',
+					pixelBg: '#0F172A'
 				}
 			},
 			fontFamily: {
@@ -143,6 +144,23 @@ export default {
 				'rainbow': {
 					'0%': { filter: 'hue-rotate(0deg)' },
 					'100%': { filter: 'hue-rotate(360deg)' }
+				},
+				'pixel-float': {
+					'0%, 100%': { transform: 'translateY(0) scale(1)' },
+					'50%': { transform: 'translateY(-6px) scale(1.01)' }
+				},
+				'pixel-pulse': {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.05)' }
+				},
+				'scanline': {
+					'0%': { transform: 'translateY(0%)' },
+					'100%': { transform: 'translateY(100%)' }
+				},
+				'pixel-glitch': {
+					'0%, 100%': { transform: 'translateX(0)' },
+					'10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-1px)' },
+					'20%, 40%, 60%, 80%': { transform: 'translateX(1px)' },
 				}
 			},
 			animation: {
@@ -157,7 +175,11 @@ export default {
 				'float': 'float 3s ease-in-out infinite',
 				'pulse-gentle': 'pulse-gentle 3s ease-in-out infinite',
 				'pixel-bounce': 'pixel-bounce 0.6s ease-in-out infinite',
-				'rainbow': 'rainbow 5s linear infinite'
+				'rainbow': 'rainbow 5s linear infinite',
+				'pixel-float': 'pixel-float 3s ease-in-out infinite',
+				'pixel-pulse': 'pixel-pulse 2s ease-in-out infinite',
+				'scanline': 'scanline 8s linear infinite',
+				'pixel-glitch': 'pixel-glitch 0.3s ease-in-out infinite'
 			},
 			backdropFilter: {
 				'none': 'none',

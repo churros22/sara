@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 interface EntryScreenProps {
   onAccessGranted: () => void;
@@ -17,13 +18,13 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
     if (password === correctPassword) {
       onAccessGranted();
       toast({
-        title: "🎉 Welcome!",
-        description: "Access granted. Enjoy!",
+        title: "🎮 Level Unlocked!",
+        description: "Access granted. Welcome to Sara's world!",
       });
     } else {
       toast({
-        title: "❌ Incorrect password",
-        description: "Please try again with the correct password.",
+        title: "❌ Wrong Password",
+        description: "Game Over! Try again with the correct password.",
         variant: "destructive",
       });
       setPassword("");
@@ -39,14 +40,17 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
 
   // Pixel art decorations - carefully positioned to avoid overlap
   const pixelArts = [
-    { emoji: "🎂", top: 10, left: 85, delay: 0.2 },
+    { emoji: "🎮", top: 10, left: 85, delay: 0.2 },
     { emoji: "🎁", top: 80, left: 10, delay: 0.5 },
-    { emoji: "🎈", top: 15, left: 15, delay: 0.8 },
+    { emoji: "💙", top: 15, left: 15, delay: 0.8 },
     { emoji: "✨", top: 75, left: 85, delay: 1.1 },
   ];
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-sara-retro1/20 via-background to-sara-retro3/20 p-4">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-sara-pixel6 via-sara-pixelBg to-sara-pixel1 p-4 relative overflow-hidden">
+      {/* Scanlines effect */}
+      <div className="absolute inset-0 bg-scanlines opacity-30 pointer-events-none"></div>
+      
       {/* Pixel art decorations */}
       {pixelArts.map((item, index) => (
         <div 
@@ -64,25 +68,34 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
         </div>
       ))}
 
-      <div className="w-full max-w-md relative">
+      {/* Pixel Character */}
+      <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-32 h-32 pixel-character-container">
+        <img 
+          src="/lovable-uploads/6ce3c4f5-4273-48e0-82f0-c8022f62c515.png" 
+          alt="Pixel Character" 
+          className="w-full h-full object-contain"
+        />
+      </div>
+
+      <div className="w-full max-w-md relative mt-32">
         <div 
-          className="bg-white/80 backdrop-blur-lg rounded-lg shadow-lg p-8 border-2 border-black transition-all"
-          style={{ boxShadow: "4px 4px 0 rgba(0,0,0,0.8)" }}
+          className="bg-sara-pixelBg backdrop-blur-lg rounded-none shadow-lg p-8 border-2 border-sara-pixel3 transition-all"
+          style={{ boxShadow: "4px 4px 0 rgba(59, 130, 246, 0.4)" }}
         >
           <div className="pixel-shadow mb-6 text-center">
-            <h1 className="text-3xl font-press text-primary mb-2">
-              <span className="animate-rainbow inline-block">Hello there! Sara</span> 
-              <span className="inline-block ml-2">💟</span>
+            <h1 className="text-2xl font-press text-sara-pixel5 mb-2">
+              <span className="animate-pixel-rainbow inline-block">Hello Sara!</span> 
+              <span className="inline-block ml-2">💙</span>
             </h1>
-            <p className="text-sm font-vt323 text-gray-600"></p>
+            <p className="text-sm font-vt323 text-sara-pixel4"></p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="password" className="block text-sm font-vt323 text-gray-700 mb-2">
-                Please enter the password:
+              <label htmlFor="password" className="block text-sm font-vt323 text-sara-pixel5 mb-2">
+                Enter Password:
               </label>
-              <p className="font-vt323 text-xs text-gray-500 mb-4">
+              <p className="font-vt323 text-xs text-sara-pixel4 mb-4">
                 Hint: Your special day is the key (format: DayMonth)
               </p>
               <input
@@ -92,24 +105,24 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Example : 0122"
-                className="w-full px-4 py-3 rounded-md border-2 border-black font-vt323 focus:outline-none text-center text-xl tracking-widest"
+                className="w-full px-4 py-3 rounded-none border-2 border-sara-pixel3 bg-sara-pixel6 font-vt323 focus:outline-none text-center text-xl tracking-widest text-sara-pixel5"
                 autoFocus
-                style={{ boxShadow: "2px 2px 0 rgba(0,0,0,0.8)" }}
+                style={{ boxShadow: "2px 2px 0 rgba(59, 130, 246, 0.4)" }}
               />
             </div>
             
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-sara-retro3 text-white rounded-md font-press text-sm hover:bg-sara-retro3/90 transition-colors"
-              style={{ boxShadow: "2px 2px 0 rgba(0,0,0,0.8)" }}
+              className="w-full py-3 px-4 bg-sara-pixel2 text-white rounded-none font-press text-sm hover:bg-sara-pixel3 transition-colors"
+              style={{ boxShadow: "2px 2px 0 rgba(59, 130, 246, 0.4)" }}
             >
-              Enter ✨
+              START GAME ▶
             </button>
           </form>
           
           <div className="mt-4 text-center">
-            <p className="font-vt323 text-sm text-gray-500">
-            👉👈
+            <p className="font-vt323 text-sm text-sara-pixel4">
+              Press START to continue
             </p>
           </div>
         </div>

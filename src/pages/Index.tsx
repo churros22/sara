@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import EntryScreen from "@/components/EntryScreen";
 import Home from "@/pages/Home";
 import { useAudio } from "@/contexts/AudioContext";
@@ -8,6 +9,7 @@ import { preloadAssets } from "@/utils/preload";
 const Index = () => {
   const [accessGranted, setAccessGranted] = useState(false);
   const audio = useAudio();
+  const navigate = useNavigate();
 
   // Start preloading assets immediately when the page loads
   useEffect(() => {
@@ -18,13 +20,17 @@ const Index = () => {
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
     if (hasAccess) {
       setAccessGranted(true);
+      // Use navigate instead of directly rendering Home component
+      navigate("/home");
     }
-  }, []);
+  }, [navigate]);
 
   const handleAccessGranted = () => {
     // Store access granted status in localStorage
     localStorage.setItem("saraAccessGranted", "true");
     setAccessGranted(true);
+    // Navigate to home using router
+    navigate("/home");
   };
 
   // Make sure audio is completely stopped when on login screen
@@ -35,11 +41,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen w-full">
-      {accessGranted ? (
-        <Home />
-      ) : (
-        <EntryScreen onAccessGranted={handleAccessGranted} />
-      )}
+      {!accessGranted && <EntryScreen onAccessGranted={handleAccessGranted} />}
     </div>
   );
 };
