@@ -1,0 +1,63 @@
+
+/* Retro Pixel Art Styling */
+.pixel-tile {
+  @apply p-3 rounded-none shadow-sm cursor-pointer transition-all duration-300 hover:translate-y-[-2px] border-2 border-sara-pixel3 bg-sara-pixelBg text-sara-pixel5;
+  image-rendering: pixelated;
+  box-shadow: 4px 4px 0 rgba(59, 130, 246, 0.4);
+}
+
+.pixel-button {
+  @apply px-4 py-2 rounded-none bg-sara-pixel2 border-2 border-sara-pixel4 text-white transition-all duration-300 hover:bg-sara-pixel3;
+  box-shadow: 3px 3px 0 rgba(59, 130, 246, 0.4);
+  image-rendering: pixelated;
+}
+
+.pixel-button-small {
+  @apply rounded-none bg-sara-pixelBg border-2 border-sara-pixel3 text-sara-pixel5 transition-all duration-300 hover:bg-sara-pixel6;
+  box-shadow: 2px 2px 0 rgba(59, 130, 246, 0.4);
+  image-rendering: pixelated;
+}
+
+.pixel-icon-container {
+  @apply bg-sara-pixelBg p-2 border border-sara-pixel3 rounded-none;
+}
+
+.pixel-text-glow {
+  text-shadow: 0 0 5px #60A5FA, 0 0 10px #3B82F6;
+}
+
+/* Pixel perfect borders and shadows */
+.pixel-border {
+  box-shadow: 4px 4px 0 rgba(59, 130, 246, 0.4);
+}
+
+.pixel-glitch {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(59, 130, 246, 0.2) 2px,
+    rgba(59, 130, 246, 0.2) 4px
+  );
+}
+
+.interactive-pixel-tile {
+  @apply p-6 rounded-none shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:translate-y-[-4px] border-2 border-sara-pixel3;
+  box-shadow: 4px 4px 0 rgba(59, 130, 246, 0.4);
+}
+
+.pixel-glass {
+  @apply bg-sara-pixel6/50 backdrop-blur-md border border-sara-pixel4/30;
+}
+
+/* Pixel perfect shadows */
+.pixel-shadow {
+  text-shadow: 2px 2px 0 rgba(30, 58, 138, 0.4);
+}
+
+/* Pixelated Character Container */
+.pixel-character-container {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  @apply animate-pixel-float;
+}
