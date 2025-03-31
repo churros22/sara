@@ -1,6 +1,7 @@
+
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Music, VolumeX, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { useAudio } from "@/contexts/AudioContext";
@@ -8,8 +9,6 @@ import { useAudio } from "@/contexts/AudioContext";
 const Home = () => {
   const navigate = useNavigate();
   const [showContent, setShowContent] = useState(false);
-  const [audioPlaying, setAudioPlaying] = useState(true); // Changed to true
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const audioContext = useAudio();
@@ -67,20 +66,6 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    // Create audio element for home page background music
-    if (!audio) {
-      const audioElement = new Audio("/assets/audio/sara_impala.mp3");
-      audioElement.loop = true;
-      audioElement.volume = 0.5;  // Lower volume for background music
-      setAudio(audioElement);
-      
-      // Try to auto-play
-      audioElement.play().catch(error => {
-        console.error("Audio playback failed:", error);
-        setAudioPlaying(false);
-      });
-    }
-
     // Fade in content
     const timer = setTimeout(() => {
       setShowContent(true);
@@ -89,39 +74,10 @@ const Home = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [audio]);
-
-  // Clean up audio when component unmounts
-  useEffect(() => {
-    return () => {
-      if (audio) {
-        audio.pause();
-        audio.src = "";
-        setAudio(null);
-      }
-    };
-  }, [audio]);
-
-  const toggleAudio = () => {
-    if (!audio) return;
-    
-    if (audioPlaying) {
-      audio.pause();
-    } else {
-      audio.play().catch(error => {
-        console.error("Audio playback failed:", error);
-      });
-    }
-    
-    setAudioPlaying(!audioPlaying);
-  };
+  }, []);
 
   const handleLogout = () => {
     // Stop all audio and clear context when logging out
-    if (audio) {
-      audio.pause();
-      audio.src = "";
-    }
     audioContext.stopAndReset();
     
     localStorage.removeItem("saraAccessGranted");
@@ -138,41 +94,33 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-tr from-sara-pastel3/40 via-background to-sara-pastel2/40 p-4 sm:p-8 overflow-x-hidden relative">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-black p-4 sm:p-8 overflow-x-hidden relative">
+      {/* Retro scanlines overlay */}
+      <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-10"></div>
+      
       <div className="relative w-full max-w-4xl z-10">
-        {/* Audio and logout buttons */}
+        {/* Logout button only */}
         <div className={`absolute top-2 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}>
           <button
-            onClick={toggleAudio}
-            className="glass rounded-full p-2 animate-hover transition-all duration-300"
-            aria-label={audioPlaying ? "Mute music" : "Play music"}
-          >
-            {audioPlaying ? (
-              <Music size={isMobile ? 16 : 20} className="text-sara-retro5 animate-pulse-gentle" />
-            ) : (
-              <VolumeX size={isMobile ? 16 : 20} className="text-sara-retro1" />
-            )}
-          </button>
-          <button
             onClick={handleLogout}
-            className="glass rounded-full p-2 animate-hover transition-all duration-300"
+            className="retro-button-small p-2 animate-hover transition-all duration-300"
             aria-label="Log out"
           >
-            <LogOut size={isMobile ? 16 : 20} className="text-sara-retro3" />
+            <LogOut size={isMobile ? 16 : 20} className="text-green-400" />
           </button>
         </div>
 
         <div className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
-          <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-primary pixel-shadow animate-scale-in">
+          <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-green-400 retro-text-glow animate-scale-in">
             Hello Sara!
           </h1>
-          <div className="w-12 h-1 bg-sara-pink mx-auto my-3 rounded-full"></div>
-          <p className="text-xl font-pixel text-muted-foreground px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="w-12 h-1 bg-green-500 mx-auto my-3 rounded-full pixel-border"></div>
+          <p className="text-xl font-press text-green-200 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             Welcome! Please feel at home, mi casa is your casa
           </p>
         </div>
 
-        {/* Section cards using buttons instead of links to prevent full page refreshes */}
+        {/* Section cards using buttons with retro gaming style */}
         <div 
           className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
           style={{ animationDelay: '0.2s' }}
@@ -181,25 +129,25 @@ const Home = () => {
             <button 
               key={section.id}
               onClick={() => navigateTo(`/${section.id}`)}
-              className={`interactive-tile-small bg-${section.color}/10 relative overflow-hidden group border border-${section.color}/20 rounded-lg shadow-sm text-left w-full`}
+              className="retro-tile text-left w-full relative overflow-hidden group"
             >
-              <div className={`absolute inset-0 bg-gradient-to-br from-${section.color}/20 to-${section.color}/10 opacity-50 group-hover:opacity-70 transition-opacity`}></div>
+              <div className="pixel-glitch absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity"></div>
               <div className="relative z-10 p-3 text-center">
-                <div className="bg-white/30 p-2 rounded-full mx-auto mb-2 w-10 h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="retro-icon-container mx-auto mb-2 w-10 h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {section.icon}
                 </div>
-                <h2 className="text-base font-pixel font-semibold truncate pixel-shadow">{section.title}</h2>
-                <p className="text-xs mt-1 opacity-80">{section.description}</p>
+                <h2 className="text-base font-press font-semibold truncate retro-text-glow">{section.title}</h2>
+                <p className="text-xs mt-1 text-green-200">{section.description}</p>
               </div>
             </button>
           ))}
         </div>
       </div>
 
-      <div className={`mt-6 text-center text-sm text-muted-foreground ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
-        <p className="font-pixel text-lg">Made with love 'and rage :3' for you 💖</p>
+      <div className={`mt-6 text-center text-sm text-green-200 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
+        <p className="font-press text-lg">Made with love 'and rage :3' for you 💖</p>
         <div className="mt-2 font-pixel">
-          <span className="inline-block animate-rainbow font-bold pixel-shadow">✨ Happy Birthday Sara! ✨</span>
+          <span className="inline-block animate-rainbow font-bold retro-text-glow">✨ Happy Birthday Sara! ✨</span>
         </div>
       </div>
     </div>

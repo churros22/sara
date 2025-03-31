@@ -59,26 +59,46 @@
   }
 }
 
-/* Custom styles for interactive cards */
-.interactive-tile {
-  @apply p-6 rounded-lg shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:translate-y-[-4px] hover:ring-2 hover:ring-white/20;
+/* Retro Video Game Styling */
+.retro-tile {
+  @apply p-3 rounded-sm shadow-sm cursor-pointer transition-all duration-300 hover:translate-y-[-2px] border-2 border-green-500 bg-black/80 text-green-400;
+  box-shadow: 4px 4px 0 rgba(34, 197, 94, 0.4);
 }
 
-.interactive-tile-small {
-  @apply p-3 rounded-lg shadow-sm cursor-pointer transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px] hover:ring-1 hover:ring-white/20;
+.retro-button-small {
+  @apply rounded-sm bg-black border-2 border-green-500 text-green-400 transition-all duration-300 hover:bg-green-900/20;
+  box-shadow: 2px 2px 0 rgba(34, 197, 94, 0.4);
 }
 
-.glass {
-  @apply bg-white/5 backdrop-blur-md border border-white/10;
+.retro-icon-container {
+  @apply bg-black/50 p-2 border border-green-500 rounded-sm;
 }
 
-/* Pixel perfect shadows */
-.pixel-shadow {
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+.retro-text-glow {
+  text-shadow: 0 0 5px #4ade80, 0 0 10px #4ade80, 0 0 15px #4ade80;
 }
 
+/* Pixel perfect borders and shadows */
 .pixel-border {
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 4px 4px 0 rgba(34, 197, 94, 0.4);
+}
+
+.pixel-glitch {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(34, 197, 94, 0.2) 2px,
+    rgba(34, 197, 94, 0.2) 4px
+  );
+}
+
+.bg-scanlines {
+  background-image: linear-gradient(
+    transparent 50%,
+    rgba(34, 197, 94, 0.1) 50%
+  );
+  background-size: 100% 4px;
 }
 
 /* Animation utilities */
@@ -101,14 +121,23 @@
 }
 
 @keyframes rainbow {
-  0% { color: #ff99cc; }
-  14% { color: #ff9999; }
-  28% { color: #ffcc99; }
-  42% { color: #ffff99; }
-  56% { color: #99ff99; }
-  70% { color: #99ffff; }
-  84% { color: #9999ff; }
-  100% { color: #ff99cc; }
+  0% { color: #4ade80; }
+  14% { color: #22c55e; }
+  28% { color: #16a34a; }
+  42% { color: #4ade80; }
+  56% { color: #a3e635; }
+  70% { color: #4ade80; }
+  84% { color: #22c55e; }
+  100% { color: #4ade80; }
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0.7;
+  }
 }
 
 .animate-float {
@@ -123,6 +152,10 @@
   animation: rainbow 8s linear infinite;
 }
 
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
 .animate-hover {
   @apply transition-transform duration-200 hover:scale-105;
 }
@@ -133,17 +166,17 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(34, 197, 94, 0.1);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(34, 197, 94, 0.3);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(34, 197, 94, 0.5);
 }
 
 /* Page transitions */
@@ -160,4 +193,48 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Retro video game specific animations */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.animate-glitch {
+  animation: glitch 0.5s ease-out;
+}
+
+/* Custom interactive cards */
+.interactive-tile {
+  @apply p-6 rounded-lg shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:translate-y-[-4px] hover:ring-2 hover:ring-white/20;
+}
+
+.interactive-tile-small {
+  @apply p-3 rounded-lg shadow-sm cursor-pointer transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px] hover:ring-1 hover:ring-white/20;
+}
+
+.glass {
+  @apply bg-white/5 backdrop-blur-md border border-white/10;
+}
+
+/* Pixel perfect shadows */
+.pixel-shadow {
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
