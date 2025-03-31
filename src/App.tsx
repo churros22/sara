@@ -4,20 +4,17 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, Suspense, lazy } from "react";
+import { useEffect } from "react";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
+import Saranterest from "./pages/Saranterest";
+import Googolu from "./pages/Googolu";
+import Saratify from "./pages/Saratify";
+import Saraprise from "./pages/Saraprise";
+import NotFound from "./pages/NotFound";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
 import PersistentView, { PersistentLayout } from "./layouts/PersistentLayout";
-import FloatingPlayer from "./components/FloatingPlayer";
-
-// Lazy load less frequently accessed pages to improve performance
-const Saranterest = lazy(() => import("./pages/Saranterest"));
-const Googolu = lazy(() => import("./pages/Googolu"));
-const Saratify = lazy(() => import("./pages/Saratify"));
-const Saraprise = lazy(() => import("./pages/Saraprise"));
-const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Create a persistent query client for better caching
 const queryClient = new QueryClient({
@@ -66,8 +63,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
     if (!hasAccess && location.pathname !== "/") {
-      // Use replace to avoid back button issues
-      navigate("/", { replace: true });
+      navigate("/");
     }
     
     // Only handle cleanup on unmount
@@ -108,9 +104,7 @@ function App() {
                     path="/saranterest"
                     element={
                       <PersistentView path="/saranterest">
-                        <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center">Loading...</div>}>
-                          <Saranterest />
-                        </Suspense>
+                        <Saranterest />
                       </PersistentView>
                     }
                   />
@@ -118,9 +112,7 @@ function App() {
                     path="/googolu"
                     element={
                       <PersistentView path="/googolu">
-                        <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center">Loading...</div>}>
-                          <Googolu />
-                        </Suspense>
+                        <Googolu />
                       </PersistentView>
                     }
                   />
@@ -128,9 +120,7 @@ function App() {
                     path="/saratify"
                     element={
                       <PersistentView path="/saratify">
-                        <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center">Loading...</div>}>
-                          <Saratify />
-                        </Suspense>
+                        <Saratify />
                       </PersistentView>
                     }
                   />
@@ -138,20 +128,13 @@ function App() {
                     path="/saraprise"
                     element={
                       <PersistentView path="/saraprise">
-                        <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center">Loading...</div>}>
-                          <Saraprise />
-                        </Suspense>
+                        <Saraprise />
                       </PersistentView>
                     }
                   />
-                  <Route path="*" element={
-                    <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center">Loading...</div>}>
-                      <NotFound />
-                    </Suspense>
-                  } />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </AuthGuard>
-              <FloatingPlayer />
             </PersistentLayout>
             <Toaster />
             <Sonner />

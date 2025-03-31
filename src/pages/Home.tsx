@@ -5,7 +5,6 @@ import { LogOut } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { useAudio } from "@/contexts/AudioContext";
-import NavMenu from "@/components/NavMenu";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -86,10 +85,10 @@ const Home = () => {
       title: "Logged out! 👋",
       description: "Come back soon!",
     });
-    navigate("/", { replace: true });
+    navigate("/");
   };
 
-  // Navigate to a specific path
+  // Use Link from react-router-dom for navigation to avoid full page refreshes
   const navigateTo = (path: string) => {
     navigate(path);
   };
@@ -99,7 +98,7 @@ const Home = () => {
       {/* Retro scanlines overlay */}
       <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-10"></div>
       
-      <div className="relative w-full max-w-4xl z-10 pb-20">
+      <div className="relative w-full max-w-4xl z-10">
         {/* Logout button only */}
         <div className={`absolute top-2 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}>
           <button
@@ -107,16 +106,16 @@ const Home = () => {
             className="retro-button-small p-2 animate-hover transition-all duration-300"
             aria-label="Log out"
           >
-            <LogOut size={isMobile ? 16 : 20} className="text-blue-400" />
+            <LogOut size={isMobile ? 16 : 20} className="text-green-400" />
           </button>
         </div>
 
         <div className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
-          <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-blue-400 retro-text-glow animate-scale-in">
+          <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-green-400 retro-text-glow animate-scale-in">
             Hello Sara!
           </h1>
-          <div className="w-12 h-1 bg-blue-500 mx-auto my-3 rounded-full pixel-border"></div>
-          <p className="text-xl font-press text-blue-200 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="w-12 h-1 bg-green-500 mx-auto my-3 rounded-full pixel-border"></div>
+          <p className="text-xl font-press text-green-200 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             Welcome! Please feel at home, mi casa is your casa
           </p>
         </div>
@@ -138,22 +137,19 @@ const Home = () => {
                   {section.icon}
                 </div>
                 <h2 className="text-base font-press font-semibold truncate retro-text-glow">{section.title}</h2>
-                <p className="text-xs mt-1 text-blue-200">{section.description}</p>
+                <p className="text-xs mt-1 text-green-200">{section.description}</p>
               </div>
             </button>
           ))}
         </div>
       </div>
 
-      <div className={`mt-6 text-center text-sm text-blue-200 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
+      <div className={`mt-6 text-center text-sm text-green-200 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
         <p className="font-press text-lg">Made with love 'and rage :3' for you 💖</p>
         <div className="mt-2 font-pixel">
           <span className="inline-block animate-rainbow font-bold retro-text-glow">✨ Happy Birthday Sara! ✨</span>
         </div>
       </div>
-      
-      {/* Navigation Menu */}
-      <NavMenu />
     </div>
   );
 };

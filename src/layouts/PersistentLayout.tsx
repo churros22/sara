@@ -25,8 +25,7 @@ const PersistentView = ({ path, children }: PersistentViewProps) => {
     <div style={{ 
       display: pathname === path ? "block" : "none",
       height: pathname === path ? "auto" : "0",
-      overflow: pathname === path ? "visible" : "hidden",
-      position: "relative"
+      overflow: pathname === path ? "visible" : "hidden"
     }}>
       {children}
     </div>
@@ -34,7 +33,7 @@ const PersistentView = ({ path, children }: PersistentViewProps) => {
 };
 
 export const PersistentLayout = ({ children }: { children: ReactNode }) => {
-  return <div className="relative w-full min-h-screen">{children}</div>;
+  return <div className="relative">{children}</div>;
 };
 
 export default PersistentView;
