@@ -67,7 +67,7 @@ const Saranterest = () => {
           {categories.map((category, index) => (
             <div 
               key={index}
-              className="px-3 py-1.5 rounded-full bg-gray-100 text-sm font-vt323 whitespace-nowrap hover:bg-gray-200 cursor-pointer transition-all"
+              className="px-3 py-1.5 rounded-full bg-gray-100 text-sm text-black font-vt323 whitespace-nowrap hover:bg-gray-200 cursor-pointer transition-all"
               style={{ 
                 border: '1px solid #000',
                 boxShadow: '1px 1px 0 #000'

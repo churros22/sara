@@ -86,8 +86,8 @@ const Home = () => {
     
     localStorage.removeItem("saraAccessGranted");
     toast({
-      title: "Game Saved! 👋",
-      description: "Come back soon to continue your adventure!",
+      title: "Bye Bye 👋",
+      description: "Miss you already! 😢",
     });
     navigate("/");
   };
@@ -98,7 +98,7 @@ const Home = () => {
       <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-20"></div>
       
       {/* Pixel Character */}
-      <div className="absolute top-20 sm:top-12 left-1/2 transform -translate-x-1/2 w-32 h-32 pixel-character-container">
+      <div className="absolute top-40 sm:top-12 left-11 transform -translate-x-1/2 w-11 h-11 pixel-character-container">
         {!imageLoaded && (
           <div className="w-full h-full">
             <Skeleton className="w-full h-full bg-sara-pixel3/20 animate-pulse-gentle" />
@@ -126,11 +126,14 @@ const Home = () => {
 
         <div className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
           <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-sara-pixel5 pixel-text-glow animate-scale-in">
-            Hello Sara!
+            Hi Sara!
           </h1>
           <div className="w-12 h-1 bg-sara-pixel3 mx-auto my-3 rounded-none pixel-border"></div>
           <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            Welcome to your pixel adventure
+            Welcome 🎉 
+          </p>
+          <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            Feel free por favor, mi casa is your casa 
           </p>
         </div>
 
@@ -150,7 +153,7 @@ const Home = () => {
                 <div className="pixel-icon-container mx-auto mb-2 w-10 h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {section.icon}
                 </div>
-                <h2 className="text-base font-press font-semibold truncate pixel-text-glow">{section.title}</h2>
+                <h2 className="text-base font-press font-semibold truncate pixel-text-">{section.title}</h2>
                 <p className="text-xs mt-1 text-sara-pixel4">{section.description}</p>
               </div>
             </Link>
@@ -159,7 +162,8 @@ const Home = () => {
       </div>
 
       <div className={`mt-6 text-center text-sm text-sara-pixel4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
-        <p className="font-press text-lg">Made with love 'and rage :3' 💙</p>
+        <p className="font-press text-lg">Made with love 💙</p>
+        <p className="mt-2 font-press">and rage :3 </p>
         <div className="mt-2 font-pixel">
           <span className="inline-block animate-pixel-rainbow font-bold pixel-text-glow">✨ Happy Birthday Sara! ✨</span>
         </div>

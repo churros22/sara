@@ -2,10 +2,10 @@
 /* Animation utilities */
 @keyframes float {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateX(0px);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(10px);
   }
 }
 
@@ -19,14 +19,14 @@
 }
 
 @keyframes pixel-rainbow {
-  0% { color: #60A5FA; }
+  0% { color: #60f0fa; }
   14% { color: #3B82F6; }
   28% { color: #2563EB; }
-  42% { color: #93C5FD; }
+  42% { color: #3b09f3; }
   56% { color: #60A5FA; }
   70% { color: #3B82F6; }
-  84% { color: #2563EB; }
-  100% { color: #60A5FA; }
+  84% { color: #2bcfd4; }
+  100% { color: #17ac44; }
 }
 
 @keyframes blink {
@@ -92,7 +92,7 @@
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
 }
 
 .animate-pulse-gentle {
@@ -100,7 +100,7 @@
 }
 
 .animate-pixel-rainbow {
-  animation: pixel-rainbow 8s linear infinite;
+  animation: pixel-rainbow 4s linear infinite;
 }
 
 .animate-blink {

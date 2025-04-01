@@ -12,7 +12,7 @@ interface SongInfoProps {
 const SongInfo = ({ song }: SongInfoProps) => {
   return (
     <div className="flex flex-col">
-      <div className="relative w-full">
+      <div className="relative w-1/1">
         {/* Album art with improved iPhone compatibility */}
         <div className="relative aspect-square overflow-hidden rounded-lg mb-4 shadow-lg group">
           <img 
@@ -23,15 +23,6 @@ const SongInfo = ({ song }: SongInfoProps) => {
             decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30 group-hover:opacity-80 transition-opacity"></div>
-          
-          {/* Spotify-like hover play state */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="bg-[#1DB954]/90 rounded-full w-12 h-12 flex items-center justify-center">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="white">
-                <path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z"></path>
-              </svg>
-            </div>
-          </div>
           
           {/* Like button overlay */}
           <button className="absolute bottom-3 right-3 bg-black/40 p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
@@ -49,8 +40,8 @@ const SongInfo = ({ song }: SongInfoProps) => {
       {/* Additional features like album and release date */}
       <div className="mt-4 px-2 text-xs text-white/50">
         <div className="flex justify-between">
-          <span>From the album</span>
-          <span>2023</span>
+          <span>From the album of saranade</span>
+          <span>2025</span>
         </div>
       </div>
     </div>

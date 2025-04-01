@@ -18,13 +18,13 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
     if (password === correctPassword) {
       onAccessGranted();
       toast({
-        title: "🎮 Level Unlocked!",
-        description: "Access granted. Welcome to Sara's world!",
+        title: "Hooray! 🎉",
+        duration: 1000,
       });
     } else {
       toast({
         title: "❌ Wrong Password",
-        description: "Game Over! Try again with the correct password.",
+        description: "Try again slow Sara 😜",
         variant: "destructive",
       });
       setPassword("");
@@ -40,16 +40,13 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
 
   // Pixel art decorations - carefully positioned to avoid overlap
   const pixelArts = [
-    { emoji: "🎮", top: 10, left: 85, delay: 0.2 },
-    { emoji: "🎁", top: 80, left: 10, delay: 0.5 },
-    { emoji: "💙", top: 15, left: 15, delay: 0.8 },
-    { emoji: "✨", top: 75, left: 85, delay: 1.1 },
+    { emoji: "💙", top: 11, left: 50, delay: 0.8, },
   ];
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-sara-pixel6 via-sara-pixelBg to-sara-pixel1 p-4 relative overflow-hidden">
       {/* Scanlines effect */}
-      <div className="absolute inset-0 bg-scanlines opacity-30 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-scanlines opacity-70 pointer-events-none"></div>
       
       {/* Pixel art decorations */}
       {pixelArts.map((item, index) => (
@@ -69,7 +66,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
       ))}
 
       {/* Pixel Character */}
-      <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-32 h-32 pixel-character-container">
+      <div className="absolute top-20 left-50 transform -translate-x-1/2 w-32 h-32 pixel-character-container">
         <img 
           src="/lovable-uploads/6ce3c4f5-4273-48e0-82f0-c8022f62c515.png" 
           alt="Pixel Character" 
@@ -116,13 +113,13 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
               className="w-full py-3 px-4 bg-sara-pixel2 text-white rounded-none font-press text-sm hover:bg-sara-pixel3 transition-colors"
               style={{ boxShadow: "2px 2px 0 rgba(59, 130, 246, 0.4)" }}
             >
-              START GAME ▶
+              Enter ▶
             </button>
           </form>
           
           <div className="mt-4 text-center">
             <p className="font-vt323 text-sm text-sara-pixel4">
-              Press START to continue
+              Press Enter to continue 
             </p>
           </div>
         </div>

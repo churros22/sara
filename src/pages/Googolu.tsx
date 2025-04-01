@@ -123,8 +123,11 @@ const Googolu = () => {
             onClick={() => navigate("/")}
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"
             aria-label="Go back to home"
+            color="black"
           >
-            <ArrowLeft size={isMobile ? 20 : 24} className="rotate-180" />
+            <ArrowLeft size={isMobile ? 20 : 24}  
+            color="black"
+            />
           </button>
         </div>
       </div>

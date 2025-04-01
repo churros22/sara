@@ -47,7 +47,7 @@ const Saraprise = () => {
           >
             <ArrowLeft size={24} />
           </button>
-          <h1 className="text-3xl font-bold font-pixel pixel-shadow animate-scale-in">Saraprise</h1>
+          <h1 className="text-2xl font-bold font-pixel pixel-shadow animate-scale-in">Saraprise</h1>
         </div>
 
         <div className="max-w-screen-sm mx-auto glass p-4 rounded-2xl shadow-lg animate-fade-in">
@@ -55,8 +55,8 @@ const Saraprise = () => {
           {isIframeLoading && (
             <div className="w-full h-[400px] flex flex-col items-center justify-center rounded-lg bg-black/5 backdrop-blur-sm">
               <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-              <p className="text-lg font-pixel text-primary">Loading your surprise...</p>
-              <p className="text-sm text-muted-foreground mt-2">This might take a moment to load</p>
+              <p className="text-lg font-pixel text-primary">Loading...</p>
+              <p className="text-sm text-muted-foreground mt-2">Be patient Patrice</p>
             </div>
           )}
 
@@ -64,9 +64,9 @@ const Saraprise = () => {
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
-            className={`w-full h-[400px] rounded-lg border-0 transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
+            className={`relative w-full h-full rounded-lg transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
             onLoad={handleIframeLoad}
-            style={{ overflow: "hidden" }}
+            style={{ overflow: "hidden", border: "none" }}
           ></iframe>
 
           {/* Additional content: Pictures and text */}

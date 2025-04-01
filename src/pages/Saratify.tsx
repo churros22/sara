@@ -112,8 +112,8 @@ const Saratify = () => {
           {/* Player section with more Spotify-like styling */}
           <div className="bg-gradient-to-br from-gray-900/90 to-black/90 rounded-lg p-4 sm:p-6 shadow-lg backdrop-blur-lg border border-gray-800">
             <div className="mb-6 text-center">
-              <h2 className="text-3xl text-[#1DB954] font-bold mb-2">Sara's Playlist</h2>
-              <p className="text-gray-400">Songs selected just for you</p>
+              <h2 className="text-xl text-[#1DB954] font-bold mb-2">Sara's Playlist</h2>
+              <p className="text-xs text-gray-400">Songs selected just for you</p>
             </div>
             
             <MusicPlayer songs={songs} />

@@ -107,7 +107,7 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
           {/* Lyrics section */}
           {currentSong.lyrics && (
             <div className="px-4 py-3 rounded-lg bg-white/5 text-center max-h-48 overflow-y-auto">
-              <h3 className="text-white/90 text-sm mb-2 font-semibold">Lyrics</h3>
+              <h3 className="text-white/90 text-sm mb-2 font-semibold">More info</h3>
               <p className="text-white/70 text-sm whitespace-pre-line">{currentSong.lyrics}</p>
             </div>
           )}
@@ -116,9 +116,6 @@ const MusicPlayer = ({ songs }: MusicPlayerProps) => {
           <div className="mt-4 flex justify-between items-center text-xs text-white/50">
             <div>
               <span className="mr-2">{currentSongIndex + 1} of {songs.length}</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span>Made with 💚</span>
             </div>
           </div>
         </div>
