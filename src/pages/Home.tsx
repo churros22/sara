@@ -132,7 +132,7 @@ const Home = () => {
         </div>
 
         {/* Header section with welcome message */}
-        <AnimatedWrap>
+        <AnimatedWrap animation="fade-in">
           <div className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
             <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-sara-pixel5 pixel-text-glow animate-scale-in">
               Hi Sara!
