@@ -60,13 +60,13 @@ const Saraprise = () => {
             </div>
           )}
 
-          {/* Embed the external HTML page using an iframe with adjusted dimensions */}
+          {/* Embed the external HTML page using an iframe with removed borders/margins */}
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
-            className={`relative w-full h-full rounded-lg transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
+            className={`relative w-full rounded-lg transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
             onLoad={handleIframeLoad}
-            style={{ overflow: "hidden", border: "none" }}
+            style={{ overflow: "hidden", border: "none", margin: 0, padding: 0, height: "500px" }}
           ></iframe>
 
           {/* Additional content: Pictures and text */}
