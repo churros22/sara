@@ -7,10 +7,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useAudio } from "@/contexts/AudioContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import AnimatedWrap from "@/components/AnimatedWrap";
+import DesktopEnvironment from "@/components/DesktopEnvironment";
 
 /**
  * Home Page Component
- * Main landing page after login with pixel art design
+ * Main landing page after login with pixel art design and desktop environment
  */
 const Home = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Home = () => {
   const { toast } = useToast();
   const audioContext = useAudio();
 
-  // App sections with detailed descriptions
+  // App sections with detailed descriptions for reference
   const sections = [
     {
       id: "saranterest",
@@ -92,6 +93,8 @@ const Home = () => {
     audioContext.stopAndReset();
     
     localStorage.removeItem("saraAccessGranted");
+    localStorage.removeItem("desktopLastVisited"); // Clear desktop state on logout
+    
     toast({
       title: "Bye Bye 👋",
       description: "Miss you already! 😢",
@@ -139,37 +142,18 @@ const Home = () => {
             </h1>
             <div className="w-12 h-1 bg-sara-pixel3 mx-auto my-3 rounded-none pixel-border"></div>
             <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              Welcome 🎉 
+              Welcome to your interactive desktop 🎉 
             </p>
             <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              Feel free por favor, mi casa is your casa 
+              Click on any device to explore
             </p>
           </div>
         </AnimatedWrap>
 
-        {/* App navigation grid with pixel art styling */}
-        <div 
-          className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
-          style={{ animationDelay: '0.2s' }}
-        >
-          {sections.map((section) => (
-            <Link 
-              key={section.id}
-              to={`/${section.id}`}
-              className="pixel-tile relative overflow-hidden group"
-            >
-              {/* Glitch effect overlay on hover */}
-              <div className="pixel-glitch absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity"></div>
-              <div className="relative z-10 p-3 text-center">
-                <div className="pixel-icon-container mx-auto mb-2 w-10 h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  {section.icon}
-                </div>
-                <h2 className="text-base font-press font-semibold truncate pixel-text-">{section.title}</h2>
-                <p className="text-xs mt-1 text-sara-pixel4">{section.description}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
+        {/* New Desktop Environment Component */}
+        <AnimatedWrap animation="fade-in" delay={0.2}>
+          <DesktopEnvironment />
+        </AnimatedWrap>
       </div>
 
       {/* Footer with animated birthday message */}
