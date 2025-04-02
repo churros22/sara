@@ -4,12 +4,17 @@ import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ArrowLeft } from "lucide-react";
 
+/**
+ * Saraprise Page Component
+ * A special surprise page for Sara with embedded content
+ */
 const Saraprise = () => {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
   const [isIframeLoading, setIsIframeLoading] = useState(true);
   const isMobile = useIsMobile();
 
+  // Set loading state after initial render
   useEffect(() => {
     // Mark as loaded after a short delay for initial animations
     const timer = setTimeout(() => {
@@ -29,6 +34,10 @@ const Saraprise = () => {
     return () => clearTimeout(fallbackTimer);
   }, []);
 
+  /**
+   * Handle iframe load event
+   * Adds a small delay to ensure smooth transition
+   */
   const handleIframeLoad = () => {
     // Short delay to ensure smooth transition
     setTimeout(() => {
@@ -37,11 +46,12 @@ const Saraprise = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sara-pink/20 via-background to-sara-purple/20">
+    <div className="min-h-screen w-full bg-gradient-to-br from-sara-pink/20 via-background to-sara-purple/20">
       <div className="container py-8">
+        {/* Header with back button */}
         <div className="flex items-center mb-8 animate-fade-in">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
             className="p-2 rounded-full hover:bg-muted transition-colors mr-4 animate-pulse-gentle"
             aria-label="Go back"
           >
@@ -50,6 +60,7 @@ const Saraprise = () => {
           <h1 className="text-2xl font-bold font-pixel pixel-shadow animate-scale-in">Saraprise</h1>
         </div>
 
+        {/* Main content container */}
         <div className="max-w-screen-sm mx-auto glass p-4 rounded-2xl shadow-lg animate-fade-in">
           {/* Enhanced loading indicator */}
           {isIframeLoading && (
@@ -60,13 +71,19 @@ const Saraprise = () => {
             </div>
           )}
 
-          {/* Embed the external HTML page using an iframe with removed borders/margins */}
+          {/* Embed the external HTML page - removed borders and margins */}
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
             className={`relative w-full rounded-lg transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
             onLoad={handleIframeLoad}
-            style={{ overflow: "hidden", border: "none", margin: 0, padding: 0, height: "500px" }}
+            style={{ 
+              overflow: "hidden", 
+              border: "none", 
+              margin: 0, 
+              padding: 0, 
+              height: "500px"
+            }}
           ></iframe>
 
           {/* Additional content: Pictures and text */}
@@ -79,12 +96,12 @@ const Saraprise = () => {
               <img
                 src="./assets/images/sara_1.jpg"
                 alt="Sara smiling"
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               />
               <img
                 src="./assets/images/sara_2.jpg"
                 alt="Sara enjoying her day"
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               />
             </div>
             <p className="text-lg mt-6">

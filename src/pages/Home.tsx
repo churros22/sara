@@ -1,14 +1,17 @@
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { LogOut } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { useAudio } from "@/contexts/AudioContext";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Link } from "react-router-dom";
 import AnimatedWrap from "@/components/AnimatedWrap";
 
+/**
+ * Home Page Component
+ * Main landing page after login with pixel art design
+ */
 const Home = () => {
   const navigate = useNavigate();
   const [showContent, setShowContent] = useState(false);
@@ -69,8 +72,8 @@ const Home = () => {
     }
   ];
 
+  // Fade in content after initial render
   useEffect(() => {
-    // Fade in content
     const timer = setTimeout(() => {
       setShowContent(true);
     }, 300);
@@ -80,6 +83,10 @@ const Home = () => {
     };
   }, []);
 
+  /**
+   * Handle logout
+   * Clears localStorage and stops audio playback
+   */
   const handleLogout = () => {
     // Stop all audio and clear context when logging out
     audioContext.stopAndReset();
@@ -89,15 +96,15 @@ const Home = () => {
       title: "Bye Bye 👋",
       description: "Miss you already! 😢",
     });
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sara-pixelBg p-4 sm:p-8 overflow-x-hidden relative">
-      {/* Retro scanlines overlay */}
+      {/* Retro scanlines overlay for pixel art effect */}
       <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-20"></div>
       
-      {/* Pixel Character */}
+      {/* Pixel Character with skeleton loading */}
       <div className="absolute top-40 sm:top-12 left-11 transform -translate-x-1/2 w-11 h-11 pixel-character-container">
         {!imageLoaded && (
           <div className="w-full h-full">
@@ -113,7 +120,7 @@ const Home = () => {
       </div>
       
       <div className="relative w-full max-w-4xl z-10 mt-36 sm:mt-40">
-        {/* Logout button only */}
+        {/* Logout button */}
         <div className={`absolute top-2 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}>
           <button
             onClick={handleLogout}
@@ -124,20 +131,23 @@ const Home = () => {
           </button>
         </div>
 
-        <div className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
-          <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-sara-pixel5 pixel-text-glow animate-scale-in">
-            Hi Sara!
-          </h1>
-          <div className="w-12 h-1 bg-sara-pixel3 mx-auto my-3 rounded-none pixel-border"></div>
-          <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            Welcome 🎉 
-          </p>
-          <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            Feel free por favor, mi casa is your casa 
-          </p>
-        </div>
+        {/* Header section with welcome message */}
+        <AnimatedWrap>
+          <div className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
+            <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-sara-pixel5 pixel-text-glow animate-scale-in">
+              Hi Sara!
+            </h1>
+            <div className="w-12 h-1 bg-sara-pixel3 mx-auto my-3 rounded-none pixel-border"></div>
+            <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              Welcome 🎉 
+            </p>
+            <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              Feel free por favor, mi casa is your casa 
+            </p>
+          </div>
+        </AnimatedWrap>
 
-        {/* Section cards in grid layout with retro game styling */}
+        {/* App navigation grid with pixel art styling */}
         <div 
           className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
           style={{ animationDelay: '0.2s' }}
@@ -148,6 +158,7 @@ const Home = () => {
               to={`/${section.id}`}
               className="pixel-tile relative overflow-hidden group"
             >
+              {/* Glitch effect overlay on hover */}
               <div className="pixel-glitch absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity"></div>
               <div className="relative z-10 p-3 text-center">
                 <div className="pixel-icon-container mx-auto mb-2 w-10 h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -161,6 +172,7 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Footer with animated birthday message */}
       <div className={`mt-6 text-center text-sm text-sara-pixel4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
         <p className="font-press text-lg">Made with love 💙</p>
         <p className="mt-2 font-press">and rage :3 </p>

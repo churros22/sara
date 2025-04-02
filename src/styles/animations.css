@@ -1,31 +1,40 @@
 
-/* Core animations */
+/* =============================
+   CORE ANIMATIONS
+   ============================= */
+
+/* Floating animation - creates gentle up and down movement */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(10px); }
 }
 
+/* Subtle pulsing effect for emphasis */
 @keyframes pulse-gentle {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.8; }
 }
 
+/* Smooth entrance animation with fade and slide */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Pixel-perfect bouncing for retro elements */
 @keyframes pixel-bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
 
+/* Glitch effect to add digital character */
 @keyframes pixel-glitch {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-1px); }
   20%, 40%, 60%, 80% { transform: translateX(1px); }
 }
 
+/* Cycling through colors for rainbow effect */
 @keyframes pixel-rainbow {
   0% { color: #60f0fa; }
   14% { color: #3B82F6; }
@@ -37,23 +46,31 @@
   100% { color: #17ac44; }
 }
 
-/* Animation classes */
+/* =============================
+   ANIMATION UTILITY CLASSES
+   ============================= */
+
+/* Apply floating animation */
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
 
+/* Apply gentle pulsing */
 .animate-pulse-gentle {
   animation: pulse-gentle 2s ease-in-out infinite;
 }
 
+/* Apply rainbow color cycling */
 .animate-pixel-rainbow {
   animation: pixel-rainbow 4s linear infinite;
 }
 
+/* Apply pixel-perfect bouncing */
 .animate-pixel-bounce {
   animation: pixel-bounce 0.6s ease-in-out infinite;
 }
 
+/* Apply glitch effect */
 .animate-glitch {
   animation: glitch 0.5s ease-out;
 }
