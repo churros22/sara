@@ -1,7 +1,8 @@
 
 import { useNavigate, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { LogOut } from "lucide-react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { useAudio } from "@/contexts/AudioContext";
@@ -11,7 +12,7 @@ import DesktopEnvironment from "@/components/DesktopEnvironment";
 
 /**
  * Home Page Component
- * Main landing page after login with pixel art design and desktop environment
+ * Main landing page after login with 3D immersive desktop environment
  */
 const Home = () => {
   const navigate = useNavigate();
@@ -20,6 +21,11 @@ const Home = () => {
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const audioContext = useAudio();
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Motion values for parallax scrolling effect
+  const scrollY = useMotionValue(0);
+  const y = useTransform(scrollY, [0, 300], [0, -50]);
 
   // App sections with detailed descriptions for reference
   const sections = [
@@ -73,6 +79,18 @@ const Home = () => {
     }
   ];
 
+  // Handle scroll for parallax effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (containerRef.current) {
+        scrollY.set(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [scrollY]);
+
   // Fade in content after initial render
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -103,12 +121,53 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sara-pixelBg p-4 sm:p-8 overflow-x-hidden relative">
-      {/* Retro scanlines overlay for pixel art effect */}
-      <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-20"></div>
+    <div 
+      ref={containerRef}
+      className="min-h-screen w-full flex flex-col items-center justify-center bg-sara-pixelBg p-4 sm:p-8 overflow-x-hidden relative"
+      style={{ 
+        perspective: "1500px",
+        transformStyle: "preserve-3d"
+      }}
+    >
+      {/* 3D environment background with depth */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Distant background layer */}
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-b from-sara-pixel1/10 to-sara-pixel2/5"
+          style={{ y, transformStyle: "preserve-3d", transform: "translateZ(-200px)" }}
+        />
+        
+        {/* Mid-distance elements */}
+        <motion.div 
+          className="absolute inset-0 bg-grid opacity-5"
+          style={{ y: useTransform(scrollY, [0, 300], [0, -30]), transformStyle: "preserve-3d", transform: "translateZ(-100px)" }}
+        />
+        
+        {/* Foreground elements */}
+        <motion.div 
+          className="absolute inset-0 pointer-events-none bg-scanlines opacity-20"
+          style={{ transformStyle: "preserve-3d", transform: "translateZ(-50px)" }}
+        />
+      </div>
       
-      {/* Pixel Character with skeleton loading */}
-      <div className="absolute top-40 sm:top-12 left-11 transform -translate-x-1/2 w-11 h-11 pixel-character-container">
+      {/* 3D Pixel Character with skeleton loading */}
+      <motion.div 
+        className="absolute top-40 sm:top-12 left-11 transform -translate-x-1/2 w-11 h-11 pixel-character-container"
+        style={{ 
+          transformStyle: "preserve-3d", 
+          transform: "translateZ(50px) rotateY(10deg)",
+          filter: "drop-shadow(0 10px 8px rgb(0 0 0 / 0.3))"
+        }}
+        animate={{
+          rotateY: [10, -10, 10],
+          y: [0, -5, 0]
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
         {!imageLoaded && (
           <div className="w-full h-full">
             <Skeleton className="w-full h-full bg-sara-pixel3/20 animate-pulse-gentle" />
@@ -119,51 +178,151 @@ const Home = () => {
           alt="Pixel Character" 
           className={`w-full h-full object-contain ${imageLoaded ? 'block' : 'hidden'}`}
           onLoad={() => setImageLoaded(true)}
+          style={{ transformStyle: "preserve-3d" }}
         />
-      </div>
+      </motion.div>
       
-      <div className="relative w-full max-w-4xl z-10 mt-36 sm:mt-40">
-        {/* Logout button */}
-        <div className={`absolute top-2 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}>
+      <div className="relative w-full max-w-4xl z-10 mt-36 sm:mt-40" style={{ transformStyle: "preserve-3d" }}>
+        {/* Logout button with 3D effect */}
+        <motion.div 
+          className={`absolute top-2 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}
+          whileHover={{ 
+            scale: 1.1,
+            rotateY: 10,
+            z: 10
+          }}
+          style={{ 
+            transformStyle: "preserve-3d", 
+            transform: "translateZ(30px)"
+          }}
+        >
           <button
             onClick={handleLogout}
-            className="pixel-button-small p-2 animate-hover transition-all duration-300"
+            className="pixel-button-small p-2 transition-all duration-300"
+            style={{ 
+              transformStyle: "preserve-3d",
+              boxShadow: "0 5px 15px rgba(0,0,0,0.1), 0 3px 5px rgba(0,0,0,0.2)"
+            }}
             aria-label="Log out"
           >
             <LogOut size={isMobile ? 16 : 20} className="text-sara-pixel4" />
           </button>
-        </div>
+        </motion.div>
 
         {/* Header section with welcome message */}
         <AnimatedWrap animation="fade-in">
-          <div className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
-            <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-sara-pixel5 pixel-text-glow animate-scale-in">
+          <motion.div 
+            className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}
+            style={{ 
+              transformStyle: "preserve-3d", 
+              transform: "translateZ(20px)"
+            }}
+          >
+            <motion.h1 
+              className="text-4xl sm:text-5xl font-press font-bold mb-4 text-sara-pixel5 pixel-text-glow animate-scale-in"
+              animate={{ 
+                textShadow: ["0 0 10px rgba(59, 130, 246, 0.3)", "0 0 20px rgba(59, 130, 246, 0.5)", "0 0 10px rgba(59, 130, 246, 0.3)"]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
               Hi Sara!
-            </h1>
-            <div className="w-12 h-1 bg-sara-pixel3 mx-auto my-3 rounded-none pixel-border"></div>
-            <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              Welcome to your interactive desktop 🎉 
-            </p>
-            <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            </motion.h1>
+            
+            <div 
+              className="w-12 h-1 bg-sara-pixel3 mx-auto my-3 rounded-none pixel-border"
+              style={{ 
+                transformStyle: "preserve-3d", 
+                transform: "translateZ(15px)",
+                boxShadow: "0 3px 10px rgba(59, 130, 246, 0.3)"
+              }}
+            ></div>
+            
+            <motion.p 
+              className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" 
+              style={{ 
+                animationDelay: '0.3s',
+                transformStyle: "preserve-3d", 
+                transform: "translateZ(10px)"
+              }}
+            >
+              Welcome to your 3D interactive desktop 🎉 
+            </motion.p>
+            
+            <motion.p 
+              className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" 
+              style={{ 
+                animationDelay: '0.3s',
+                transformStyle: "preserve-3d", 
+                transform: "translateZ(10px)"
+              }}
+            >
               Click on any device to explore
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </AnimatedWrap>
 
-        {/* New Desktop Environment Component */}
+        {/* 3D Desktop Environment Component */}
         <AnimatedWrap animation="fade-in" delay={0.2}>
           <DesktopEnvironment />
         </AnimatedWrap>
       </div>
 
       {/* Footer with animated birthday message */}
-      <div className={`mt-6 text-center text-sm text-sara-pixel4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
+      <motion.div 
+        className={`mt-6 text-center text-sm text-sara-pixel4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
+        style={{ 
+          animationDelay: '0.4s', 
+          position: 'relative', 
+          zIndex: 10,
+          transformStyle: "preserve-3d", 
+          transform: "translateZ(40px)"
+        }}
+        whileHover={{
+          scale: 1.05,
+          rotateX: 5
+        }}
+      >
         <p className="font-press text-lg">Made with love 💙</p>
         <p className="mt-2 font-press">and rage :3 </p>
-        <div className="mt-2 font-pixel">
+        <motion.div 
+          className="mt-2 font-pixel"
+          animate={{
+            y: [0, -5, 0],
+            scale: [1, 1.05, 1]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
           <span className="inline-block animate-pixel-rainbow font-bold pixel-text-glow">✨ Happy Birthday Sara! ✨</span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
+      
+      {/* 3D room elements to create depth */}
+      <motion.div 
+        className="absolute -bottom-4 left-0 right-0 h-20 bg-gradient-to-t from-sara-pixel1/20 to-transparent"
+        style={{ 
+          transformStyle: "preserve-3d", 
+          transform: "translateZ(-50px) rotateX(45deg)",
+          filter: "blur(3px)"
+        }}
+      />
+      
+      {/* 3D desk surface */}
+      <motion.div 
+        className="absolute -bottom-40 left-0 right-0 h-40 bg-[url('/lovable-uploads/a6c47b86-9b3d-401d-b3c0-7ac35e32d347.png')] bg-cover opacity-30"
+        style={{ 
+          transformStyle: "preserve-3d", 
+          transform: "translateZ(-30px) rotateX(60deg)",
+          transformOrigin: "bottom"
+        }}
+      />
     </div>
   );
 };
