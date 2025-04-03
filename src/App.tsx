@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, lazy, Suspense, useState } from "react";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
@@ -137,7 +137,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AudioProvider>
-          <BrowserRouter>
+          <HashRouter>
             <PersistentLayout>
               <ScrollToTop />
               <AuthGuard>
@@ -191,7 +191,7 @@ function App() {
             </PersistentLayout>
             <Toaster />
             <Sonner />
-          </BrowserRouter>
+          </HashRouter>
         </AudioProvider>
       </TooltipProvider>
     </QueryClientProvider>
