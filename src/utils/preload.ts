@@ -29,7 +29,7 @@ const preloadSongs: Song[] = [
   }
 ];
 
-// Images to preload - changed from absolute paths to relative paths
+// Images to preload - using relative paths with ./ prefix
 const imagesToPreload = [
   "./assets/images/sara_1.jpg",
   "./assets/images/sara_2.jpg",
@@ -69,6 +69,7 @@ export const preloadAssets = () => {
       console.log("All assets preloaded successfully!");
       preloadCompleted = true;
       localStorage.setItem("saratify-assets-preloaded", "true");
+      localStorage.setItem("saratify-assets-loaded", "true");
     }
   };
 

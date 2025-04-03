@@ -40,6 +40,10 @@ export function useSaratifyCache() {
     
     if (assetsLoaded === "true") {
       setIsAssetsLoaded(true);
+    } else {
+      // Mark assets as loaded when component mounts
+      localStorage.setItem(cacheKey, "true");
+      setIsAssetsLoaded(true);
     }
   }, []);
 
