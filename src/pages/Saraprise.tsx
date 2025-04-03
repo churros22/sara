@@ -71,7 +71,7 @@ const Saraprise = () => {
             </div>
           )}
 
-          {/* Embed the external HTML page - removed borders and margins */}
+          {/* Embed the external HTML page - fixed path to work with GitHub Pages */}
           <iframe
             src="./assets/index_saraprise.html"
             title="Saraprise Content"
