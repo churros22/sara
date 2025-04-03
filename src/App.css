@@ -1,41 +1,42 @@
-
-/* =============================
-   APP CONTAINER STYLES
-   ============================= */
-
-/* Main container for the app */
-.app-container {
-  width: 100%;
+#root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 2rem;
+  text-align: center;
 }
 
-/* Global transition effect for interactive elements */
-.transition-all {
-  transition: all 0.3s ease;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-/* =============================
-   CUSTOM SCROLLBAR
-   ============================= */
-
-/* Customize the scrollbar for a more integrated look */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.5);
-  border-radius: 4px;
+.card {
+  padding: 2em;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.7);
+.read-the-docs {
+  color: #888;
 }

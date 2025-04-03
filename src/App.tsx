@@ -3,14 +3,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HashRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, lazy, Suspense, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, lazy, Suspense } from "react";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
 import PersistentView, { PersistentLayout } from "./layouts/PersistentLayout";
 import { Skeleton } from "./components/ui/skeleton";
 
-// Lazy load pages for better performance and reduced initial bundle size
+// Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
 const Home = lazy(() => import("./pages/Home"));
 const Saranterest = lazy(() => import("./pages/Saranterest"));
@@ -19,10 +19,7 @@ const Saratify = lazy(() => import("./pages/Saratify"));
 const Saraprise = lazy(() => import("./pages/Saraprise"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-/**
- * Create a persistent query client for better caching
- * This helps maintain state between page navigations
- */
+// Create a persistent query client for better caching
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -33,10 +30,7 @@ const queryClient = new QueryClient({
   },
 });
 
-/**
- * Loading component for suspense
- * Displays while lazy-loaded components are being fetched
- */
+// Loading component for suspense
 const PageLoader = () => (
   <div className="min-h-screen w-full flex items-center justify-center bg-sara-pixelBg">
     <div className="w-32 h-32">
@@ -45,10 +39,7 @@ const PageLoader = () => (
   </div>
 );
 
-/**
- * ScrollToTop component 
- * Ensures page scrolls to top on route changes
- */
+// ScrollToTop component to scroll to the top on route changes
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -59,53 +50,32 @@ const ScrollToTop = () => {
   return null;
 };
 
-/**
- * PageTransition component
- * Handles smooth transitions between pages
- */
+// Component to handle page transitions smoothly
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const [isVisible, setIsVisible] = useState(true);
-  
-  // Apply fade transition on route change
-  useEffect(() => {
-    setIsVisible(true);
-    return () => setIsVisible(false);
-  }, [location.pathname]);
   
   return (
-    <div 
-      key={location.pathname} 
-      className={`page-transition ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-      style={{ transition: 'opacity 0.3s ease' }}
-    >
+    <div key={location.pathname} className="page-transition">
       {children}
     </div>
   );
 };
 
-/**
- * AuthGuard component
- * Protects routes and handles access control
- */
+// AuthGuard component to protect routes
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const audio = useAudio();
-  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
   // Start preloading assets immediately
   useEffect(() => {
     preloadAssets();
   }, []);
 
-  // Check authorization status
   useEffect(() => {
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
-    setIsAuthorized(hasAccess);
-    
     if (!hasAccess && location.pathname !== "/") {
-      navigate("/", { replace: true }); // Use replace to prevent back button issues
+      navigate("/");
     }
     
     // Only handle cleanup on unmount
@@ -116,11 +86,6 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     };
   }, [navigate, location, audio]);
 
-  // Show loading state while checking authorization
-  if (isAuthorized === null && location.pathname !== "/") {
-    return <PageLoader />;
-  }
-
   return (
     <PageTransition>
       {children}
@@ -128,16 +93,12 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-/**
- * Main App component
- * Sets up the application structure and routing
- */
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AudioProvider>
-          <HashRouter>
+          <BrowserRouter>
             <PersistentLayout>
               <ScrollToTop />
               <AuthGuard>
@@ -191,7 +152,7 @@ function App() {
             </PersistentLayout>
             <Toaster />
             <Sonner />
-          </HashRouter>
+          </BrowserRouter>
         </AudioProvider>
       </TooltipProvider>
     </QueryClientProvider>
