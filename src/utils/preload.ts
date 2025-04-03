@@ -73,6 +73,12 @@ export const preloadAssets = () => {
     }
   };
 
+  // Add error handling for preloading
+  const handlePreloadError = (type, src, error) => {
+    console.warn(`Failed to preload ${type}: ${src}`, error);
+    console.warn(`Make sure the file exists at the correct path: ${src}`);
+  };
+
   // Preload images in the background
   imagesToPreload.forEach(imageSrc => {
     const img = new Image();
@@ -82,7 +88,7 @@ export const preloadAssets = () => {
       checkAllLoaded();
     };
     img.onerror = (e) => {
-      console.error(`Failed to preload image: ${imageSrc}`, e);
+      handlePreloadError('image', imageSrc, e);
       // Count as loaded even if it failed, to avoid blocking
       imagesLoaded++;
       checkAllLoaded();
@@ -104,7 +110,7 @@ export const preloadAssets = () => {
     };
     
     audio.onerror = (e) => {
-      console.error(`Failed to preload audio: ${song.title}`, e);
+      handlePreloadError('audio', song.src, e);
       // Count as loaded even if it failed, to avoid blocking
       audioLoaded++;
       checkAllLoaded();
