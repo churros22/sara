@@ -59,7 +59,7 @@ const Saraprise = () => {
           <button onClick={() => navigate("/home")} className="p-2 rounded-full hover:bg-muted transition-colors mr-4 animate-pulse-gentle" aria-label="Go back">
             <ArrowLeft size={24} />
           </button>
-          <h1 className="text-2xl font-bold font-pixel pixel-shadow animate-scale-in">Saraprise</h1>
+          <h1 className="text-2xl font-bold font-pixelated pixel-shadow animate-scale-in">Saraprise</h1>
         </div>
 
         <div className="max-w-screen-sm mx-auto glass p-4 shadow-lg animate-fade-in rounded-sm">
@@ -77,6 +77,7 @@ const Saraprise = () => {
 
           {/* Embed the external HTML page using an iframe with fixed height */}
           <ScrollArea className="h-[60vh]">
+          <div className="relative w-full h-full rounded-lg overflow-hidden shadow-lg border border-muted bg-gradient-to-br from-sara-pink/10 via-background to-sara-purple/10">
             <iframe 
               src="./assets/index_saraprise.html" 
               title="Saraprise Content" 
@@ -87,6 +88,12 @@ const Saraprise = () => {
                 height: "60vh"
               }}
             />
+            {!isIframeLoading && (
+             <div className="absolute inset-0 pointer-events-none border-2 border-primary rounded-lg animate-glow">
+              
+             </div>
+    )}
+  </div>
           </ScrollArea>
 
           {/* Additional content: Pictures and text */}

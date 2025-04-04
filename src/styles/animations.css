@@ -17,15 +17,25 @@
     opacity: 0.8;
   }
 }
-
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+  }
+}
 @keyframes pixel-rainbow {
-  0% { color: #60f0fa; }
+  0% { color: #3ef1b6; }
   14% { color: #3B82F6; }
-  28% { color: #2563EB; }
-  42% { color: #3b09f3; }
-  56% { color: #60A5FA; }
-  70% { color: #3B82F6; }
-  84% { color: #2bcfd4; }
+  28% { color: #1ea3cc; }
+  42% { color: #3460db; }
+  56% { color: #405ec4; }
+  70% { color: #4099e2; }
+  84% { color: #349273; }
   100% { color: #17ac44; }
 }
 
@@ -121,4 +131,8 @@
 
 .animate-pixel-bounce {
   animation: pixel-bounce 0.6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s infinite;
 }

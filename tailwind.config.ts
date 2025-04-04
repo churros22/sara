@@ -89,7 +89,10 @@ export default {
 				display: ['SF Pro Display', 'Inter', 'sans-serif'],
 				caveat: ['Caveat', 'cursive'],
 				vt323: ['VT323', 'monospace'],
-				press: ['"Press Start 2P"', 'cursive']
+				press: ['"Press Start 2P"', 'cursive'],
+				silkscreen: ['Silkscreen', 'monospace'],
+				pixelated: ['Pixelated', 'monospace'],
+                arcade: ['ArcadeClassic', 'monospace']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -166,7 +169,7 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.5s ease-out',
+				'fade-in': 'fade-in 0.2s ease-out',
 				'fade-out': 'fade-out 0.5s ease-out',
 				'scale-in': 'scale-in 0.4s ease-out',
 				'scale-out': 'scale-out 0.4s ease-out',

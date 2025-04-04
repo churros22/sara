@@ -80,7 +80,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
           style={{ boxShadow: "4px 4px 0 rgba(59, 130, 246, 0.4)" }}
         >
           <div className="pixel-shadow mb-6 text-center">
-            <h1 className="text-2xl font-press text-sara-pixel5 mb-2">
+            <h1 className="text-2xl font-pixelated font-bold text-sara-pixel5 mb-2">
               <span className="animate-pixel-rainbow inline-block">Hello Sara!</span> 
               <span className="inline-block ml-2">💙</span>
             </h1>
@@ -89,10 +89,10 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="password" className="block text-sm font-vt323 text-sara-pixel5 mb-2">
+              <label htmlFor="password" className="block text-sm font-vt323 font-bold text-sara-pixel5 mb-2">
                 Enter Password:
               </label>
-              <p className="font-vt323 text-xs text-sara-pixel4 mb-4">
+              <p className="font-vt323 text-xs text-sara-green mb-4">
                 Hint: Your special day is the key (format: DayMonth)
               </p>
               <input
@@ -110,7 +110,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
             
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-sara-pixel2 text-white rounded-none font-press text-sm hover:bg-sara-pixel3 transition-colors"
+              className="w-full py-3 px-4 bg-sara-pixel2 text-white rounded-none font-silkscreen text-sm hover:bg-sara-pixel3 transition-colors"
               style={{ boxShadow: "2px 2px 0 rgba(59, 130, 246, 0.4)" }}
             >
               Enter ▶
@@ -118,7 +118,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
           </form>
           
           <div className="mt-4 text-center">
-            <p className="font-vt323 text-sm text-sara-pixel4">
+            <p className="font-press text-sm text-sara-pixel4">
               Press Enter to continue 
             </p>
           </div>

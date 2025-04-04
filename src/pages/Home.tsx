@@ -100,10 +100,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sara-pixelBg p-4 sm:p-8 overflow-x-hidden relative">
-       <div
-    className="w-full h-screen/3 bg-[url('/assets/images/bg_sara.png')] bg-cover bg-center"
-  ></div>
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sara-pixelBg p-4 sm:p-8 overflow-x-hidden relative bg-[url('/assets/images/bg_sara.png')] bg-contain bg-top bg-no-repeat">
       {/* Retro scanlines overlay */}
       <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-20"></div>
       
@@ -124,7 +121,7 @@ const Home = () => {
       
       <div className="relative w-full max-w-4xl z-10 mt-36 sm:mt-40">
         {/* Logout button only */}
-        <div className={`absolute top-2 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}>
+        <div className={`absolute top-14 right-2 z-10 flex gap-2 ${isMobile ? 'scale-75 origin-top-right' : ''}`}>
           <button
             onClick={handleLogout}
             className="pixel-button-small p-2 animate-hover transition-all duration-300"
@@ -135,51 +132,47 @@ const Home = () => {
         </div>
 
         <div className={`text-center mb-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`}>
-          <h1 className="text-4xl sm:text-5xl font-press font-bold mb-4 text-sara-pixel5 pixel-text-glow animate-scale-in">
+          <h1 className="text-4xl sm:text-5xl font-pixelated font-bold mb-2 mt-11 text-sara-pixel5 pixel-text-glow animate-scale-in">
             Hi Sara!
           </h1>
           <div className="w-12 h-1 bg-sara-pixel3 mx-auto my-3 rounded-none pixel-border"></div>
-          <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <p className="text-xl font-silkscreen text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.0s' }}>
             Welcome 🎉 
           </p>
-          <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <p className="text-xl font-press text-sara-pixel4 px-4 animate-fade-in" style={{ animationDelay: '0.0s' }}>
             Feel free por favor, mi casa is your casa 
           </p>
         </div>
 
         {/* Section cards in grid layout with retro game styling */}
         <div 
-          className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
-          style={{ animationDelay: '0.2s' }}
+          className={`grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} 
+          style={{ animationDelay: '0.0s' }}
         >
           {sections.map((section) => (
             <Link 
               key={section.id}
               to={`/${section.id}`}
-              className="pixel-tile relative overflow-hidden group"
-              onClick={(e) => {
-                // Prevent default to avoid page reload and manually navigate
-                e.preventDefault();
-                navigate(`/${section.id}`);
-              }}
+              className="pixel-tile relative overflow-hidden group-hover:opacity-20"
+              
             >
               <div className="pixel-glitch absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity"></div>
               <div className="relative z-10 p-3 text-center">
                 <div className="pixel-icon-container mx-auto mb-2 w-10 h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {section.icon}
                 </div>
-                <h2 className="text-base font-press font-semibold truncate pixel-text-">{section.title}</h2>
-                <p className="text-xs mt-1 text-sara-pixel4">{section.description}</p>
+                <h2 className="text-base font-pixelated font-semibold truncate pixel-text-">{section.title}</h2>
+                <p className="text-xs mt-1 font-press text-sara-pixel4">{section.description}</p>
               </div>
             </Link>
           ))}
         </div>
       </div>
 
-      <div className={`mt-6 text-center text-sm text-sara-pixel4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s', position: 'relative', zIndex: 10 }}>
+      <div className={`mt-6 text-center text-sm text-sara-pixel4 ${showContent ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.0s', position: 'relative', zIndex: 10 }}>
         <p className="font-press text-lg">Made with love 💙</p>
-        <p className="mt-2 font-press">and rage :3 </p>
-        <div className="mt-2 font-pixel">
+        <p className="mt-2 font-caveat">and rage :3 </p>
+        <div className="mt-4 font-pixelated">
           <span className="inline-block animate-pixel-rainbow font-bold pixel-text-glow">✨ Happy Birthday Sara! ✨</span>
         </div>
       </div>
