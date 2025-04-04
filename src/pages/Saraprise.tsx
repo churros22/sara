@@ -66,7 +66,7 @@ const Saraprise = () => {
             title="Saraprise Content"
             className={`relative w-full h-full rounded-lg transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
             onLoad={handleIframeLoad}
-            style={{ overflow: "hidden", border: "none" }}
+            style={{ overflow: "auto", border: "none" }}
           ></iframe>
 
           {/* Additional content: Pictures and text */}
