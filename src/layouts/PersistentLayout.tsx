@@ -11,10 +11,16 @@ export const PersistentLayout = ({ children }: { children: ReactNode }) => {
   
   // Save scroll position when leaving a route
   useEffect(() => {
+    const saveScroll = () => {
+      scrollPositions.set(pathname, window.scrollY);
+    };
+
+    // Save position both on unmount and when scrolling
+    window.addEventListener('scroll', saveScroll, { passive: true });
+    
     return () => {
-      if (contentRef.current) {
-        scrollPositions.set(pathname, window.scrollY);
-      }
+      saveScroll();
+      window.removeEventListener('scroll', saveScroll);
     };
   }, [pathname]);
 
@@ -22,10 +28,21 @@ export const PersistentLayout = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const savedPosition = scrollPositions.get(pathname);
     if (savedPosition !== undefined) {
-      // Use requestAnimationFrame for smoother behavior
-      requestAnimationFrame(() => {
+      // Use requestAnimationFrame for smoother behavior and try multiple times
+      // to ensure the restoration happens after all content is rendered
+      let attempts = 0;
+      const maxAttempts = 5;
+      
+      const tryScrollRestore = () => {
         window.scrollTo(0, savedPosition);
-      });
+        attempts++;
+        
+        if (window.scrollY !== savedPosition && attempts < maxAttempts) {
+          requestAnimationFrame(tryScrollRestore);
+        }
+      };
+      
+      requestAnimationFrame(tryScrollRestore);
     }
   }, [pathname]);
 

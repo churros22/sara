@@ -80,6 +80,13 @@ const Home = () => {
     };
   }, []);
 
+  // Handle navigation with function instead of direct Link
+  const handleNavigate = (path: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    // Save current scroll position before navigating
+    navigate(path);
+  };
+
   const handleLogout = () => {
     // Stop all audio and clear context when logging out
     audioContext.stopAndReset();
@@ -147,6 +154,11 @@ const Home = () => {
               key={section.id}
               to={`/${section.id}`}
               className="pixel-tile relative overflow-hidden group"
+              onClick={(e) => {
+                // Prevent default to avoid page reload and manually navigate
+                e.preventDefault();
+                navigate(`/${section.id}`);
+              }}
             >
               <div className="pixel-glitch absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity"></div>
               <div className="relative z-10 p-3 text-center">
