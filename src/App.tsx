@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, lazy, Suspense, useState } from "react";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
@@ -74,7 +74,6 @@ const LoadingTransition = ({ onComplete }: { onComplete: () => void }) => {
 
 // AuthGuard component to protect routes
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const audio = useAudio();
   const [isLoading, setIsLoading] = useState(false);
@@ -92,8 +91,6 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     if (hasAccess && location.pathname === "/home" && !showHome) {
       setIsLoading(true);
       // The loading state will be cleared by the LoadingTransition component
-    } else if (!hasAccess && location.pathname !== "/") {
-      navigate("/");
     }
     
     // Only handle cleanup on unmount
@@ -102,7 +99,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
         audio.stopAndReset();
       }
     };
-  }, [navigate, location, audio, showHome]);
+  }, [location, audio, showHome]);
 
   // Handler for when loading transition completes
   const handleLoadingComplete = () => {
