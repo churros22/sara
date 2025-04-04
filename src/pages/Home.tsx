@@ -100,7 +100,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sara-pixelBg p-4 sm:p-8 overflow-x-hidden relative">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sara-pixelBg p-4 sm:p-8 overflow-x-hidden relative bg-[url('/assets/images/bg_sara.png')] bg-cover bg-top">
       {/* Retro scanlines overlay */}
       <div className="absolute inset-0 pointer-events-none bg-scanlines opacity-20"></div>
       
