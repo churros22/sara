@@ -19,7 +19,7 @@ const Index = () => {
     const hasAccess = localStorage.getItem("saraAccessGranted") === "true";
     if (hasAccess) {
       setAccessGranted(true);
-      // Use navigate instead of directly rendering Home component
+      // Navigate to home, the loading screen will be shown by AuthGuard in App.tsx
       navigate("/home", { replace: true });
     }
   }, [navigate]);
@@ -28,7 +28,7 @@ const Index = () => {
     // Store access granted status in localStorage
     localStorage.setItem("saraAccessGranted", "true");
     setAccessGranted(true);
-    // Navigate to home using router with replace to prevent back button issues
+    // Navigate to home, the loading screen will be shown by AuthGuard in App.tsx
     navigate("/home", { replace: true });
   };
 
