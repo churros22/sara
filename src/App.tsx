@@ -9,6 +9,7 @@ import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
 import PersistentLayout from "./layouts/PersistentLayout";
 import { Skeleton } from "./components/ui/skeleton";
+import { Progress } from "./components/ui/progress";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -39,36 +40,32 @@ const PageLoader = () => (
   </div>
 );
 
-// Modified ScrollToTop component that only scrolls on initial page load or specific routes
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  const [initialLoad, setInitialLoad] = useState(true);
-
-  useEffect(() => {
-    // Only scroll to top on initial page load or when navigating to root
-    if (initialLoad || pathname === "/") {
-      window.scrollTo(0, 0);
-      setInitialLoad(false);
-    }
-  }, [pathname, initialLoad]);
-
-  return null;
-};
-
-// Dedicated loading screen for transition from login to home
+// Dedicated loading screen for transition from login to home with progress bar
 const LoadingTransition = ({ onComplete }: { onComplete: () => void }) => {
+  const [progress, setProgress] = useState(0);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onComplete();
-    }, 2000); // 2 second loading screen
-    return () => clearTimeout(timer);
+    // Simulate loading progress
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        const newValue = prev + 5; // Increase by 5% each time
+        if (newValue >= 100) {
+          clearInterval(interval);
+          setTimeout(() => onComplete(), 200); // Complete after reaching 100%
+          return 100;
+        }
+        return newValue;
+      });
+    }, 50); // Complete in roughly 1 second (20 steps * 50ms)
+
+    return () => clearInterval(interval);
   }, [onComplete]);
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-sara-pixel6 via-sara-pixelBg to-sara-pixel1">
-      <div className="text-center">
-        <div className="w-24 h-24 border-4 border-t-transparent border-sara-pixel3 rounded-full animate-spin mx-auto mb-6"></div>
-        <p className="text-xl font-press text-sara-pixel5 animate-pulse-gentle">Loading Sara's World...</p>
+      <div className="text-center w-64">
+        <p className="text-xl font-press text-sara-pixel5 mb-6">Loading Sara's World...</p>
+        <Progress value={progress} className="h-2" />
         <p className="mt-4 text-sm text-sara-pixel4">Preparing your adventure...</p>
       </div>
     </div>
@@ -127,7 +124,6 @@ function App() {
       <TooltipProvider>
         <AudioProvider>
           <BrowserRouter>
-            <ScrollToTop />
             <AuthGuard>
               <PersistentLayout>
                 <Suspense fallback={<PageLoader />}>

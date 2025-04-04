@@ -22,9 +22,10 @@ export const PersistentLayout = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const savedPosition = scrollPositions.get(pathname);
     if (savedPosition !== undefined) {
-      setTimeout(() => {
+      // Use requestAnimationFrame for smoother behavior
+      requestAnimationFrame(() => {
         window.scrollTo(0, savedPosition);
-      }, 0);
+      });
     }
   }, [pathname]);
 
