@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import EntryScreen from "@/components/EntryScreen";
 import { useAudio } from "@/contexts/AudioContext";
 import { preloadAssets } from "@/utils/preload";

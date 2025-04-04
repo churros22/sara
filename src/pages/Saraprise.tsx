@@ -41,7 +41,7 @@ const Saraprise = () => {
       <div className="container py-8">
         <div className="flex items-center mb-8 animate-fade-in">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
             className="p-2 rounded-full hover:bg-muted transition-colors mr-4 animate-pulse-gentle"
             aria-label="Go back"
           >

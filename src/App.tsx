@@ -50,17 +50,6 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Component to handle page transitions smoothly
-const PageTransition = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
-  
-  return (
-    <div key={location.pathname} className="page-transition">
-      {children}
-    </div>
-  );
-};
-
 // AuthGuard component to protect routes
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
@@ -86,11 +75,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     };
   }, [navigate, location, audio]);
 
-  return (
-    <PageTransition>
-      {children}
-    </PageTransition>
-  );
+  return <>{children}</>;
 };
 
 function App() {
@@ -99,57 +84,22 @@ function App() {
       <TooltipProvider>
         <AudioProvider>
           <BrowserRouter>
-            <PersistentLayout>
-              <ScrollToTop />
-              <AuthGuard>
+            <ScrollToTop />
+            <AuthGuard>
+              <PersistentLayout>
                 <Suspense fallback={<PageLoader />}>
                   <Routes>
                     <Route path="/" element={<Index />} />
-                    <Route
-                      path="/home"
-                      element={
-                        <PersistentView path="/home">
-                          <Home />
-                        </PersistentView>
-                      }
-                    />
-                    <Route
-                      path="/saranterest"
-                      element={
-                        <PersistentView path="/saranterest">
-                          <Saranterest />
-                        </PersistentView>
-                      }
-                    />
-                    <Route
-                      path="/googolu"
-                      element={
-                        <PersistentView path="/googolu">
-                          <Googolu />
-                        </PersistentView>
-                      }
-                    />
-                    <Route
-                      path="/saratify"
-                      element={
-                        <PersistentView path="/saratify">
-                          <Saratify />
-                        </PersistentView>
-                      }
-                    />
-                    <Route
-                      path="/saraprise"
-                      element={
-                        <PersistentView path="/saraprise">
-                          <Saraprise />
-                        </PersistentView>
-                      }
-                    />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/saranterest" element={<Saranterest />} />
+                    <Route path="/googolu" element={<Googolu />} />
+                    <Route path="/saratify" element={<Saratify />} />
+                    <Route path="/saraprise" element={<Saraprise />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Suspense>
-              </AuthGuard>
-            </PersistentLayout>
+              </PersistentLayout>
+            </AuthGuard>
             <Toaster />
             <Sonner />
           </BrowserRouter>

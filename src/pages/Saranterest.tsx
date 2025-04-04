@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import ImageGrid from "@/components/ImageGrid";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { ArrowLeft, Heart, Bell, MessageCircle, User } from "lucide-react";
+import { ArrowLeft, Bell, MessageCircle, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Saranterest = () => {
@@ -12,13 +12,13 @@ const Saranterest = () => {
 
   // Preload images with proper dimensions
   const dummyImages = [
-    { id: "1", src: "/assets/images/sara_1.jpg", alt: "Sara image 1" },
-    { id: "2", src: "/assets/images/sara_2.jpg", alt: "Sara image 2" },
-    { id: "3", src: "/assets/images/sara_3.jpg", alt: "Sara image 3" },
-    { id: "4", src: "/assets/images/sara_4.jpg", alt: "Sara image 4" },
-    { id: "5", src: "/assets/images/sara_5.jpg", alt: "Sara image 5" },
-    { id: "7", src: "/assets/images/sara_7.jpg", alt: "Sara image 7" },
-    { id: "8", src: "/assets/images/sara_8.jpg", alt: "Sara image 8" },
+    { id: "1", src: "./assets/images/sara_1.jpg", alt: "Sara image 1" },
+    { id: "2", src: "./assets/images/sara_2.jpg", alt: "Sara image 2" },
+    { id: "3", src: "./assets/images/sara_3.jpg", alt: "Sara image 3" },
+    { id: "4", src: "./assets/images/sara_4.jpg", alt: "Sara image 4" },
+    { id: "5", src: "./assets/images/sara_5.jpg", alt: "Sara image 5" },
+    { id: "7", src: "./assets/images/sara_7.jpg", alt: "Sara image 7" },
+    { id: "8", src: "./assets/images/sara_8.jpg", alt: "Sara image 8" },
   ];
 
   // Pinterest categories (for decoration)
@@ -31,7 +31,7 @@ const Saranterest = () => {
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           {/* Back button */}
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
             className="p-2 rounded-full text-gray-700 hover:bg-gray-100 transition-colors"
             aria-label="Go back"
           >
@@ -85,7 +85,6 @@ const Saranterest = () => {
           <div className="absolute -inset-1 -z-10 bg-gradient-to-r from-sara-retro1/10 via-sara-retro3/10 to-sara-retro5/10 blur-sm"></div>
           <ImageGrid images={dummyImages} />
         </div>
-
       </div>
     </div>
   );

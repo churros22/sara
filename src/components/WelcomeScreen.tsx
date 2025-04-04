@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +11,7 @@ const WelcomeScreen = () => {
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const audioContext = useAudio();
+  const navigate = useNavigate();
 
   // App sections with detailed descriptions
   const sections = [
@@ -77,13 +78,12 @@ const WelcomeScreen = () => {
 
   const handleLogout = () => {
     audioContext.stopAndReset();
-    
     localStorage.removeItem("saraAccessGranted");
     toast({
       title: "Game Saved! 👋",
       description: "Come back soon to continue your adventure!",
     });
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
@@ -94,7 +94,7 @@ const WelcomeScreen = () => {
       {/* Pixel Character */}
       <div className="absolute top-20 sm:top-12 left-1/2 transform -translate-x-1/2 w-32 h-32 pixel-character-container">
         <img 
-          src="/lovable-uploads/6ce3c4f5-4273-48e0-82f0-c8022f62c515.png" 
+          src="./lovable-uploads/6ce3c4f5-4273-48e0-82f0-c8022f62c515.png" 
           alt="Pixel Character" 
           className="w-full h-full object-contain"
         />
