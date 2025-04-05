@@ -41,14 +41,21 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sara-pixelBg p-4 sm:p-8 relative overflow-hidden">
+    <div className="min-h-screen w-full flex flex-col bg-sara-pixelBg p-4 sm:p-8 relative overflow-hidden">
+      {/* Background with forest on top and gradient below */}
       <div className="absolute inset-0 overflow-hidden">
-        <img 
-          src="/lovable-uploads/f50ed068-b0aa-414d-a993-85e567d482cc.png" 
-          alt="Forest Background" 
-          className="w-full h-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-sara-pixelBg/80"></div>
+        {/* Forest image only at the top portion */}
+        <div className="relative h-1/3">
+          <img 
+            src="/lovable-uploads/f50ed068-b0aa-414d-a993-85e567d482cc.png" 
+            alt="Forest Background" 
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-sara-pixelBg/60"></div>
+        </div>
+        
+        {/* Gradient background below the forest */}
+        <div className="absolute top-1/3 left-0 right-0 bottom-0 bg-gradient-to-b from-black via-sara-pixel1 to-black"></div>
         
         <SparkleEffect />
       </div>
@@ -64,15 +71,16 @@ const Home = () => {
         </button>
       </div>
       
-      <div className="relative z-10 w-full max-w-4xl text-center mt-8 mb-10">
+      {/* Avatar moved to top left */}
+      <div className="relative z-10 self-start mt-6 ml-6">
         <UserAvatar />
       </div>
 
-      <div className="relative z-10 w-full max-w-4xl">
+      <div className="relative z-10 w-full max-w-4xl mx-auto mt-12">
         <SectionGrid sections={homeSections} />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 mt-auto">
         <HomeFooter />
       </div>
     </div>
