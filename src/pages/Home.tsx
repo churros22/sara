@@ -1,11 +1,9 @@
-
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { LogOut } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
 import { useAudio } from "@/contexts/AudioContext";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import AnimatedWrap from "@/components/AnimatedWrap";
 
@@ -18,7 +16,6 @@ const Home = () => {
   const { toast } = useToast();
   const audioContext = useAudio();
 
-  // App sections with detailed descriptions
   const sections = [
     {
       id: "saranterest",
@@ -71,7 +68,6 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    // Fade in content
     const timer = setTimeout(() => {
       setShowContent(true);
     }, 300);
@@ -81,7 +77,6 @@ const Home = () => {
     };
   }, []);
 
-  // Generate sparkles randomly
   useEffect(() => {
     const createSparkle = () => {
       const id = Date.now();
@@ -89,7 +84,7 @@ const Home = () => {
       const y = Math.random() * 100;
       const size = Math.random() * 10 + 5;
       const delay = Math.random() * 2;
-      
+
       const style = {
         position: 'absolute',
         left: `${x}%`,
@@ -102,21 +97,19 @@ const Home = () => {
         opacity: 0,
         zIndex: 1
       } as React.CSSProperties;
-      
+
       setSparkles(prev => [...prev.slice(-20), { id, style }]);
     };
-    
+
     const interval = setInterval(createSparkle, 500);
     return () => clearInterval(interval);
   }, []);
 
-  // Handle navigation with function instead of direct Link
   const handleNavigate = (path: string) => {
     navigate(path);
   };
 
   const handleLogout = () => {
-    // Stop all audio and clear context when logging out
     audioContext.stopAndReset();
     
     localStorage.removeItem("saraAccessGranted");
@@ -129,7 +122,6 @@ const Home = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#1D3557] p-4 sm:p-8 relative overflow-hidden">
-      {/* Background with butterfly effect */}
       <div className="absolute inset-0 overflow-hidden">
         <img 
           src="/lovable-uploads/f50ed068-b0aa-414d-a993-85e567d482cc.png" 
@@ -138,7 +130,6 @@ const Home = () => {
         />
         <div className="absolute inset-0 bg-[#1D3557]/70"></div>
         
-        {/* Sparkles */}
         {sparkles.map(sparkle => (
           <div 
             key={sparkle.id}
@@ -148,10 +139,8 @@ const Home = () => {
         ))}
       </div>
       
-      {/* Header Section */}
       <div className="relative z-10 w-full max-w-4xl text-center mt-8 mb-10">
         <div className="flex flex-col items-center justify-center">
-          {/* Avatar with glow effect */}
           <div className="mb-6 relative">
             <div className="absolute inset-0 rounded-full bg-[#4CC9F0] blur-lg opacity-70 animate-pulse-gentle"></div>
             <Avatar className="w-24 h-24 border-2 border-[#4CC9F0] animate-glow">
@@ -160,7 +149,6 @@ const Home = () => {
             </Avatar>
           </div>
           
-          {/* Vertical Sara text */}
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full">
             <div className="flex flex-col">
               {["S", "A", "R", "A"].map((letter, index) => (
@@ -175,16 +163,14 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Main hero text */}
           <h1 className="text-5xl sm:text-7xl font-bold mb-4 text-[#4CC9F0] animate-fade-in"
               style={{ textShadow: "0 0 15px rgba(76, 201, 240, 0.6)" }}>
             Hi Sara!
           </h1>
           
-          {/* Glowing underline */}
           <div className="w-32 h-1 bg-[#4CC9F0] mx-auto my-3 rounded-full shadow-[0_0_10px_rgba(76,201,240,0.8)]"></div>
           
-          <AnimatedWrap>
+          <AnimatedWrap animation="fade-in">
             <div className="mt-6 text-center">
               <h2 className="text-2xl font-silkscreen text-white mb-2">Welcome 🎉</h2>
               <p className="text-xl font-caveat text-[#A3F7BF] italic">
@@ -195,7 +181,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Feature Section in 2x2 Grid */}
       <div className="relative z-10 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         {sections.map((section, index) => (
           <div 
@@ -219,12 +204,10 @@ const Home = () => {
         ))}
       </div>
 
-      {/* Footer Section */}
       <div className="relative z-10 mt-auto pb-8 text-center">
         <p className="font-caveat text-xl text-[#A3F7BF]">Made with love <span className="text-[#4CC9F0] animate-pulse-gentle inline-block">💙</span></p>
         <p className="mt-2 font-caveat text-white/70">and rage :3</p>
         
-        {/* Birthday message with sparkle effect */}
         <div className="mt-6 relative">
           <span className="inline-block text-2xl font-bold text-[#4CC9F0] animate-pixel-rainbow"
                 style={{ textShadow: "0 0 10px rgba(76, 201, 240, 0.5)" }}>
@@ -232,7 +215,6 @@ const Home = () => {
           </span>
         </div>
         
-        {/* Logout button */}
         <div className="absolute top-4 right-4">
           <button
             onClick={handleLogout}
