@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,8 +7,8 @@ import { useEffect, lazy, Suspense, useState } from "react";
 import { AudioProvider, useAudio } from "./contexts/AudioContext";
 import { preloadAssets } from "./utils/preload";
 import PersistentLayout from "./layouts/PersistentLayout";
-import { Skeleton } from "./components/ui/skeleton";
-import { Progress } from "./components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Progress } from "@/components/ui/progress";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
