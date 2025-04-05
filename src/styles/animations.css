@@ -17,26 +17,28 @@
     opacity: 0.8;
   }
 }
+
 @keyframes glow {
   0% {
-    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
   }
   50% {
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+    box-shadow: 0 0 20px rgba(76, 201, 240, 0.8);
   }
   100% {
-    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
   }
 }
+
 @keyframes pixel-rainbow {
-  0% { color: #3ef1b6; }
-  14% { color: #3B82F6; }
-  28% { color: #1ea3cc; }
-  42% { color: #3460db; }
-  56% { color: #405ec4; }
-  70% { color: #4099e2; }
-  84% { color: #349273; }
-  100% { color: #17ac44; }
+  0% { color: #4CC9F0; }
+  14% { color: #A3F7BF; }
+  28% { color: #FFD700; }
+  42% { color: #4CC9F0; }
+  56% { color: #A3F7BF; }
+  70% { color: #FFD700; }
+  84% { color: #4CC9F0; }
+  100% { color: #A3F7BF; }
 }
 
 @keyframes blink {
@@ -89,6 +91,28 @@
   }
 }
 
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0; 
+    transform: scale(0.5);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2);
+  }
+}
+
+@keyframes fireworks {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+
 @keyframes pixel-glitch {
   0%, 100% {
     transform: translateX(0);
@@ -135,4 +159,14 @@
 
 .animate-glow {
   animation: glow 2s infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+  --x: 0;
+  --y: 0;
+}
+
+.animate-firework {
+  animation: fireworks 1s ease-out forwards;
 }
