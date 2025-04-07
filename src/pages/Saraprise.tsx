@@ -78,7 +78,7 @@ const Saraprise = () => {
 
           {/* Embed the external HTML page using an iframe with fixed height */}
           <ScrollArea className="h-[60vh]">
-          <div className="relative w-full h-full rounded-lg overflow-hidden shadow-lg border border-muted bg-gradient-to-br from-sara-pink/10 via-background to-sara-purple/10">
+          <div className="relative w-full h-auto rounded-lg overflow-hidden shadow-lg border border-muted bg-gradient-to-br from-sara-pink/10 via-background to-sara-purple/10">
             <iframe 
               src="./assets/index_saraprise.html" 
               title="Saraprise Content" 
@@ -98,10 +98,10 @@ const Saraprise = () => {
           </ScrollArea>
 
           {/* Newspaper-styled content */}
-          <div className="mt-8 px-4 py-6 bg-[#f8f7f1] border border-[#e0ded7] shadow-md">
+          <div className="mt-8 px-4 py-6 bg-[#f8f7f1] text-black border border-[#e0ded7] shadow-md">
             {/* Newspaper header */}
             <div className="text-center border-b-2 border-black pb-2 mb-4">
-              <h2 className="text-3xl font-bold font-serif tracking-tight uppercase">THE SARA TIMES</h2>
+              <h2 className="text-3xl font-bold font-serif tracking-tight uppercase">THE MORNING NEWSPAPER</h2>
               <p className="text-xs uppercase tracking-widest">SPECIAL BIRTHDAY EDITION</p>
             </div>
             
@@ -138,8 +138,8 @@ const Saraprise = () => {
 
             {/* Newspaper footer with date */}
             <div className="mt-6 pt-2 border-t border-gray-400 flex justify-between text-xs text-gray-600">
-              <span>The Sara Times | April 7, 2025</span>
-              <span>Price: One Smile</span>
+              <span> | April 11, 2025</span>
+              <span>Price $ : One Smile </span>
             </div>
           </div>
         </div>
