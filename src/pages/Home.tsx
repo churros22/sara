@@ -42,7 +42,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col bg-sara-pixelBg p-4 sm:p-8 relative overflow-hidden">
-      {/* Background with forest on top and gradient below */}
+      {/* Background with just forest on top */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Forest image only at the top portion */}
         <div className="relative h-1/3">
@@ -53,9 +53,6 @@ const Home = () => {
           />
           <div className="absolute inset-0 bg-sara-pixelBg/60"></div>
         </div>
-        
-        {/* Gradient background below the forest */}
-        <div className="absolute top-1/3 left-0 right-0 bottom-0 bg-gradient-to-b from-black via-sara-pixel1 to-black"></div>
         
         <SparkleEffect />
       </div>

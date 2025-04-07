@@ -47,17 +47,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
   ];
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#1D3557] p-4 relative overflow-hidden">
-      {/* Background image with overlay */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/lovable-uploads/f50ed068-b0aa-414d-a993-85e567d482cc.png" 
-          alt="Forest Background" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-[#1D3557]/70"></div>
-      </div>
-      
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-sara-pixel1 to-black p-4 relative overflow-hidden">
       {/* Fireflies/butterflies effect */}
       {butterflies.map((item, index) => (
         <div 
