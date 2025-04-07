@@ -5,6 +5,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { ArrowLeft } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
 
 const Saraprise = () => {
   const navigate = useNavigate();
@@ -92,23 +93,54 @@ const Saraprise = () => {
              <div className="absolute inset-0 pointer-events-none border-2 border-primary rounded-lg animate-glow">
               
              </div>
-    )}
-  </div>
+            )}
+          </div>
           </ScrollArea>
 
-          {/* Additional content: Pictures and text */}
-          <div className="mt-8 text-center px-4">
-            <h2 className="text-2xl font-bold mb-4">A Special Message for Sara</h2>
-            <p className="text-lg mb-6">
-              Sara, you are an amazing person, and this is a small token of appreciation for all the joy you bring to our lives.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <img src="./assets/images/sara_1.jpg" alt="Sara smiling" className="rounded-lg shadow-lg" />
-              <img src="./assets/images/sara_2.jpg" alt="Sara enjoying her day" className="rounded-lg shadow-lg" />
+          {/* Newspaper-styled content */}
+          <div className="mt-8 px-4 py-6 bg-[#f8f7f1] border border-[#e0ded7] shadow-md">
+            {/* Newspaper header */}
+            <div className="text-center border-b-2 border-black pb-2 mb-4">
+              <h2 className="text-3xl font-bold font-serif tracking-tight uppercase">THE SARA TIMES</h2>
+              <p className="text-xs uppercase tracking-widest">SPECIAL BIRTHDAY EDITION</p>
             </div>
-            <p className="text-lg mt-6">
-              We hope this day brings you as much happiness as you bring to everyone around you. Happy Birthday, Sara!
-            </p>
+            
+            {/* Newspaper headline */}
+            <h3 className="text-2xl font-serif font-bold mb-4 text-center">A Special Message for Sara</h3>
+            
+            {/* Two-column newspaper layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-4">
+                {/* First column with text */}
+                <p className="text-sm leading-relaxed font-serif first-letter:text-3xl first-letter:font-bold first-letter:float-left first-letter:mr-1">
+                  Sara, you are an amazing person, and this is a small token of appreciation for all the joy you bring to our lives. Your kindness and warmth have touched everyone around you in ways you may never fully realize.
+                </p>
+                <p className="text-sm leading-relaxed font-serif">
+                  We hope this day brings you as much happiness as you bring to everyone around you. Happy Birthday, Sara!
+                </p>
+                <div className="border border-gray-300 p-2 bg-gray-50 italic text-xs">
+                  "The greatest gift you can give someone is your time, your attention, your love, your concern." — Sara's daily reminder
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                {/* Second column with images */}
+                <div className="border p-1 bg-white shadow-sm">
+                  <img src="./assets/images/sara_1.jpg" alt="Sara smiling" className="w-full h-auto sepia-[0.2]" />
+                  <p className="text-xs italic pt-1 text-center">Sara enjoying her special day</p>
+                </div>
+                <div className="border p-1 bg-white shadow-sm">
+                  <img src="./assets/images/sara_2.jpg" alt="Sara enjoying her day" className="w-full h-auto sepia-[0.2]" />
+                  <p className="text-xs italic pt-1 text-center">A moment to remember</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Newspaper footer with date */}
+            <div className="mt-6 pt-2 border-t border-gray-400 flex justify-between text-xs text-gray-600">
+              <span>The Sara Times | April 7, 2025</span>
+              <span>Price: One Smile</span>
+            </div>
           </div>
         </div>
       </div>
