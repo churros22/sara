@@ -77,16 +77,16 @@ const Saraprise = () => {
           )}
 
           {/* Embed the external HTML page using an iframe with fixed height */}
-          <ScrollArea className="h-[60vh]">
+          
           <div className="relative w-full h-auto rounded-lg overflow-hidden shadow-lg border border-muted bg-gradient-to-br from-sara-pink/10 via-background to-sara-purple/10">
             <iframe 
               src="./assets/index_saraprise.html" 
               title="Saraprise Content" 
-              className={`relative w-full min-h-[400px] rounded-lg transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
+              className={`relative w-full min-h-[200px] rounded-lg transition-opacity duration-500 ${isIframeLoading ? "opacity-0" : "opacity-100"}`}
               onLoad={handleIframeLoad} 
               style={{
                 border: "none",
-                height: "60vh"
+                height: "40vh"
               }}
             />
             {!isIframeLoading && (
@@ -95,7 +95,7 @@ const Saraprise = () => {
              </div>
             )}
           </div>
-          </ScrollArea>
+          
 
           {/* Newspaper-styled content */}
           <div className="mt-8 px-4 py-6 bg-[#f8f7f1] text-black border border-[#e0ded7] shadow-md">
