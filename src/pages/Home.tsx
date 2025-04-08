@@ -40,10 +40,10 @@ const Home = () => {
   return (
     <div className="min-h-screen w-full flex flex-col bg-sara-pixelBg relative overflow-hidden">
       {/* Background with just forest on top */}
-      <div className="relative h-1/3 w-full overflow-hidden">
+      <div className="relative top-1 w-full overflow-hidden">
         <img
           src="/assets/images/bg_sara.png"
-          className="w-full h-full object-cover opacity-50"
+          className="w-full h-full object-cover opacity-90"
         />
         
 
@@ -62,10 +62,10 @@ const Home = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center mt-8 px-4 sm:px-8">
+      <div className="flex flex-col items-center justify-center mt-1 px-6 sm:px-8">
         <UserAvatar />
 
-        <div className="w-full max-w-4xl mx-auto mt-11">
+        <div className="w-auto mx-auto mt-6">
           <SectionGrid sections={homeSections} />
         </div>
 

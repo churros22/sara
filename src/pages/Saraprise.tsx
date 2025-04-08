@@ -106,20 +106,32 @@ const Saraprise = () => {
             </div>
             
             {/* Newspaper headline */}
-            <h3 className="text-2xl font-serif font-bold mb-4 text-center">A Special Message for Sara</h3>
+            <h3 className="text-2xl font-serif font-bold mb-4 text-center">Such a lovely person</h3>
             
             {/* Two-column newspaper layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-4">
                 {/* First column with text */}
                 <p className="text-sm leading-relaxed font-serif first-letter:text-3xl first-letter:font-bold first-letter:float-left first-letter:mr-1">
-                  Sara, you are an amazing person, and this is a small token of appreciation for all the joy you bring to our lives. Your kindness and warmth have touched everyone around you in ways you may never fully realize.
+                  Dear Sara, From a large collection of morning messages spanning months, 
+                  From "Good الف morning ya ahla sara f denya kolha" to carefully crafted 
+                  declarations of affection that would make Shakespeare envious. Comes one final morning newspaper.
+                  <br />The universe can hardly contain its excitement today, because your special day has officially arrived. 
+                  You’ve been described as a master playful Sara, an adorably slow Sara, a wonderfully moody Sara, and everything
+                  in between—but from every angle, you’re pure magic.
+                  Rumor has it, the only thing deadlier than your sharp wit is your brief encounter with that wood-cleaning liquid, 
+                  yet through it all, you emerge unscathed—and hotter, apparently!
+                  <br />
+                  With every sunrise message I’ve ever written, I’ve tried to capture how precious you are—yet words never measure up
+                  <br />
                 </p>
                 <p className="text-sm leading-relaxed font-serif">
-                  We hope this day brings you as much happiness as you bring to everyone around you. Happy Birthday, Sara!
+                May your birthday be filled with moments that make you smile, adventures that excite you, and people who cherish you as much as you cherish them.
+                <br />
+                Thank you for being a million versions of perfection, all rolled into one incredible soul.
                 </p>
                 <div className="border border-gray-300 p-2 bg-gray-50 italic text-xs">
-                  "The greatest gift you can give someone is your time, your attention, your love, your concern." — Sara's daily reminder
+                  "The greatest gift you can give someone is your time, your attention, your love, your concern." — Things Sara would never say
                 </div>
               </div>
               
@@ -135,7 +147,11 @@ const Saraprise = () => {
                 </div>
               </div>
             </div>
-
+ {/* Newspaper headline */}
+ <h3 className="text-2xl font-serif font-bold mb-2 text-center">Weather Forcast :</h3>
+ <div className="border border-gray-300 p-1 bg-gray-50 italic text-center text-xs">
+                  "100% CHANCE OF HAPPY TEARS"
+                </div>
             {/* Newspaper footer with date */}
             <div className="mt-6 pt-2 border-t border-gray-400 flex justify-between text-xs text-gray-600">
               <span> | April 11, 2025</span>

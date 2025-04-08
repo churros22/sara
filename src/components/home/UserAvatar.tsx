@@ -23,7 +23,10 @@ const UserAvatar = () => {
         <div className="mt-6 text-center">
           <h2 className="text-2xl font-silkscreen text-white mb-2">Welcome 🎉</h2>
           <p className="text-l font-caveat text-[#A3F7BF] italic">
-            Feel free por favor, mi casa is your casa
+           Feel free por favor seniora 
+          </p>
+          <p className="text-l font-caveat text-[#A3F7BF] italic">
+           mi casa is your casa
           </p>
         </div>
       </AnimatedWrap>

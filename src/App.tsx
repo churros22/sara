@@ -63,9 +63,9 @@ const LoadingTransition = ({ onComplete }: { onComplete: () => void }) => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-sara-pixel6 via-sara-pixelBg to-sara-pixel1">
       <div className="text-center w-64">
-        <p className="text-xl font-press text-sara-pixel5 mb-6">Loading Sara's World...</p>
+        <p className="text-xl font-press text-sara-pixel5 mb-6">We're cooking...</p>
         <Progress value={progress} className="h-2" />
-        <p className="mt-4 text-sm text-sara-pixel4">Preparing your adventure...</p>
+        <p className="mt-4 text-sm text-sara-pixel4">Please wait for the food to be ready...</p>
       </div>
     </div>
   );

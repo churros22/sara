@@ -18,7 +18,7 @@ const EntryScreen = ({ onAccessGranted }: EntryScreenProps) => {
       onAccessGranted();
       toast({
         title: "Hooray! 🎉",
-        duration: 1000,
+        duration: 500,
       });
     } else {
       toast({

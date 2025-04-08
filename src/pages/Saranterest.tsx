@@ -19,10 +19,13 @@ const Saranterest = () => {
     { id: "5", src: "./assets/images/sara_5.jpg", alt: "Sara image 5" },
     { id: "7", src: "./assets/images/sara_7.jpg", alt: "Sara image 7" },
     { id: "8", src: "./assets/images/sara_8.jpg", alt: "Sara image 8" },
+    { id: "9", src: "./assets/images/sara_9.jpg", alt: "Sara image 9" },
+    { id: "10", src: "./assets/images/sara_10.jpg", alt: "Sara image 10" },
+
   ];
 
   // Pinterest categories (for decoration)
-  const categories = ["Memories", "Birthday", "Friends", "Travel", "Food", "Fashion", "Art"];
+  const categories = ["Turkish", "Crochet", "Vintage", "Travel", "Food", "Fashion", "Art"];
 
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
