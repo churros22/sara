@@ -24,7 +24,7 @@ const preloadSongs: Song[] = [
     title: "Magical Force",
     artist: "Luke Skywalker",
     src: "/assets/audio/sara_song_2.mp3",
-    cover: "/assets/images/1744211238017.jpg",
+    cover: "/assets/images/1744211238055.jpg",
     lyrics: "Well .. Idk why I added this song 🤷🏻‍♂️"
   },
   {
@@ -32,7 +32,7 @@ const preloadSongs: Song[] = [
     title: "Saranade",
     artist: "churros",
     src: "/assets/audio/sara_song_3.mp3",
-    cover: "/assets/images/sara_4.jpg",
+    cover: "/assets/images/1744211238024.jpg",
     lyrics: "You are all this and more"
   },
   {
@@ -40,7 +40,7 @@ const preloadSongs: Song[] = [
     title: "ها حي عليا و صايي",
     artist: "شاب ياسين تيريڨو",
     src: "/assets/audio/sara_song_4.mp3",
-    cover: "/assets/images/sara_8.jpg",
+    cover: "/assets/images/1744211238034.jpg",
     lyrics: " شا باغي نڨولك لمّوك .. ها حي عليا و صايي"
   }
 ];
