@@ -7,7 +7,7 @@ const preloadSongs: Song[] = [
     id: "1",
     title: "Happy Birthday",
     artist: "churros",
-    src: "/assets/audio/arabic_sara.mp3",
+    src: "/assets/audio/sara_song_1.mp3",
     cover: "/assets/images/sara_7.jpg",
     lyrics: "not really lyrics"
   },
@@ -23,8 +23,24 @@ const preloadSongs: Song[] = [
     id: "3",
     title: "Memories",
     artist: "cameleon",
-    src: "/assets/audio/sara_poem.mp3",
+    src: "/assets/audio/sara_song_2.mp3",
     cover: "/assets/images/sara_2.jpg",
+    lyrics: "lila."
+  },
+  {
+    id: "4",
+    title: "Memories",
+    artist: "cameleon",
+    src: "/assets/audio/sara_song_3.mp3",
+    cover: "/assets/images/sara_4.jpg",
+    lyrics: "lila."
+  },
+  {
+    id: "5",
+    title: "Memories",
+    artist: "cameleon",
+    src: "/assets/audio/sara_song_4.mp3",
+    cover: "/assets/images/sara_8.jpg",
     lyrics: "lila."
   }
 ];
