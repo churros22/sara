@@ -8,40 +8,40 @@ const preloadSongs: Song[] = [
     title: "Happy Birthday",
     artist: "churros",
     src: "/assets/audio/sara_song_1.mp3",
-    cover: "/assets/images/sara_7.jpg",
-    lyrics: "not really lyrics"
+    cover: "/assets/images/1744211238015.jpg",
+    lyrics: "Not really lyrics, more like just a comment section xD"
   },
   {
     id: "2",
-    title: "You Are Amazing",
-    artist: "tame impala",
+    title: "She's Amazing",
+    artist: "Tame Impala",
     src: "/assets/audio/sara_impala.mp3",
-    cover: "/assets/images/sara_1.jpg",
-    lyrics: "the less i know the better"
+    cover: "/assets/images/1744211238008.jpg",
+    lyrics: "The less you know the better"
   },
   {
     id: "3",
-    title: "Memories",
-    artist: "cameleon",
+    title: "Magical Force",
+    artist: "Luke Skywalker",
     src: "/assets/audio/sara_song_2.mp3",
-    cover: "/assets/images/sara_2.jpg",
-    lyrics: "lila."
+    cover: "/assets/images/1744211238017.jpg",
+    lyrics: "Well .. Idk why I added this song 🤷🏻‍♂️"
   },
   {
     id: "4",
-    title: "Memories",
-    artist: "cameleon",
+    title: "Saranade",
+    artist: "churros",
     src: "/assets/audio/sara_song_3.mp3",
     cover: "/assets/images/sara_4.jpg",
-    lyrics: "lila."
+    lyrics: "You are all this and more"
   },
   {
     id: "5",
-    title: "Memories",
-    artist: "cameleon",
+    title: "ها حي عليا و صايي",
+    artist: "شاب ياسين تيريڨو",
     src: "/assets/audio/sara_song_4.mp3",
     cover: "/assets/images/sara_8.jpg",
-    lyrics: "lila."
+    lyrics: " شا باغي نڨولك لمّوك .. ها حي عليا و صايي"
   }
 ];
 
@@ -54,6 +54,11 @@ const imagesToPreload = [
   "/assets/images/sara_5.jpg",
   "/assets/images/sara_7.jpg",
   "/assets/images/sara_8.jpg",
+  "/assets/images/sara_9.jpg",
+  "/assets/images/sara_10.jpg",
+  "/assets/images/sara_11.jpg",
+  "/assets/images/sara_12.jpg",
+  "/assets/images/sara_13.jpg",
 ];
 
 // Track preload status
