@@ -138,12 +138,12 @@ const Saraprise = () => {
               <div className="space-y-4">
                 {/* Second column with images */}
                 <div className="border p-1 bg-white shadow-sm">
-                  <img src="./assets/images/sara_1.jpg" alt="Sara smiling" className="w-full h-auto sepia-[0.2]" />
-                  <p className="text-xs italic pt-1 text-center">Sara enjoying her special day</p>
+                  <img src="./assets/images/Screenshot_2025-04-11-00-15-19-883-edit_com.android.chrome.jpg" alt="Sara smiling" className="w-full h-auto sepia-[0.2]" />
+                  <p className="text-xs italic pt-1 text-center">Good things</p>
                 </div>
                 <div className="border p-1 bg-white shadow-sm">
-                  <img src="./assets/images/sara_2.jpg" alt="Sara enjoying her day" className="w-full h-auto sepia-[0.2]" />
-                  <p className="text-xs italic pt-1 text-center">A moment to remember</p>
+                  <img src="./assets/images/Screenshot_2025-04-11-00-14-23-166-edit_com.android.chrome.jpg" alt="Sara enjoying her day" className="w-full h-auto sepia-[0.2]" />
+                  <p className="text-xs italic pt-1 text-center"> :3 </p>
                 </div>
               </div>
             </div>
