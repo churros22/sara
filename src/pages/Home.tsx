@@ -42,7 +42,7 @@ const Home = () => {
       {/* Background with just forest on top */}
       <div className="relative top-1 w-full overflow-hidden">
         <img
-          src="/assets/images/bg_sara.png"
+          src="/assets/images/bg_sara.jpg"
           className="w-full h-full object-cover opacity-90"
         />
         
