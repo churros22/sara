@@ -57,8 +57,7 @@ const imagesToPreload = [
   "/assets/images/sara_9.jpg",
   "/assets/images/sara_10.jpg",
   "/assets/images/sara_11.jpg",
-  "/assets/images/sara_12.jpg",
-  "/assets/images/sara_13.jpg",
+  "/assets/images/sara_6.jpg",
 ];
 
 // Track preload status
