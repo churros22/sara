@@ -19,8 +19,10 @@ const Saranterest = () => {
     { id: "5", src: "./assets/images/sara_5.jpg", alt: "Sara image 5" },
     { id: "7", src: "./assets/images/sara_7.jpg", alt: "Sara image 7" },
     { id: "8", src: "./assets/images/sara_8.jpg", alt: "Sara image 8" },
-    { id: "9", src: "./assets/images/sara_9.jpg", alt: "Sara image 9" },
-    { id: "10", src: "./assets/images/sara_10.jpg", alt: "Sara image 10" },
+    { id: "9", src: "./assets/images/sara_22.jpg", alt: "Sara image 9" },
+    { id: "10", src: "./assets/images/sara_23.jpg", alt: "Sara image 10" },
+    { id: "11", src: "./assets/images/sara_24.jpg", alt: "Sara image 11" },
+    { id: "12", src: "./assets/images/sara_25.jpg", alt: "Sara image 12" },
 
   ];
 
