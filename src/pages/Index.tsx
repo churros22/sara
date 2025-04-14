@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import EntryScreen from "@/components/EntryScreen";
 import { useAudio } from "@/contexts/AudioContext";
 import { preloadAssets } from "@/utils/preload";
-
+import { Analytics } from '@vercel/analytics/react';
 const Index = () => {
   const [accessGranted, setAccessGranted] = useState(false);
   const audio = useAudio();
@@ -41,6 +41,7 @@ const Index = () => {
   return (
     <div className="min-h-screen w-full">
       {!accessGranted && <EntryScreen onAccessGranted={handleAccessGranted} />}
+      <Analytics />
     </div>
   );
 };
