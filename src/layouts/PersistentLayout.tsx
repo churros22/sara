@@ -1,6 +1,7 @@
 
 import { ReactNode, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import SpiderOverlay from "@/components/SpiderOverlay";
 
 // Store scroll positions for each route
 const scrollPositions = new Map<string, number>();
@@ -46,7 +47,13 @@ export const PersistentLayout = ({ children }: { children: ReactNode }) => {
     }
   }, [pathname]);
 
-  return <div ref={contentRef} className="relative">{children}</div>;
+  return (
+    <div ref={contentRef} className="relative">
+      {children}
+      <SpiderOverlay />
+    </div>
+  );
 };
 
 export default PersistentLayout;
+
